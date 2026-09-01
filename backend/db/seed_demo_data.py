@@ -1,0 +1,1 @@
+print("Seeding 3 hospitals, 15 doctors, 250 patients...")
