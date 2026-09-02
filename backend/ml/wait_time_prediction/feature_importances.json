@@ -1,0 +1,82 @@
+[
+  {
+    "feature": "doctors_available",
+    "importance": 0.457238
+  },
+  {
+    "feature": "queue_length",
+    "importance": 0.285262
+  },
+  {
+    "feature": "average_consultation_time",
+    "importance": 0.241613
+  },
+  {
+    "feature": "patients_per_hour",
+    "importance": 0.00579
+  },
+  {
+    "feature": "priority_cases",
+    "importance": 0.004441
+  },
+  {
+    "feature": "hour",
+    "importance": 0.002206
+  },
+  {
+    "feature": "department_Dermatology",
+    "importance": 0.000795
+  },
+  {
+    "feature": "department_Emergency",
+    "importance": 0.000481
+  },
+  {
+    "feature": "department_Cardiology",
+    "importance": 0.000339
+  },
+  {
+    "feature": "day_Tue",
+    "importance": 0.00021
+  },
+  {
+    "feature": "day_Fri",
+    "importance": 0.000209
+  },
+  {
+    "feature": "department_General Medicine",
+    "importance": 0.000193
+  },
+  {
+    "feature": "day_Wed",
+    "importance": 0.00019
+  },
+  {
+    "feature": "department_Pediatrics",
+    "importance": 0.000178
+  },
+  {
+    "feature": "department_Orthopedics",
+    "importance": 0.000154
+  },
+  {
+    "feature": "day_Thu",
+    "importance": 0.000153
+  },
+  {
+    "feature": "day_Mon",
+    "importance": 0.000147
+  },
+  {
+    "feature": "day_Sat",
+    "importance": 0.00014
+  },
+  {
+    "feature": "day_Sun",
+    "importance": 0.00014
+  },
+  {
+    "feature": "department_ENT",
+    "importance": 0.000122
+  }
+]
