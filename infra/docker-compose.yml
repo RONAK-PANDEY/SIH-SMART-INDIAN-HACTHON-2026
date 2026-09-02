@@ -1,17 +1,108 @@
-version: '3.8'
+version: "3.9"
+
+# Local development stack: patient-portal, admin-portal, backend (FastAPI), PostgreSQL
+# Usage:
+#   cp infra/env.example infra/.env
+#   docker compose --env-file infra/.env -f infra/docker-compose.yml up --build
+
 services:
   postgres:
     image: postgres:16-alpine
-    ports: ["5432:5432"]
-  redis:
-    image: redis:7-alpine
-    ports: ["6379:6379"]
+    container_name: portal_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - portal_net
+
   backend:
-    build: ../backend
-    ports: ["8000:8000"]
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: portal_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      SECRET_KEY: ${SECRET_KEY}
+      JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
+      JWT_EXPIRE_MINUTES: ${JWT_EXPIRE_MINUTES:-60}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    volumes:
+      - ../backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - portal_net
+
   patient-portal:
-    build: ../patient-portal
-    ports: ["3000:80"]
+    build:
+      context: ../patient-portal
+      dockerfile: Dockerfile
+    container_name: portal_patient_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_API_BASE_URL: ${PATIENT_PORTAL_API_BASE_URL}
+      VITE_APP_ENV: ${ENVIRONMENT:-development}
+    ports:
+      - "${PATIENT_PORTAL_PORT:-3000}:3000"
+    volumes:
+      - ../patient-portal:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0 --port 3000
+    networks:
+      - portal_net
+
   admin-portal:
-    build: ../admin-portal
-    ports: ["3001:80"]
+    build:
+      context: ../admin-portal
+      dockerfile: Dockerfile
+    container_name: portal_admin_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_API_BASE_URL: ${ADMIN_PORTAL_API_BASE_URL}
+      VITE_APP_ENV: ${ENVIRONMENT:-development}
+    ports:
+      - "${ADMIN_PORTAL_PORT:-3001}:3001"
+    volumes:
+      - ../admin-portal:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0 --port 3001
+    networks:
+      - portal_net
+
+volumes:
+  postgres_data:
+
+networks:
+  portal_net:
+    driver: bridge
