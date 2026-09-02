@@ -1,98 +1,31 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { BookingDetails } from '../fixtures/test-data';
+import { Page, expect } from '@playwright/test';
 
-/**
- * Page Object Model for OPD Appointment & Token Booking Page (/book-appointment)
- */
 export class BookingPage {
-  readonly page: Page;
-  readonly heading: Locator;
-  readonly dateInput: Locator;
-  readonly slotPills: Locator;
-  readonly confirmBookingButton: Locator;
-  readonly tokenConfirmationCard: Locator;
-  readonly tokenNumberDisplay: Locator;
-  readonly trackQueueButton: Locator;
+  constructor(private page: Page) {}
 
-  constructor(page: Page) {
-    this.page = page;
-    this.heading = page.locator('h1, h2').filter({ hasText: /Book OPD Appointment|Book Appointment|Appointment/i });
-    this.dateInput = page.locator('input[type="date"], input#booking-date');
-    this.slotPills = page.locator('button, .slot-pill').filter({ hasText: /AM|PM/i });
-    this.confirmBookingButton = page.locator('button').filter({ hasText: /Confirm|Generate Token|Book/i }).first();
-    this.tokenConfirmationCard = page.locator('[data-testid="token-card"], .token-card, .bg-white:has-text("Token")');
-    this.tokenNumberDisplay = page.locator('[data-testid="token-number"], .token-id, span:has-text("T-"), h2:has-text("T-")');
-    this.trackQueueButton = page.locator('button, a').filter({ hasText: /Track Queue|Live Queue|My Token|View Token/i }).first();
+  async expectLoaded() {
+    await expect(this.page.getByTestId('booking-slots')).toBeVisible();
   }
 
-  /**
-   * Navigate directly to booking page
-   */
-  async goto(baseUrl?: string): Promise<void> {
-    const targetUrl = baseUrl ? `${baseUrl}/book-appointment` : '/book-appointment';
-    await this.page.goto(targetUrl);
-    await this.page.waitForLoadState('domcontentloaded');
+  async selectFirstAvailableSlot() {
+    const slot = this.page.getByTestId('slot-available').first();
+    await expect(slot).toBeVisible();
+    await slot.click();
   }
 
-  /**
-   * Verify booking page is loaded
-   */
-  async verifyPageLoaded(): Promise<void> {
-    await expect(this.heading).toBeVisible({ timeout: 10000 });
+  async confirmBooking() {
+    await this.page.getByTestId('booking-confirm').click();
   }
 
-  /**
-   * Select date for consultation
-   */
-  async selectDate(date: string): Promise<void> {
-    if (await this.dateInput.count() > 0) {
-      await this.dateInput.fill(date);
-    }
+  async expectTokenIssued(): Promise<string> {
+    const tokenEl = this.page.getByTestId('appointment-token');
+    await expect(tokenEl).toBeVisible({ timeout: 15_000 });
+    const token = (await tokenEl.textContent())?.trim() ?? '';
+    expect(token.length).toBeGreaterThan(0);
+    return token;
   }
 
-  /**
-   * Select an available time slot
-   */
-  async selectTimeSlot(slotText?: string): Promise<void> {
-    if (slotText) {
-      const specificSlot = this.page.locator(`button:has-text("${slotText}")`).first();
-      if (await specificSlot.count() > 0) {
-        await specificSlot.click();
-        return;
-      }
-    }
-    if (await this.slotPills.count() > 0) {
-      await this.slotPills.first().click();
-    }
-  }
-
-  /**
-   * Confirm booking and request token generation
-   */
-  async confirmBooking(): Promise<void> {
-    if (await this.confirmBookingButton.count() > 0) {
-      await this.confirmBookingButton.click();
-    }
-  }
-
-  /**
-   * Book appointment and get issued token
-   */
-  async bookSlot(booking: BookingDetails): Promise<void> {
-    await this.verifyPageLoaded();
-    await this.selectDate(booking.preferredDate);
-    await this.selectTimeSlot(booking.timeSlot);
-    await this.confirmBooking();
-  }
-
-  /**
-   * Navigate to live queue tracker page
-   */
-  async proceedToLiveQueue(): Promise<void> {
-    if (await this.trackQueueButton.count() > 0) {
-      await this.trackQueueButton.click();
-    } else {
-      await this.page.goto('/live-queue');
-    }
+  async goToQueueTracker() {
+    await this.page.getByTestId('view-queue-status').click();
   }
 }
