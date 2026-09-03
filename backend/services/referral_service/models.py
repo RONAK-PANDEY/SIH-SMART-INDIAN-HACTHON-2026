@@ -8,14 +8,14 @@ from pydantic import BaseModel, Field
 
 
 class TriagePriority(str, Enum):
-    """Triage category per docs/business-rules.md Section 2. URGENT/PRIORITY
-    are the categories rule 4 checks equipment-driven referrals against;
-    ROUTINE never triggers on equipment shortage alone (rule 4), but always
-    triggers on missing specialty/staffing (rule 3, "regardless of triage
-    category")."""
+    """Triage category. URGENT/PRIORITY are the categories rule 4 checks
+    equipment-driven referrals against; ROUTINE/NON_URGENT never trigger
+    on equipment shortage alone (rule 4), but always trigger on missing
+    specialty/staffing (rule 3, "regardless of triage category")."""
     URGENT = "URGENT"
     PRIORITY = "PRIORITY"
     ROUTINE = "ROUTINE"
+    NON_URGENT = "NON_URGENT"
 
 
 class TriageEventType(str, Enum):
