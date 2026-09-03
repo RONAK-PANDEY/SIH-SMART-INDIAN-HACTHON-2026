@@ -1,0 +1,17 @@
+id,hospital_id,name,floor,avg_consult_minutes
+dept_f5c547ce04dd,hosp_83b025a86289,Cardiology,4,20
+dept_1b907361e882,hosp_83b025a86289,ENT,1,11
+dept_a898944431c5,hosp_83b025a86289,General Medicine,2,11
+dept_c4af00fb8810,hosp_83b025a86289,Dermatology,5,12
+dept_7e0837c54787,hosp_83b025a86289,Orthopedics,1,20
+dept_85aa0b32469f,hosp_fee9cc547f0c,ENT,4,15
+dept_8b69b7d3e5fa,hosp_fee9cc547f0c,Gynecology,3,14
+dept_5ceff144f6a0,hosp_fee9cc547f0c,Dermatology,2,11
+dept_44f2489d3d11,hosp_fee9cc547f0c,Pediatrics,3,14
+dept_086c6229cdef,hosp_fee9cc547f0c,General Medicine,2,11
+dept_64ba723b1218,hosp_20b1d1c7553a,General Medicine,5,12
+dept_d56ff14ca88c,hosp_20b1d1c7553a,Gynecology,1,17
+dept_11f01decb4fe,hosp_20b1d1c7553a,Pediatrics,5,12
+dept_669d14fc18c7,hosp_20b1d1c7553a,ENT,4,11
+dept_9194cc7177bc,hosp_20b1d1c7553a,Cardiology,5,22
+dept_2f1c8b63be06,hosp_20b1d1c7553a,Orthopedics,5,18

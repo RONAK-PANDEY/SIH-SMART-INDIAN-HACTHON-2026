@@ -1,0 +1,17 @@
+id,user_id,hospital_id,department_id,name,specialization,years_experience,avg_consult_minutes,punctuality_factor
+doc_2f2d123240f4,user_729e1ce4a004,hosp_83b025a86289,dept_f5c547ce04dd,Dr. Robert Muller,Interventional Cardiology,15,17,1.0
+doc_00169991de63,user_13387bd15c70,hosp_83b025a86289,dept_1b907361e882,Dr. Jessica Miller,Otolaryngology,7,10,1.12
+doc_3054e302144b,user_b2f8e5899523,hosp_83b025a86289,dept_a898944431c5,Dr. Wei Johnson,Internal Medicine,32,8,0.86
+doc_de11a62742a1,user_dff6c6a32e2b,hosp_83b025a86289,dept_c4af00fb8810,Dr. John Novak,Cosmetic Dermatology,35,11,1.37
+doc_e32ce699acb7,user_0799c1e0aa79,hosp_83b025a86289,dept_7e0837c54787,Dr. Jennifer Kim,Spine Surgery,17,19,1.12
+doc_e24bfe53fe37,user_dc89d9254884,hosp_fee9cc547f0c,dept_85aa0b32469f,Dr. Ananya Li,Otolaryngology,14,16,1.06
+doc_97ade2c336cc,user_efee76218cef,hosp_fee9cc547f0c,dept_8b69b7d3e5fa,Dr. Diego Ali,Reproductive Health,22,15,1.01
+doc_7665a82cef9e,user_27463adefa2c,hosp_fee9cc547f0c,dept_5ceff144f6a0,Dr. Rohan Li,Cosmetic Dermatology,35,9,1.48
+doc_9d83cca623ae,user_e1703ac71798,hosp_fee9cc547f0c,dept_44f2489d3d11,Dr. William Park,Neonatology,21,13,1.05
+doc_1be52abb3c11,user_20b5ef7f2b7e,hosp_fee9cc547f0c,dept_086c6229cdef,Dr. James Novak,Family Medicine,13,11,0.92
+doc_d7b7fa95bec3,user_6c424fedb1c4,hosp_20b1d1c7553a,dept_64ba723b1218,Dr. Fatima Singh,Family Medicine,33,13,1.13
+doc_f897ffcbfda0,user_93a86fdb75c1,hosp_20b1d1c7553a,dept_d56ff14ca88c,Dr. Patricia Miller,Obstetrics & Gynecology,14,16,1.04
+doc_49b90439d2b6,user_0f5ee7431a29,hosp_20b1d1c7553a,dept_11f01decb4fe,Dr. Jennifer Kim,General Pediatrics,35,13,1.08
+doc_295d91e4115e,user_7caf430d1c73,hosp_20b1d1c7553a,dept_669d14fc18c7,Dr. Elizabeth Davis,Otolaryngology,3,14,0.85
+doc_8e3731da16c5,user_c572a5c37135,hosp_20b1d1c7553a,dept_9194cc7177bc,Dr. Robert Patel,General Cardiology,20,22,1.59
+doc_db3f59188e0b,user_f070b490b21c,hosp_20b1d1c7553a,dept_2f1c8b63be06,Dr. Kavya Davis,Joint Replacement,18,19,0.97
