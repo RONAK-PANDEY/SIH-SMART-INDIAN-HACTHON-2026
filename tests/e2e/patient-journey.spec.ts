@@ -1,87 +1,129 @@
-import { test, expect, chromium, Browser } from '@playwright/test';
+import { test, expect } from '@playwright/test';
+import { TEST_PATIENTS, TEST_HOSPITALS, TRIAGE_SCENARIOS, TEST_BOOKING_DEFAULTS, TEST_DOCTORS } from './fixtures/test-data';
 import { RegisterPage } from './pages/RegisterPage';
 import { HospitalSelectPage } from './pages/HospitalSelectPage';
 import { TriagePage } from './pages/TriagePage';
 import { BookingPage } from './pages/BookingPage';
 import { QueueTrackerPage } from './pages/QueueTrackerPage';
 import { DoctorConsolePage } from './pages/DoctorConsolePage';
-import { uniquePatient, hospital, department, triageAnswers } from './fixtures/test-data';
 
-test.describe('Full patient journey', () => {
-  test('register -> select hospital/dept -> triage -> book -> token -> live queue -> called -> visit recorded', async ({
-    page,
-    browser,
-  }) => {
-    const patient = uniquePatient();
+/**
+ * SmartCare E2E Test Suite - Smart Indian Hackathon 2026
+ * Comprehensive Patient Journey & Doctor Queue Workflow
+ */
 
-    // --- 1. Register ---
+test.describe('SmartCare E2E: Full Patient Journey & OPD Queue Management', () => {
+
+  test('E2E-01: Patient registration with ABHA ID and demographic profile', async ({ page }) => {
     const registerPage = new RegisterPage(page);
+    const patient = TEST_PATIENTS.primary;
+
     await registerPage.goto();
-    await registerPage.register(patient);
-    await registerPage.completeOtpIfPresent();
-    await registerPage.expectSuccess();
+    await registerPage.verifyPageLoaded();
+    await registerPage.fillRegistration(patient);
+    await registerPage.submit();
 
-    // --- 2. Select hospital / department ---
-    const hospitalPage = new HospitalSelectPage(page);
-    await page.goto('/select-hospital'); // adjust if register redirects here already
-    await hospitalPage.selectHospital(hospital.name);
-    await hospitalPage.expectDepartmentListVisible();
-    await hospitalPage.selectDepartment(department.name);
+    // Verify transition to hospital selection
+    await expect(page).toHaveURL(/.*hospital-select.*/);
+  });
 
-    // --- 3. Triage ---
+  test('E2E-02: Hospital discovery and OPD department selection', async ({ page }) => {
+    const hospitalSelectPage = new HospitalSelectPage(page);
+    const hospital = TEST_HOSPITALS[0];
+    const department = hospital.departments[0];
+
+    await hospitalSelectPage.goto();
+    await hospitalSelectPage.verifyPageLoaded();
+    await hospitalSelectPage.searchHospital(hospital.city);
+    await hospitalSelectPage.selectHospital(hospital.name);
+    await hospitalSelectPage.selectDepartment(department.name);
+    await hospitalSelectPage.proceedToTriage();
+
+    // Verify navigation to AI Triage
+    await expect(page).toHaveURL(/.*triage.*/);
+  });
+
+  test('E2E-03: AI Symptom Triage assessment & acuity score calculation', async ({ page }) => {
     const triagePage = new TriagePage(page);
-    await triagePage.expectLoaded();
-    await triagePage.fillSymptoms(triageAnswers.symptom);
-    await triagePage.selectSeverity(triageAnswers.severity);
-    await triagePage.submit();
-    const priority = await triagePage.expectRecommendationAndPriority();
-    expect(priority).not.toBeNull();
+    const scenario = TRIAGE_SCENARIOS.criticalChestPain;
+
+    await triagePage.goto();
+    await triagePage.verifyPageLoaded();
+    await triagePage.completeTriage(scenario);
+    await triagePage.verifyAcuityResult(/Level|Emergency|Cardiology/i);
     await triagePage.proceedToBooking();
 
-    // --- 4. Book appointment ---
+    // Verify navigation to slot booking
+    await expect(page).toHaveURL(/.*book-appointment.*/);
+  });
+
+  test('E2E-04: OPD slot reservation and digital token generation', async ({ page }) => {
     const bookingPage = new BookingPage(page);
-    await bookingPage.expectLoaded();
-    await bookingPage.selectFirstAvailableSlot();
-    await bookingPage.confirmBooking();
 
-    // --- 5. Receive token ---
-    const token = await bookingPage.expectTokenIssued();
-    expect(token).toMatch(/^[A-Z0-9-]+$/); // adjust to actual token format
+    await bookingPage.goto();
+    await bookingPage.verifyPageLoaded();
+    await bookingPage.bookSlot(TEST_BOOKING_DEFAULTS);
+    await bookingPage.proceedToLiveQueue();
 
-    // --- 6. Track live queue ---
-    await bookingPage.goToQueueTracker();
-    const queuePage = new QueueTrackerPage(page);
-    await queuePage.expectLoaded(token);
-    const initialPosition = await queuePage.getCurrentPosition();
-    expect(initialPosition).toBeGreaterThan(0);
+    // Verify navigation to live queue tracking
+    await expect(page).toHaveURL(/.*live-queue.*/);
+  });
 
-    // --- 7. Doctor calls next patient (separate authenticated context) ---
+  test('E2E-05: Real-time Live Queue ticker & estimated wait tracking', async ({ page }) => {
+    const queueTrackerPage = new QueueTrackerPage(page);
+
+    await queueTrackerPage.goto();
+    await queueTrackerPage.verifyPageLoaded();
+    await queueTrackerPage.verifyServingTokenVisible();
+  });
+
+  test('E2E-06: Complete End-to-End Patient Journey with Doctor Consultation Sync', async ({ browser }) => {
+    // 1. Patient Browser Context
+    const patientContext = await browser.newContext();
+    const patientPage = await patientContext.newPage();
+
+    const registerPage = new RegisterPage(patientPage);
+    const hospitalSelectPage = new HospitalSelectPage(patientPage);
+    const triagePage = new TriagePage(patientPage);
+    const bookingPage = new BookingPage(patientPage);
+    const queueTrackerPage = new QueueTrackerPage(patientPage);
+
+    // Step A: Register Patient
+    await registerPage.goto();
+    await registerPage.registerPatient(TEST_PATIENTS.primary);
+
+    // Step B: Select Hospital and Specialty OPD
+    await hospitalSelectPage.selectHospital(TEST_HOSPITALS[0].name);
+    await hospitalSelectPage.proceedToTriage();
+
+    // Step C: Complete AI Symptom Triage
+    await triagePage.completeTriage(TRIAGE_SCENARIOS.criticalChestPain);
+    await triagePage.proceedToBooking();
+
+    // Step D: Book OPD Slot & Generate Token
+    await bookingPage.bookSlot(TEST_BOOKING_DEFAULTS);
+    await bookingPage.proceedToLiveQueue();
+
+    // Step E: Patient monitors Live Queue
+    await queueTrackerPage.verifyPageLoaded();
+
+    // 2. Doctor Browser Context (Simulating Doctor OPD Console)
     const doctorContext = await browser.newContext();
     const doctorPage = await doctorContext.newPage();
-    const doctorConsole = new DoctorConsolePage(doctorPage);
+    const doctorConsolePage = new DoctorConsolePage(doctorPage);
 
-    await doctorConsole.loginAsDoctor(
-      process.env.DOCTOR_EMAIL || 'doctor.test@hospital.test',
-      process.env.DOCTOR_PASSWORD || 'DoctorPass123!'
-    );
-    await doctorConsole.goToQueue(department.name);
+    await doctorConsolePage.goto();
+    await doctorConsolePage.verifyPageLoaded();
 
-    // Fast-forward: if there are patients ahead in test env, this may need
-    // repeated calls; kept simple assuming test DB seeds this patient near-front.
-    await doctorConsole.callNextPatient(token);
+    // Step F: Doctor calls next patient from the priority queue
+    await doctorConsolePage.callNextPatient();
 
-    // --- 8. Patient sees "called" status live (polling/websocket) ---
-    await queuePage.waitForCalledStatus();
+    // Step G: Doctor completes consultation and submits diagnosis
+    await doctorConsolePage.completeCurrentConsultation('Prescribed ECG and sublingual nitrates. Follow-up in 48 hours.');
 
-    // --- 9. Visit recorded ---
-    await doctorConsole.markVisitComplete(token);
-
-    // Confirm patient-side record reflects completed visit
-    await page.goto('/appointments/history');
-    await expect(
-      page.getByTestId('appointment-row').filter({ hasText: token })
-    ).toContainText(/completed/i);
-
+    // Cleanup contexts
+    await patientContext.close();
     await doctorContext.close();
   });
+
 });

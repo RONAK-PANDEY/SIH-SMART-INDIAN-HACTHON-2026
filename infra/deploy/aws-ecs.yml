@@ -1,3 +1,16 @@
 version: '1'
 task_definition:
   family: smartcare-production
+  container_definitions:
+    - name: backend
+      image: <AWS_ACCOUNT_ID>.dkr.ecr.ap-south-1.amazonaws.com/smartcare-backend:latest
+      cpu: 1024
+      memory: 2048
+      essential: true
+      portMappings:
+        - containerPort: 8000
+          hostPort: 8000
+          protocol: tcp
+      environment:
+        - name: PROJECT_NAME
+          value: "SmartCare Production Cluster"

@@ -4,13 +4,18 @@
   "private": true,
   "description": "SmartCare - AI-driven Intelligent OPD Queue & Triage Management System",
   "scripts": {
+    "start:backend": "python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload --app-dir backend",
+    "start:patient": "npm run dev --prefix patient-portal -- --port 5173 --host",
+    "start:admin": "npm run dev --prefix admin-portal -- --port 5174 --host",
+    "dev": "npm run start:patient",
+    "build:patient": "npm run build --prefix patient-portal",
+    "build:admin": "npm run build --prefix admin-portal",
+    "build": "npm run build:patient && npm run build:admin",
     "test": "playwright test",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
-    "test:e2e:report": "playwright show-report",
-    "dev:patient": "npm run dev --prefix patient-portal",
-    "dev:admin": "npm run dev --prefix admin-portal"
+    "test:e2e:report": "playwright show-report"
   },
   "devDependencies": {
     "@playwright/test": "^1.44.0",

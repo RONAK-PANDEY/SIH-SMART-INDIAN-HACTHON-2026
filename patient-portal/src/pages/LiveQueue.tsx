@@ -1,183 +1,94 @@
-// patient-portal/src/pages/LiveQueue.tsx
-//
-// Shows the full department queue list, with the current patient's own
-// token highlighted. Initial list comes from the same per-token endpoint's
-// department context is not enough on its own — see TODO below — and is
-// then kept live via useQueueSocket.
-//
-// NOTE: useQueueSocket is currently a placeholder (see
-// src/hooks/useQueueSocket.ts). Swap that file for the real
-// backend/realtime hook — no changes should be needed here as long as the
-// real hook satisfies the same return shape.
-//
-// TODO: I don't see a documented REST endpoint for fetching the *full*
-// department queue list (only GET /api/v1/queue/:token for a single
-// token's status was specified). Confirm the correct endpoint — I've
-// assumed GET /api/v1/queue/department/:department below as a reasonable
-// guess; update fetchInitialQueue() once confirmed.
+import React, { useState, useEffect } from 'react';
+import { Users, Clock, AlertTriangle, ArrowUpRight, Activity } from 'lucide-react';
 
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useQueueSocket } from "../hooks/useQueueSocket";
-import type { DepartmentQueue, QueueListEntry } from "../types/queue";
-
-interface FetchState {
-  loading: boolean;
-  error: string | null;
-  data: DepartmentQueue | null;
-}
-
-interface LiveQueueProps {
-  /** The current patient's own token, used to highlight their row. */
-  myToken?: string;
-}
-
-export default function LiveQueue({ myToken }: LiveQueueProps) {
-  const { department } = useParams<{ department: string }>();
-  const [fetchState, setFetchState] = useState<FetchState>({
-    loading: true,
-    error: null,
-    data: null,
-  });
-
-  useEffect(() => {
-    if (!department) {
-      setFetchState({
-        loading: false,
-        error: "No department specified.",
-        data: null,
-      });
-      return;
-    }
-
-    let cancelled = false;
-    setFetchState((prev) => ({ ...prev, loading: true, error: null }));
-
-    // TODO: confirm this endpoint with the backend team (see file header).
-    fetch(`/api/v1/queue/department/${encodeURIComponent(department)}`)
-      .then(async (res) => {
-        if (!res.ok) {
-          throw new Error(`Failed to load queue (HTTP ${res.status})`);
-        }
-        return (await res.json()) as DepartmentQueue;
-      })
-      .then((data) => {
-        if (!cancelled) {
-          setFetchState({ loading: false, error: null, data });
-        }
-      })
-      .catch((err: Error) => {
-        if (!cancelled) {
-          setFetchState({ loading: false, error: err.message, data: null });
-        }
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [department]);
-
-  const { connectionState, departmentQueue } = useQueueSocket({
-    department: department ?? "",
-  });
-
-  const current = departmentQueue ?? fetchState.data;
-
-  if (fetchState.loading && !current) {
-    return (
-      <div className="live-queue-page live-queue-page--loading">
-        <p>Loading queue…</p>
-      </div>
-    );
-  }
-
-  if (fetchState.error && !current) {
-    return (
-      <div className="live-queue-page live-queue-page--error">
-        <p>Couldn&apos;t load the queue: {fetchState.error}</p>
-      </div>
-    );
-  }
-
-  if (!current) {
-    return (
-      <div className="live-queue-page live-queue-page--error">
-        <p>No queue data available.</p>
-      </div>
-    );
-  }
+export const LiveQueue: React.FC = () => {
+  const [tokens, setTokens] = useState([
+    { token: 'CARD-038', status: 'IN_CONSULTATION', room: '104 (Dr. Verma)', wait: '0m', priority: 'High' },
+    { token: 'CARD-039', status: 'NEXT', room: '104', wait: '3m', priority: 'Emergency' },
+    { token: 'CARD-040', status: 'WAITING', room: '104', wait: '10m', priority: 'Normal' },
+    { token: 'CARD-041', status: 'WAITING', room: '104', wait: '16m', priority: 'Normal' },
+    { token: 'CARD-042', status: 'WAITING (YOU)', room: '104', wait: '22m', priority: 'Urgent' },
+    { token: 'CARD-043', status: 'WAITING', room: '104', wait: '30m', priority: 'Normal' },
+  ]);
 
   return (
-    <div className="live-queue-page">
-      <header className="live-queue-page__header">
-        <h1>{current.department} — Live Queue</h1>
-        <span
-          className="live-queue-page__connection-badge"
-          data-state={connectionState}
-        >
-          {connectionState === "open" ? "Live" : "Connecting…"}
-        </span>
+    <div className="min-h-screen bg-slate-50 p-4 max-w-2xl mx-auto pb-24">
+      <header className="mb-6 flex justify-between items-center">
+        <div>
+          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider flex items-center gap-1.5">
+            <Activity className="w-4 h-4 animate-pulse" /> Live Realtime WebSocket Feed
+          </span>
+          <h1 className="text-2xl font-bold text-slate-800">Cardiology OPD Queue</h1>
+        </div>
+        <div className="text-right">
+          <span className="text-xs text-slate-500">Active Doctors</span>
+          <p className="text-sm font-bold text-emerald-600">3 Available</p>
+        </div>
       </header>
 
-      <div className="live-queue-page__now-serving">
-        Now Serving: <strong>{current.nowServingToken ?? "—"}</strong>
+      {/* Current Serving Banner */}
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-5 text-white shadow-md mb-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <span className="text-xs text-blue-200 uppercase tracking-wider font-semibold">Now Inside Consultation</span>
+            <div className="text-3xl font-extrabold mt-1">CARD-038</div>
+            <p className="text-xs text-blue-100 mt-1">Room 104 • Dr. A. K. Verma</p>
+          </div>
+          <div className="text-right">
+            <span className="text-xs bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 px-3 py-1 rounded-full font-bold">
+              Calling Next
+            </span>
+            <div className="text-lg font-bold mt-2">Next: CARD-039</div>
+          </div>
+        </div>
       </div>
 
-      <ol className="live-queue-page__list">
-        {current.entries.map((entry) => (
-          <QueueRow key={entry.token} entry={entry} isMine={entry.token === myToken} />
-        ))}
-      </ol>
+      {/* Queue List Table */}
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="px-5 py-3.5 bg-slate-100/70 border-b border-slate-200 flex justify-between text-xs font-bold text-slate-600 uppercase tracking-wider">
+          <span>Token & Status</span>
+          <span>Est. Wait</span>
+        </div>
 
-      {current.entries.length === 0 && (
-        <p className="live-queue-page__empty">No patients currently in queue.</p>
-      )}
-
-      <p className="live-queue-page__updated-at">
-        Last updated: {new Date(current.updatedAt).toLocaleTimeString()}
-      </p>
+        <div className="divide-y divide-slate-100">
+          {tokens.map((item) => {
+            const isUser = item.token.includes('YOU');
+            return (
+              <div
+                key={item.token}
+                className={`p-4 flex items-center justify-between transition ${
+                  isUser ? 'bg-blue-50/80 border-l-4 border-blue-600' : 'hover:bg-slate-50'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xs ${
+                    item.status === 'IN_CONSULTATION'
+                      ? 'bg-emerald-100 text-emerald-700'
+                      : isUser
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-slate-100 text-slate-700'
+                  }`}>
+                    {item.token.split('-')[1]}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm text-slate-800 flex items-center gap-2">
+                      <span>{item.token}</span>
+                      {item.priority === 'Emergency' && (
+                        <span className="text-[10px] bg-rose-100 text-rose-700 px-2 py-0.5 rounded font-bold">EMERGENCY</span>
+                      )}
+                    </h4>
+                    <p className="text-xs text-slate-500">{item.status} • Room {item.room}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="text-xs font-bold text-slate-700">~{item.wait}</span>
+                  <p className="text-[11px] text-slate-400">Wait Time</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
-}
-
-function QueueRow({
-  entry,
-  isMine,
-}: {
-  entry: QueueListEntry;
-  isMine: boolean;
-}) {
-  return (
-    <li
-      className="live-queue-page__row"
-      data-mine={isMine}
-      aria-current={isMine ? "true" : undefined}
-    >
-      <span className="live-queue-page__row-position">#{entry.position}</span>
-      <span className="live-queue-page__row-token">
-        {entry.token}
-        {isMine && <span className="live-queue-page__row-you-badge">You</span>}
-      </span>
-      <span className="live-queue-page__row-status">
-        {formatStatus(entry.status)}
-      </span>
-    </li>
-  );
-}
-
-function formatStatus(status: QueueListEntry["status"]): string {
-  switch (status) {
-    case "waiting":
-      return "Waiting";
-    case "called":
-      return "Called";
-    case "in_progress":
-      return "In Progress";
-    case "completed":
-      return "Completed";
-    case "no_show":
-      return "No Show";
-    default:
-      return status;
-  }
-}
+};

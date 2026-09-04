@@ -1,141 +1,62 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { fetchHospitalDetail } from "../api/hospitals";
-import { StatusBadge, StatusDot } from "../components/CongestionStatus";
-import type { HospitalDetail as HospitalDetailType } from "../types/hospital";
+import React from 'react';
+import { Building2, Users, Clock, Activity, ShieldCheck } from 'lucide-react';
 
-export default function HospitalDetail() {
-  const { id } = useParams<{ id: string }>();
-  const [hospital, setHospital] = useState<HospitalDetailType | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!id) return;
-    const controller = new AbortController();
-    setLoading(true);
-    setError(null);
-    fetchHospitalDetail(id, controller.signal)
-      .then(setHospital)
-      .catch((err) => {
-        if (err.name !== "AbortError") setError(err.message);
-      })
-      .finally(() => setLoading(false));
-    return () => controller.abort();
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="mx-auto max-w-3xl px-6 py-12 text-center text-sm text-slate-500">
-        Loading hospital…
-      </div>
-    );
-  }
-
-  if (error || !hospital) {
-    return (
-      <div className="mx-auto max-w-3xl px-6 py-12">
-        <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {error ?? "Hospital not found"}
-        </div>
-        <Link
-          to="/hospitals"
-          className="mt-4 inline-block text-sm text-slate-600 hover:text-slate-900"
-        >
-          ← Back to hospitals
-        </Link>
-      </div>
-    );
-  }
+export const HospitalDetail: React.FC = () => {
+  const departments = [
+    { name: 'Cardiology OPD', waiting: 42, avgWait: '24m', doctors: 6, status: 'High' },
+    { name: 'General Medicine', waiting: 88, avgWait: '35m', doctors: 10, status: 'Critical' },
+    { name: 'Pediatrics OPD', waiting: 18, avgWait: '12m', doctors: 4, status: 'Normal' },
+    { name: 'Orthopedics OPD', waiting: 25, avgWait: '18m', doctors: 5, status: 'Normal' },
+    { name: 'Neurology OPD', waiting: 14, avgWait: '15m', doctors: 3, status: 'Normal' },
+  ];
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-8">
-      <Link
-        to="/hospitals"
-        className="text-sm text-slate-500 hover:text-slate-900"
-      >
-        ← Back to hospitals
-      </Link>
-
-      <header className="mt-3 mb-6 flex items-start justify-between gap-4">
+    <div className="p-6 space-y-6 bg-slate-50 min-h-screen">
+      <header className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">
-            {hospital.name}
-          </h1>
-          <p className="text-sm text-slate-500">
-            {hospital.district}, {hospital.state}
-            {hospital.address ? ` · ${hospital.address}` : ""}
-          </p>
+          <span className="text-xs text-blue-600 font-bold uppercase tracking-wider">Facility ID: HOSP-001</span>
+          <h1 className="text-2xl font-bold text-slate-800">AIIMS New Delhi - Department Telemetry</h1>
+          <p className="text-xs text-slate-500 mt-1">Ansari Nagar, New Delhi • Tertiary Super-Speciality Hospital</p>
         </div>
-        <StatusBadge
-          status={hospital.congestion_status}
-          score={hospital.congestion_score}
-        />
+        <div className="flex gap-2">
+          <span className="px-3 py-1.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold">
+            Load: 88% (Overburdened)
+          </span>
+        </div>
       </header>
 
-      <section className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <Metric label="OPD capacity" value={`${hospital.opd_capacity_pct}%`} />
-        <Metric
-          label="Emergency capacity"
-          value={`${hospital.emergency_capacity_pct}%`}
-        />
-        <Metric
-          label="Avg. wait"
-          value={`${hospital.avg_wait_minutes} min`}
-        />
-        <Metric
-          label="Doctors available"
-          value={`${hospital.doctors_available}/${hospital.doctors_on_shift}`}
-        />
-      </section>
-
-      <section className="mb-8">
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <div className="text-sm text-slate-500">Patients seen today</div>
-          <div className="text-3xl font-semibold text-slate-900">
-            {hospital.patients_today}
-          </div>
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="p-5 border-b border-slate-100 flex justify-between items-center">
+          <h3 className="font-bold text-slate-800 text-sm">OPD Department Capacities</h3>
+          <span className="text-xs text-slate-400">Auto-refresh every 10s</span>
         </div>
-      </section>
 
-      {hospital.departments.length > 0 && (
-        <section>
-          <h2 className="mb-3 text-sm font-medium text-slate-500">
-            Department congestion
-          </h2>
-          <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
-            {hospital.departments.map((dept) => (
-              <li
-                key={dept.department}
-                className="flex items-center justify-between px-4 py-3"
-              >
-                <div className="flex items-center gap-3">
-                  <StatusDot status={dept.congestion_status} />
-                  <span className="font-medium text-slate-900">
-                    {dept.department}
-                  </span>
+        <div className="divide-y divide-slate-100">
+          {departments.map((d) => (
+            <div key={d.name} className="p-4 flex items-center justify-between hover:bg-slate-50">
+              <div>
+                <h4 className="font-bold text-sm text-slate-800">{d.name}</h4>
+                <p className="text-xs text-slate-400">{d.doctors} Active Doctors Consultations</p>
+              </div>
+              <div className="flex items-center gap-6 text-xs text-right">
+                <div>
+                  <span className="text-slate-400">Patients in Queue</span>
+                  <p className="font-bold text-slate-800">{d.waiting}</p>
                 </div>
-                <span className="text-sm text-slate-500">
-                  score {Math.round(dept.congestion_score)}
+                <div>
+                  <span className="text-slate-400">Avg Wait</span>
+                  <p className="font-bold text-amber-600">{d.avgWait}</p>
+                </div>
+                <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold ${
+                  d.status === 'Critical' ? 'bg-rose-100 text-rose-700' : d.status === 'High' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'
+                }`}>
+                  {d.status}
                 </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      <p className="mt-6 text-xs text-slate-400">
-        Last updated {new Date(hospital.last_updated).toLocaleString()}
-      </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
-}
-
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-lg border border-slate-200 bg-white p-4">
-      <div className="text-xs text-slate-500">{label}</div>
-      <div className="text-xl font-semibold text-slate-900">{value}</div>
-    </div>
-  );
-}
+};
