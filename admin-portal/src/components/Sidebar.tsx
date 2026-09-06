@@ -1,15 +1,18 @@
 import React from 'react';
-import { LayoutDashboard, Building2, Layers, BarChart3, AlertCircle, Map, Stethoscope } from 'lucide-react';
+import { LayoutDashboard, Building2, Layers, BarChart3, AlertCircle, Map, Stethoscope, Users, LogIn, Flame } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
   const menuItems = [
     { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
-    { label: 'Hospital Network', icon: Building2, path: '/hospitals' },
-    { label: 'Live Queues', icon: Layers, path: '/live-queues' },
+    { label: 'Counter Helpdesk', icon: Users, path: '/counter-desk' },
     { label: 'Doctor Panel', icon: Stethoscope, path: '/doctor-panel' },
+    { label: '108 Ambulance Fleet', icon: Flame, path: '/ambulance-fleet' },
+    { label: 'Live Queues', icon: Layers, path: '/live-queues' },
+    { label: 'Hospital Network', icon: Building2, path: '/hospitals' },
     { label: 'Flow Analytics', icon: BarChart3, path: '/analytics' },
     { label: 'Alerts & Incidents', icon: AlertCircle, path: '/alerts' },
     { label: 'Load Heatmap', icon: Map, path: '/heatmap' },
+    { label: 'Staff Login', icon: LogIn, path: '/login' },
   ];
 
   return (

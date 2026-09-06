@@ -4,6 +4,7 @@ from config import settings
 from services.auth_service.jwt_handler import auth_router
 from services.patient_service.router import patient_router
 from services.appointment_service.router import appointment_router
+from services.triage_service.router import triage_router
 from realtime.websocket_gateway.gateway import ws_manager, ws_router
 
 app = FastAPI(
@@ -26,6 +27,7 @@ app.add_middleware(
 app.include_router(auth_router, prefix=f"{settings.API_V1_PREFIX}/auth", tags=["Authentication & RBAC"])
 app.include_router(patient_router, prefix=f"{settings.API_V1_PREFIX}/patients", tags=["Patient Services"])
 app.include_router(appointment_router, prefix=f"{settings.API_V1_PREFIX}/appointments", tags=["Appointments & Tokens"])
+app.include_router(triage_router, prefix=f"{settings.API_V1_PREFIX}/triage", tags=["AI Triage, Aadhaar & Network Referrals"])
 app.include_router(ws_router, prefix=f"{settings.API_V1_PREFIX}/ws", tags=["Realtime WebSocket Gateway"])
 
 @app.get("/health")

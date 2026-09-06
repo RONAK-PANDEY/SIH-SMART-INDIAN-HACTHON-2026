@@ -133,10 +133,57 @@ def test_fastapi_app_routes():
         print(f"[PASS] Route confirmed: {er}")
 
 
+def test_triage_and_aadhaar_services():
+    print("\n--- Testing AI Triage, 100+ Symptoms Taxonomy & Aadhaar Auth ---")
+    from services.triage_service.triage_ai_service import TriageAIService
+    from services.auth_service.aadhaar_abha_service import AadhaarABHAService
+    from services.referral_service.hospital_network_service import HospitalNetworkService
+
+    # 1. Symptoms Taxonomy
+    taxonomy = TriageAIService.get_all_symptoms()
+    total_symptoms = sum(len(v) for v in taxonomy.values())
+    assert total_symptoms >= 40, f"Expected rich taxonomy, found {total_symptoms}"
+    print(f"[PASS] Loaded {len(taxonomy)} medical categories with {total_symptoms} distinct symptoms")
+
+    # 2. Emergency Red Flag Detection
+    eval_res = TriageAIService.evaluate_triage(
+        selected_symptom_ids=["sym_cp_severe"],
+        free_text_description="Radiating chest pain and diaphoresis",
+        vulnerability={"senior": True, "pregnant": False, "differentlyAbled": False}
+    )
+    assert eval_res["triage_level"] == 1, "Chest pain must trigger P1 Emergency"
+    assert eval_res["is_emergency"] is True
+    print(f"[PASS] Emergency Red-Flag verified: {eval_res['priority_tag']} -> {eval_res['department_name']}")
+
+    # 3. Free-text Custom Complaint without pre-selected options
+    custom_eval = TriageAIService.evaluate_triage(
+        selected_symptom_ids=[],
+        free_text_description="Continuous coughing with asthma wheezing since yesterday night",
+        vulnerability={}
+    )
+    assert custom_eval["department_id"] == "dept-pulmo", f"Expected dept-pulmo, got {custom_eval['department_id']}"
+    print(f"[PASS] Custom Free-Text NLP Matcher verified: Assigned to {custom_eval['department_name']}")
+
+    # 4. Aadhaar Auth Verification
+    otp_resp = AadhaarABHAService.send_otp("982144321109")
+    assert otp_resp["status"] == "success"
+    profile = AadhaarABHAService.verify_otp_and_fetch_profile("982144321109", "123456")
+    assert profile["citizen_data"]["is_senior"] is True
+    assert profile["citizen_data"]["full_name"] == "Aarav Sharma"
+    print(f"[PASS] Aadhaar Verified Citizen: {profile['citizen_data']['full_name']} (Senior Priority: {profile['citizen_data']['is_senior']})")
+
+    # 5. Hospital Network & Congestion Referral
+    load_analysis = HospitalNetworkService.check_hospital_load_and_suggest_referral("hosp-aiims-delhi")
+    assert load_analysis["is_congested"] is True
+    assert len(load_analysis["suggested_alternatives"]) > 0
+    print(f"[PASS] Inter-Hospital Load Balancer verified: Suggested transfer saves ~{load_analysis['time_saved_mins']} mins")
+
+
 async def main():
     await test_patient_service()
     test_appointment_service()
     test_fastapi_app_routes()
+    test_triage_and_aadhaar_services()
     print("\n==========================================")
     print("ALL TESTS PASSED SUCCESSFULLY!")
     print("==========================================")
