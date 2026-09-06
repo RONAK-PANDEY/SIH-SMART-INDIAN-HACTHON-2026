@@ -19,10 +19,12 @@ import {
   MapPin
 } from 'lucide-react';
 import { useTranslation, LanguageSwitcherPill } from '../i18n';
+import { FeedbackModal } from '../components/FeedbackModal';
 
 export const MyToken: React.FC = () => {
   const { t } = useTranslation();
   const [showZoomModal, setShowZoomModal] = useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [allTokens, setAllTokens] = useState<any[]>([]);
   const [activeToken, setActiveToken] = useState<any>(null);
 
@@ -262,22 +264,32 @@ export const MyToken: React.FC = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="p-6 pt-0 flex gap-2">
+        <div className="p-6 pt-0 space-y-2">
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-2xl transition text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <Printer className="w-4 h-4" />
+              <span>Print Token Slip</span>
+            </button>
+            <a
+              href="/live-queue"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-2xl transition text-xs flex items-center justify-center gap-1.5 cursor-pointer text-center"
+            >
+              <Layers className="w-4 h-4" />
+              <span>Track Live Queue</span>
+            </a>
+          </div>
+
           <button
             type="button"
-            onClick={() => window.print()}
-            className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-2xl transition text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+            onClick={() => setShowFeedbackModal(true)}
+            className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-2xl transition text-xs flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
           >
-            <Printer className="w-4 h-4" />
-            <span>Print Token Slip</span>
+            <span>⭐ Rate Doctor Consultation (Govt Salary Bonus Survey)</span>
           </button>
-          <a
-            href="/live-queue"
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-2xl transition text-xs flex items-center justify-center gap-1.5 cursor-pointer text-center"
-          >
-            <Layers className="w-4 h-4" />
-            <span>Track Live Queue</span>
-          </a>
         </div>
       </div>
 
@@ -360,6 +372,18 @@ export const MyToken: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Citizen Feedback & Doctor Behavioral Rating Modal */}
+      <FeedbackModal
+        isOpen={showFeedbackModal}
+        onClose={() => setShowFeedbackModal(false)}
+        doctorId={activeToken?.doctorId || 'doc-001'}
+        doctorName={activeToken?.doctor || 'Dr. Rajesh Sharma'}
+        department={activeToken?.department || 'Cardiology'}
+        hospitalName={activeToken?.hospital || 'AIIMS New Delhi - Main Campus'}
+        tokenNumber={activeToken?.tokenNumber || 'CARD-042'}
+        patientName={activeToken?.patientName || 'Citizen Patient'}
+      />
     </div>
   );
 };

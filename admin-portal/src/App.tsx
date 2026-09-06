@@ -1,43 +1,40 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Dashboard } from './pages/Dashboard';
-import { HospitalList } from './pages/HospitalList';
-import { HospitalDetail } from './pages/HospitalDetail';
-import { LiveQueues } from './pages/LiveQueues';
-import { Analytics } from './pages/Analytics';
-import { Alerts } from './pages/Alerts';
-import { Heatmap } from './pages/Heatmap';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { GovtAdminLanding } from './pages/GovtAdminLanding';
 import { DoctorPanel } from './pages/DoctorPanel';
-import { CounterDesk } from './pages/CounterDesk';
-import { AmbulanceFleet } from './pages/AmbulanceFleet';
-import { Login } from './pages/Login';
+import { LiveQueues } from './pages/LiveQueues';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 
 export const App: React.FC = () => {
   return (
     <Router>
-      <div className="flex min-h-screen bg-slate-50 font-sans antialiased text-slate-800">
-        <Sidebar />
-        <div className="flex-1 flex flex-col min-w-0">
-          <Header />
-          <main className="flex-1 overflow-y-auto">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/counter-desk" element={<CounterDesk />} />
-              <Route path="/doctor-panel" element={<DoctorPanel />} />
-              <Route path="/ambulance-fleet" element={<AmbulanceFleet />} />
-              <Route path="/hospitals" element={<HospitalList />} />
-              <Route path="/hospital/:id" element={<HospitalDetail />} />
-              <Route path="/live-queues" element={<LiveQueues />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/alerts" element={<Alerts />} />
-              <Route path="/heatmap" element={<Heatmap />} />
-            </Routes>
-          </main>
-        </div>
-      </div>
+      <Routes>
+        {/* Full screen Government Staff Gateway */}
+        <Route path="/gateway" element={<GovtAdminLanding />} />
+        <Route path="/login" element={<GovtAdminLanding />} />
+
+        {/* Doctor Consultation Console Layout */}
+        <Route
+          path="/*"
+          element={
+            <div className="flex min-h-screen bg-slate-50 font-sans antialiased text-slate-800">
+              <Sidebar />
+              <div className="flex-1 flex flex-col min-w-0">
+                <Header />
+                <main className="flex-1 overflow-y-auto">
+                  <Routes>
+                    <Route path="/" element={<DoctorPanel />} />
+                    <Route path="/doctor-panel" element={<DoctorPanel />} />
+                    <Route path="/live-queues" element={<LiveQueues />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
+                </main>
+              </div>
+            </div>
+          }
+        />
+      </Routes>
     </Router>
   );
 };

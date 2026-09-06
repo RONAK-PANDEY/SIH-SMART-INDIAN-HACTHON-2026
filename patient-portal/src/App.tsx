@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { GovtLanding } from './pages/GovtLanding';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
@@ -22,7 +23,8 @@ export const App: React.FC = () => {
       <Router>
         <div className="font-sans antialiased min-h-screen bg-slate-50">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<GovtLanding />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<Dashboard />} />

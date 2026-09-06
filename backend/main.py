@@ -5,6 +5,7 @@ from services.auth_service.jwt_handler import auth_router
 from services.patient_service.router import patient_router
 from services.appointment_service.router import appointment_router
 from services.triage_service.router import triage_router
+from services.observer_service.router import observer_router
 from realtime.websocket_gateway.gateway import ws_manager, ws_router
 
 app = FastAPI(
@@ -14,7 +15,7 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_PREFIX}/openapi.json",
 )
 
-# CORS middleware for Web, PWA and Admin clients
+# CORS middleware for Web, PWA, Admin and Govt Observer clients
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -28,6 +29,7 @@ app.include_router(auth_router, prefix=f"{settings.API_V1_PREFIX}/auth", tags=["
 app.include_router(patient_router, prefix=f"{settings.API_V1_PREFIX}/patients", tags=["Patient Services"])
 app.include_router(appointment_router, prefix=f"{settings.API_V1_PREFIX}/appointments", tags=["Appointments & Tokens"])
 app.include_router(triage_router, prefix=f"{settings.API_V1_PREFIX}/triage", tags=["AI Triage, Aadhaar & Network Referrals"])
+app.include_router(observer_router, prefix=f"{settings.API_V1_PREFIX}/observer", tags=["Govt Observer, Vigilance & Doctor Bonus Engine"])
 app.include_router(ws_router, prefix=f"{settings.API_V1_PREFIX}/ws", tags=["Realtime WebSocket Gateway"])
 
 @app.get("/health")

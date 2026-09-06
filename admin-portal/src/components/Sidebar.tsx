@@ -1,42 +1,92 @@
 import React from 'react';
-import { LayoutDashboard, Building2, Layers, BarChart3, AlertCircle, Map, Stethoscope, Users, LogIn, Flame } from 'lucide-react';
+import { 
+  Stethoscope, 
+  Layers, 
+  LogIn, 
+  ExternalLink, 
+  ShieldCheck, 
+  Activity, 
+  UserCheck, 
+  Clock,
+  Sparkles
+} from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 export const Sidebar: React.FC = () => {
+  const location = useLocation();
+
   const menuItems = [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
-    { label: 'Counter Helpdesk', icon: Users, path: '/counter-desk' },
-    { label: 'Doctor Panel', icon: Stethoscope, path: '/doctor-panel' },
-    { label: '108 Ambulance Fleet', icon: Flame, path: '/ambulance-fleet' },
-    { label: 'Live Queues', icon: Layers, path: '/live-queues' },
-    { label: 'Hospital Network', icon: Building2, path: '/hospitals' },
-    { label: 'Flow Analytics', icon: BarChart3, path: '/analytics' },
-    { label: 'Alerts & Incidents', icon: AlertCircle, path: '/alerts' },
-    { label: 'Load Heatmap', icon: Map, path: '/heatmap' },
-    { label: 'Staff Login', icon: LogIn, path: '/login' },
+    { label: 'Doctor Consultation Panel', icon: Stethoscope, path: '/doctor-panel' },
+    { label: 'Live Turn Calling', icon: Layers, path: '/live-queues' },
+    { label: 'Staff Duty Login', icon: LogIn, path: '/login' },
   ];
 
   return (
-    <aside className="w-64 bg-slate-900 text-slate-300 min-h-screen flex flex-col p-4 border-r border-slate-800">
-      <div className="flex items-center gap-2.5 px-3 py-4 mb-4 border-b border-slate-800 text-white font-bold text-lg">
-        <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white">SC</div>
-        <span>SmartCare Admin</span>
+    <aside className="w-64 bg-slate-900 text-slate-300 min-h-screen flex flex-col p-4 border-r border-slate-800 shrink-0">
+      
+      {/* Brand Header */}
+      <div className="flex items-center gap-2.5 px-3 py-4 mb-4 border-b border-slate-800 text-white font-bold text-base">
+        <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black text-sm shadow-md">
+          🩺
+        </div>
+        <div>
+          <span className="block leading-tight">SmartCare Clinical</span>
+          <span className="text-[10px] text-slate-400 font-normal">Doctor Consultation Suite</span>
+        </div>
       </div>
 
-      <nav className="flex-1 space-y-1">
+      {/* Duty Status Badge */}
+      <div className="p-3 mb-4 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+        <div className="flex items-center gap-2 text-emerald-400 font-bold mb-0.5">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>ON CLINICAL DUTY</span>
+        </div>
+        <p className="text-[11px] text-slate-400">Dr. Rajesh Sharma (Cardiology)</p>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 space-y-1 text-xs">
         {menuItems.map((item) => {
           const Icon = item.icon;
+          const isActive = location.pathname === item.path || (item.path === '/doctor-panel' && location.pathname === '/');
           return (
             <a
               key={item.label}
               href={item.path}
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium hover:bg-slate-800 hover:text-white transition"
+              className={`flex items-center gap-3 px-3.5 py-3 rounded-xl font-medium transition ${
+                isActive
+                  ? 'bg-blue-600 text-white font-bold shadow-md shadow-blue-600/30'
+                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              }`}
             >
-              <Icon className="w-4 h-4 text-slate-400" />
+              <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
               <span>{item.label}</span>
             </a>
           );
         })}
       </nav>
+
+      {/* Oversight Console Promotion Link */}
+      <div className="pt-4 mt-auto border-t border-slate-800 space-y-2">
+        <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs space-y-2">
+          <div className="flex items-center gap-1.5 font-bold text-amber-400 text-[11px]">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>National Oversight Console</span>
+          </div>
+          <p className="text-[10px] text-slate-300 leading-tight">
+            Counter Desk, 108 Fleet, Analytics, Heatmap & Bonus Engine shifted to Port 5175.
+          </p>
+          <a
+            href="http://localhost:5175"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center justify-between px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg font-bold text-[11px] transition shadow-xs"
+          >
+            <span>Open Govt Console</span>
+            <ExternalLink className="w-3 h-3" />
+          </a>
+        </div>
+      </div>
     </aside>
   );
 };
