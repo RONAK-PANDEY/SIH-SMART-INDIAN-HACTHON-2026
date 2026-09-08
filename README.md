@@ -3,9 +3,43 @@
 
 ![SmartCare Banner](https://img.shields.io/badge/SIH-2026-blue?style=for-the-badge) ![Release](https://img.shields.io/badge/Release-v3.0.0_V3-success?style=for-the-badge) ![Status](https://img.shields.io/badge/Status-Production_Ready-brightgreen?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge) ![FastAPI](https://img.shields.io/badge/Backend-FastAPI_0.110-teal?style=for-the-badge) ![React](https://img.shields.io/badge/Frontend-React_18_TypeScript-blue?style=for-the-badge) ![Supabase](https://img.shields.io/badge/Database-Supabase_Multi--Key_Pool-emerald?style=for-the-badge)
 
-**SmartCare** is an intelligent, multi-lingual, AI-driven OPD queue, triage, and hospital congestion load-balancing ecosystem built for the **Ministry of Health & Family Welfare (MoHFW), Government of India**. 
+---
+
+## 📌 Problem Statement Details (SIH Format)
+
+| Field | Detail |
+| :--- | :--- |
+| **Problem Statement ID** | SIH26133 |
+| **Problem Statement Title** | Smart Hospital Queue and Healthcare Management System |
+| **Theme** | MedTech / BioTech / HealthTech |
+| **Category** | Software |
+| **Team Name** | Quantum Coders |
+
+---
+
+## 💡 Idea / Proposed Solution
+
+Indian government hospitals face three chronic problems: unmanaged physical OPD queues causing hours-long waits, no structured tooling for doctors to manage patient flow, and zero real-time visibility for the government into hospital performance, doctor conduct, or queue-jumping ("ghost tokens").
+
+**SmartCare** solves this with an intelligent, multi-lingual, AI-driven OPD queue, triage, and hospital congestion load-balancing ecosystem built for the **Ministry of Health & Family Welfare (MoHFW), Government of India**.
 
 It unifies **Citizens/Patients**, **Hospital Clinical Staff & Doctors**, **Turnstile Security Gate Attendants**, and **Government Vigilance Observers** into a single synchronized platform to eliminate OPD congestion, prevent queue jumping, guarantee emergency fast-tracking, and incentivize compassionate patient care through citizen-governed performance bonuses.
+
+---
+
+## 🛠️ Technical Approach
+
+**Tech Stack:**
+- **Frontend (3 Portals):** React 18 + TypeScript + Tailwind CSS
+- **Backend Gateway:** FastAPI (Python) with WebSocket real-time broadcasting
+- **Database:** Supabase (PostgreSQL) with Row Level Security and a 6-Key multi-account connection pool
+- **Mobile Client:** Android (Kotlin + Jetpack Compose + CameraX + Google ML Kit Barcode Scanning)
+- **Security:** SHA-256 cryptographic token hashing, dynamic QR validation
+
+**Methodology:**
+1. Citizen reports symptoms → AI triage engine classifies acuity and department → dynamic QR token issued.
+2. Token scanned at hospital turnstile (Android app) → backend validates hash → WebSocket broadcasts status to Doctor Console and Government Console simultaneously.
+3. Doctor completes consultation → patient rates the doctor → Government Console aggregates ratings into a Doctor Performance Index (DPI) that drives an automatic salary bonus/penalty.
 
 ---
 
@@ -178,6 +212,8 @@ npm run dev -- --port 5175 --host
 | **FastAPI Backend Gateway** | `8000` | [http://localhost:8000/docs](http://localhost:8000/docs) | REST API, WebSocket Broadcaster, Supabase Key Pool, AI ML Services |
 | **Android QR Scanner Client** | `Mobile`| `http://<HOST_IP>:8000/api/v1/tokens/scan` | Turnstile Guards: Dynamic QR check-in & automated door synchronization |
 
+---
+
 ## ⏱️ 60-Second Hackathon Demo Script (Full End-to-End Loop)
 
 Follow this exact click-path during judge evaluations to demonstrate the entire cross-portal loop in under 60 seconds:
@@ -205,8 +241,39 @@ Citizen Generates Token       Entrance QR Ingress          Consults & Completes 
    - The citizen on `:5173` sees the **"✅ Consultation Completed"** celebration modal!
 
 4. **Step 4 — Citizen Survey & Government Vigilance Oversight (Port :5175)**
-   - On `:5173`, patient clicks **"Submit Doctor Rating"** (5 Stars ★★★★★).
-   - Switch to `http://localhost:5175/` (Govt Vigilance Sentinel) and `http://localhost:5175/doctor-performance`.
+   - On `:5173`, patient clicks **"Submit Doctor Rating"** (5 Stars ★★★★★) rating courtesy, communication, examination, and punctuality.
+   - Switch to `http://localhost:5175/` (Govt Vigilance Sentinel Dashboard) to show the live queue clear from AIIMS Cardiology.
+   - Navigate to `http://localhost:5175/doctor-performance` to show Dr. Rajesh Sharma's DPI score update in real time with the new 5-star review.
+   - Navigate to `http://localhost:5175/salary-bonus` to show the automatic bonus calculator reflect the updated rating — closing the full citizen-to-payroll accountability loop live in front of judges.
+
+---
+
+## ✅ Feasibility & Challenges
+
+**Feasibility:**
+- Built entirely on production-grade, freely available technology (React, FastAPI, Supabase, Android/Kotlin) — no proprietary dependencies.
+- Designed to integrate with existing government infrastructure (Ayushman Bharat PM-JAY, UPI, Aadhaar/UIDAI) rather than replace it.
+- Modular portal architecture allows phased hospital-by-hospital rollout.
+
+**Potential Challenges & Mitigation:**
+| Challenge | Mitigation |
+| :--- | :--- |
+| Network/connectivity issues in rural hospitals | Dual-mode offline fallback (local in-memory mode) when Supabase/network is unavailable |
+| Rate limits under high OPD surge load | 6-Key Supabase multi-account connection pool with round-robin distribution |
+| Fake/manipulated doctor ratings | Ratings tied to verified, scanned consultation tokens only — no rating without a completed visit |
+| Digital literacy barriers | 11 Indian language support + simple symptom-card based triage (no typing required) |
+
+---
+
+## 🌍 Impact & Benefits
+
+- **For Citizens**: Transparent, fair queueing; drastically reduced wait times; access in native language; instant emergency ambulance dispatch.
+- **For Doctors**: Streamlined consultation workflow; fair, data-backed performance recognition instead of subjective evaluation.
+- **For Government**: Real-time national visibility into hospital operations; objective, corruption-resistant doctor accountability; data-driven resource allocation via heatmaps and analytics.
+- **Social Impact**: Strengthens public trust in government healthcare infrastructure and supports Digital India / Ayushman Bharat Digital Mission goals.
+
+---
+
 ## 🧪 Verification & Hardening Test Suite (v3.0.0)
 
 SmartCare is engineered with comprehensive automated verification:
@@ -217,6 +284,27 @@ SmartCare is engineered with comprehensive automated verification:
   - `test_token_scanner.py`: SHA-256 hash generation, tampered QR rejection, duplicate scan blocking.
 - **End-to-End Ingress Verification (`backend/test_e2e_qr_turnstile_loop.py`)**: All 7 integration steps passing.
 - **Frontend Production Builds**: `patient-portal` (:5173), `admin-portal` (:5174), `govt-portal` (:5175) all build with 0 TypeScript/compilation errors.
+
+---
+
+## 📚 References
+
+- Ministry of Health & Family Welfare (MoHFW), Government of India — https://mohfw.gov.in
+- Ayushman Bharat Digital Mission (ABDM) — https://abdm.gov.in
+- Ayushman Bharat PM-JAY — https://pmjay.gov.in
+
+---
+
+## 👥 Team — Quantum Coders
+
+| Name | Role |
+| :--- | :--- |
+| Arpan | Team Captain / Full-Stack Lead |
+| Shristi | Front-End Developer |
+| Rishikesh | Back-End / Database Engineer |
+| Alok | Data / AI Engineer |
+| Kartik | DevOps / QA |
+| Ajay | Domain Specialist |
 
 ---
 
