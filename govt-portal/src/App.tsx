@@ -12,6 +12,7 @@ import { AmbulanceFleet } from './pages/AmbulanceFleet';
 import { LiveQueues } from './pages/LiveQueues';
 import { HospitalList } from './pages/HospitalList';
 import { HospitalDetail } from './pages/HospitalDetail';
+import { LiveScanFeed } from './pages/LiveScanFeed';
 import { Analytics } from './pages/Analytics';
 import { Alerts } from './pages/Alerts';
 import { Heatmap } from './pages/Heatmap';
@@ -36,6 +37,7 @@ export const App: React.FC = () => {
               <Route path="/counter-desk" element={<CounterDesk />} />
               <Route path="/ambulance-fleet" element={<AmbulanceFleet />} />
               <Route path="/live-queues" element={<LiveQueues />} />
+              <Route path="/live-scan-feed" element={<LiveScanFeed />} />
               <Route path="/hospitals" element={<HospitalList />} />
               <Route path="/hospital/:id" element={<HospitalDetail />} />
 

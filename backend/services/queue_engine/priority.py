@@ -9,8 +9,8 @@ class VulnerabilityFactors:
 
 class PriorityCalculator:
     """
-    Implements Ajay's dynamic priority formula:
-    P = (W_time * T_waiting_mins) + (W_triage * (6 - L_esi)) + (W_vuln * V_score)
+    Implements dynamic priority formula with Emergency Acuity Safeguard:
+    P = Emergency_Override + (W_time * T_waiting_mins) + (W_triage * (6 - L_esi)) + (W_vuln * V_score)
     """
     W_TIME = 0.5
     W_TRIAGE = 2.0
@@ -23,9 +23,18 @@ class PriorityCalculator:
         triage_level: int,  # 1 (Resuscitation) to 5 (Non-urgent)
         vulnerability: VulnerabilityFactors
     ) -> float:
-        waiting_mins = max(0.0, (datetime.utcnow() - issued_at).total_seconds() / 60.0)
+        clean_issued = issued_at.replace(tzinfo=None) if hasattr(issued_at, 'replace') else issued_at
+        waiting_mins = max(0.0, (datetime.utcnow() - clean_issued).total_seconds() / 60.0)
         
-        # Invert triage score so Level 1 (highest emergency) yields highest numerical boost
+        # Clinical Emergency Tier Override (Level 1: Resuscitation +1000, Level 2: Emergent +500)
+        # Prevents normal wait accumulation from overtaking life-threatening trauma
+        emergency_boost = 0.0
+        if triage_level == 1:
+            emergency_boost = 1000.0
+        elif triage_level == 2:
+            emergency_boost = 500.0
+        
+        # Invert triage score so Level 1 yields highest numerical boost
         triage_component = max(1, 6 - triage_level)
 
         # Vulnerability multiplier
@@ -34,6 +43,7 @@ class PriorityCalculator:
             vuln_score = 1.5
 
         priority_score = (
+            emergency_boost +
             (cls.W_TIME * waiting_mins) +
             (cls.W_TRIAGE * triage_component) +
             (cls.W_VULN * vuln_score)

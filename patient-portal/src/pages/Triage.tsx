@@ -176,6 +176,14 @@ export const Triage: React.FC = () => {
         <p className="text-xs sm:text-sm text-slate-600 mt-1">
           Describe your condition or pick from 100+ symptoms. Our medical AI will identify the right specialty, assess clinical urgency, and fast-track your token.
         </p>
+
+        {/* WHY THIS MATTERS: AI TRIAGE INNOVATION MICROCOPY */}
+        <div className="mt-3 p-3 bg-indigo-50 border border-indigo-200 rounded-xl flex items-center gap-2.5 text-xs text-indigo-900">
+          <Sparkles className="w-4 h-4 text-indigo-600 shrink-0" />
+          <span>
+            <strong>Why this matters:</strong> AI Department Triage evaluates clinical severity before hospital arrival, automatically directing citizens to the exact specialty chamber and eliminating misrouted OPD tokens and emergency room crowding.
+          </span>
+        </div>
       </header>
 
       {/* Hospital Helpdesk & Emergency Quick Call Bar */}

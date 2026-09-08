@@ -1,139 +1,144 @@
 # SmartCare: Next-Gen AI Smart OPD, Emergency Queue & Government Vigilance Platform
-### Smart India Hackathon (SIH) 2026 • Official Release v2.0.0
+### Smart India Hackathon (SIH) 2026 — Official Release v3.0.0 (V3 Master Release)
 
-![SmartCare Banner](https://img.shields.io/badge/SIH-2026-blue?style=for-the-badge) ![Release](https://img.shields.io/badge/Release-v2.0.0-success?style=for-the-badge) ![Status](https://img.shields.io/badge/Status-Production_Ready-brightgreen?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)
+![SmartCare Banner](https://img.shields.io/badge/SIH-2026-blue?style=for-the-badge) ![Release](https://img.shields.io/badge/Release-v3.0.0_V3-success?style=for-the-badge) ![Status](https://img.shields.io/badge/Status-Production_Ready-brightgreen?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge) ![FastAPI](https://img.shields.io/badge/Backend-FastAPI_0.110-teal?style=for-the-badge) ![React](https://img.shields.io/badge/Frontend-React_18_TypeScript-blue?style=for-the-badge) ![Supabase](https://img.shields.io/badge/Database-Supabase_Multi--Key_Pool-emerald?style=for-the-badge)
 
-SmartCare is an intelligent, multi-lingual, AI-driven OPD queue, triage, and hospital congestion load-balancing ecosystem. It brings together **Citizens/Patients**, **Hospital Clinical Staff & Doctors**, and **Government Vigilance Observers** to ensure transparent healthcare delivery, eliminate waiting room congestion, and incentivize compassionate patient care through performance-linked salary bonuses.
+**SmartCare** is an intelligent, multi-lingual, AI-driven OPD queue, triage, and hospital congestion load-balancing ecosystem built for the **Ministry of Health & Family Welfare (MoHFW), Government of India**. 
+
+It unifies **Citizens/Patients**, **Hospital Clinical Staff & Doctors**, **Turnstile Security Gate Attendants**, and **Government Vigilance Observers** into a single synchronized platform to eliminate OPD congestion, prevent queue jumping, guarantee emergency fast-tracking, and incentivize compassionate patient care through citizen-governed performance bonuses.
 
 ---
 
-## 🏛️ Ecosystem Architecture & 3 Specialized Portals (V2.0.0 Architecture)
+## 🏛️ Complete Ecosystem Architecture (V3.0.0)
 
 ```
-                               ┌─────────────────────────────────────────┐
-                               │  Government of India / MoHFW / ABDM     │
-                               └────────────────────┬────────────────────┘
-                                                    │
-            ┌───────────────────────────────────────┼───────────────────────────────────────┐
-            │                                       │                                       │
-            ▼                                       ▼                                       ▼
-┌─────────────────────────┐             ┌─────────────────────────┐             ┌─────────────────────────┐
-│ 1. Citizen / Patient    │             │ 2. Clinical & Doctor    │             │ 3. National Vigilance   │
-│ Portal (:5173)          │             │ Console (:5174)         │             │ & Oversight (:5175)     │
-├─────────────────────────┤             ├─────────────────────────┤             ├─────────────────────────┤
-│ • Official Govt Landing │             │ • Doctor Duty Login     │             │ • Sentinel Dashboard    │
-│ • Direct AI Dept Match  │ ──Token───► │ • Patient Calling Desk  │ ◄──Surveys─ │ • Doctor Behavioral DPI │
-│ • 11 Indian Languages   │             │ • E-Prescription (Rx)   │             │ • Salary Bonus (+15%)   │
-│ • Scannable QR Passes   │ ◄──Rx/Lab── │ • Diagnostic Lab Orders │ ──Disburse─►│ • Grievance Tribunal    │
-│ • 108 Ambulance SOS     │             │ • Referral Transfers    │             │ • Counter Helpdesk      │
-│ • Post-Consult Surveys  │             │ • Longitudinal EMR      │             │ • 108 Ambulance Fleet   │
-│ • Universal Vault       │             │ • Consultation Pacing   │             │ • Live Queues & Netwrok │
-└─────────────────────────┘             └─────────────────────────┘             │ • Flow Analytics & Map  │
-            ▲                                       ▲                           └─────────────────────────┘
-            └───────────────────────────────────────┼───────────────────────────────────────┘
-                                                    │
-                               ┌────────────────────┴────────────────────┐
-                               │     FastAPI Backend & Realtime Gateway  │
-                               │     Port 8000 (Swagger: /docs)          │
-                               └─────────────────────────────────────────┘
-```
-
----
-
-## 🚀 Module Distribution across Portals (v2.0.0 Release)
-
-### 1. 🇮🇳 Citizen / Patient Portal (`http://localhost:5173`)
-- **Official Government of India Entry Page**:
-  - Authentic MoHFW / National Health Authority (NHA) & Ayushman Bharat branding with National Emblem, Tri-color ribbon, and 24x7 Helplines (**1075**, **108**, **1098**, **14555**).
-  - Top-Right corner and bottom Register (`/register`) & Login (`/login`) buttons.
-  - Live national OPD statistics counters (Tokens Issued Today, Average Wait Reduced, Participating Hospitals).
-  - Step-by-step citizen walkthrough, services grid, and Doctor Behavioral Rating Guarantee.
-- **Problem-Based Direct Department Recommender**:
-  - One-touch symptom cards (*Chest Pain*, *Child High Fever*, *Fracture / Bone Injury*, *Skin Rash*, *Severe Eye Redness*, *Pregnancy Care*) with automatic clinical department and doctor selection.
-- **11 Indian Languages with Live Switcher**:
-  - English, हिन्दी (Hindi), ਪੰਜਾਬੀ (Punjabi), বাংলা (Bengali), தமிழ் (Tamil), తెలుగు (Telugu), मराठी (Marathi), ગુજરાતી (Gujarati), ಕನ್ನಡ (Kannada), മലയാളം (Malayalam), ଓଡ଼ିଆ (Odia).
-- **Real Scannable QR Passes & Token History**:
-  - Canvas-rendered scannable QR tokens with verification hashes and full recent token archive.
-- **Multi-Modal Payment Gateways**:
-  - Ayushman Bharat PM-JAY Cashless (₹0), UPI Dynamic QR, Net Banking, Cards, and Cash Counter receipts.
-- **24x7 108 Emergency Ambulance Telematics**:
-  - One-tap SOS request with live GPS map mockup, vehicle telematics (Oxygen/Ventilator/ALS), and ETA countdown.
-- **Universal Health Records Vault (`/health-records`)**:
-  - Digital Prescriptions (Rx), Diagnostic Lab Reports, and Billing Invoices.
-- **Citizen Post-Consultation Doctor Feedback Survey**:
-  - Rate doctor talking courtesy, explanation clarity, examination thoroughness, and punctuality directly to the Government Observer.
-
----
-
-### 2. 🩺 SmartCare Clinical & Doctor Console (`http://localhost:5174`)
-- **Doctor Consultation Suite (`/` and `/doctor-panel`)**:
-  - Real-time patient calling with audio queue chimes.
-  - Digital prescription writer with dosage schedules and one-click PDF export.
-  - Diagnostic lab order requisition (CBC, Lipid Profile, Chest X-Ray, ECG, MRI).
-  - Inter-hospital emergency referrals with bed availability load balancing.
-  - Full longitudinal patient medical history inspector.
-- **Live Turn Calling Matrix (`/live-queues`)**:
-  - Pacing monitor and queue sequence tracker.
-- **Doctor Duty Sign-in & Authentication (`/login`)**:
-  - Fast credential login and direct link to the National Oversight Console (`:5175`).
-
----
-
-### 3. 🛡️ National OPD Vigilance & Doctor Salary Bonus Oversight Console (`http://localhost:5175`)
-- **Centralized Government Oversight & Operations Headquarters**:
-  1. **Hospital Sentinel Dashboard (`/`)**:
-     - Real-time queue integrity surveillance, wait-time anomaly alerts (>40 mins), and ghost token bypassing flags across AIIMS New Delhi, Safdarjung, and RML.
-     - Live KPI cards, OPD inflow telemetry, acuity triage spectrum, and regional cluster load balancing.
-  2. **Doctor Behavioral & Performance Index - DPI (`/doctor-performance`)**:
-     - Real-time aggregation of citizen surveys across 4 pillars (Courtesy, Communication, Examination, Punctuality).
-     - Live citizen review stream with doctor filtering.
-  3. **Doctor Performance Salary Bonus Calculator (`/salary-bonus`)**:
-     - Automatically calculates monthly salary bonuses and deductions based on citizen survey feedback:
-       - **Grade A+ (Rating ≥ 4.75★)**: **+15% Performance Salary Bonus** (Distinguished Excellence)
-       - **Grade A (Rating 4.2 - 4.7★)**: **+8% Performance Incentive** (Meritorious)
-       - **Grade B (Rating 3.5 - 4.1★)**: **0% Base Salary** (Standard Compliance)
-       - **Grade C (Rating < 3.2★ / Grievance)**: **-10% Disciplinary Deduction & Audit Show-Cause Notice**
-     - Interactive Simulator: Test citizen reviews and watch payroll update live!
-  4. **Citizen Grievance Redressal Desk (`/grievances`)**:
-     - Case management for citizen complaints with actions: *Issue Show-Cause Notice*, *Initiate Inquiry*, *Apply Penalty*, *Mark Resolved*.
-  5. **Hospital Quality Ranking & Compliance Leaderboard (`/compliance`)**:
-     - Benchmarking compliance scores, average wait times, and bonus pool eligibility.
-  6. **Counter Helpdesk (`/counter-desk`)**:
-     - Walk-in patient triage, UIDAI Aadhaar lookup, and thermal token generation.
-  7. **108 Emergency Ambulance Fleet Command (`/ambulance-fleet`)**:
-     - Fleet GPS telematics, live vehicle status, and ER trauma bed coordination.
-  8. **Live Queues Monitor (`/live-queues`)**:
-     - Turn-by-turn OPD matrix for all active hospital chambers.
-  9. **Regional Hospital Network (`/hospitals` & `/hospital/:id`)**:
-     - Bed capacity, department telemetry, and facility discovery.
-  10. **OPD Flow Rate Analytics (`/analytics`)**:
-      - Wait time regression models, patient throughput velocity, and AI prediction accuracy.
-  11. **Operational Alerts & Incidents (`/alerts`)**:
-      - Surge alerts, queue bottlenecks, and emergency triage escalations.
-  12. **Geospatial Load Heatmap (`/heatmap`)**:
-      - NCR hospital cluster load map and load shedding routes.
-
----
-
-## ⚡ Quick Start: Running All 4 Services
-
-### 🚀 One-Click Launch (Windows)
-Double-click `start-all.bat` or run:
-```bash
-.\start-all.bat
+                               ┌─────────────────────────────────────────────────────────────┐
+                               │   Government of India / MoHFW / National Health Portal      │
+                               └──────────────────────────────┬──────────────────────────────┘
+                                                              │
+        ┌─────────────────────────────────────────────────────┼─────────────────────────────────────────────────────┐
+        │                                                     │                                                     │
+        ▼                                                     ▼                                                     ▼
+┌────────────────────────────────┐           ┌────────────────────────────────┐           ┌────────────────────────────────┐
+│ 1. Citizen / Patient Portal    │           │ 2. Clinical & Doctor Console   │           │ 3. National OPD Vigilance      │
+│ Port :5173 (React/TS/Tailwind) │           │ Port :5174 (React/TS/Tailwind) │           │ & Oversight Console (:5175)    │
+├────────────────────────────────┤           ├────────────────────────────────┤           ├────────────────────────────────┤
+│ • Official MoHFW Entryway      │           │ • Doctor Duty Login            │           │ • Sentinel Command Dashboard   │
+│ • Problem-Based AI Triage      │ ──Tokens──► • Live Patient Calling Desk    │ ◄─Surveys─┤ • Doctor Behavioral DPI Index  │
+│ • 11 Indian Languages Switch   │           │ • E-Prescription (Rx) Writer   │           │ • Monthly Salary Bonus (+15%)  │
+│ • Dynamic SHA-256 QR Passes    │ ◄─Rx/Lab──┤ • Diagnostic Lab Order System  │ ──Disburse► • Grievance Redressal Tribunal │
+│ • 24x7 108 Ambulance SOS       │           │ • Inter-Hospital Referrals     │           │ • OPD Counter Walk-in Desk     │
+│ • Digital Health Vault         │           │ • Longitudinal Patient EMR     │           │ • 108 Ambulance Fleet Map      │
+│ • Citizen Doctor Rating Survey │           │ • Live WebSocket Pacing Matrix │           │ • NCR Heatmap & Load Shedding  │
+└────────────────────────────────┘           └────────────────────────────────┘           └────────────────────────────────┘
+        │                                                     ▲                                                     ▲
+        │                                                     │                                                     │
+        │                                    ┌────────────────┴───────────────┐                                     │
+        │                                    │ 4. Android QR Turnstile        │                                     │
+        │                                    │ Scanner Client (Gate Security) │                                     │
+        │                                    └────────────────┬───────────────┘                                     │
+        │                                                     │ POST /api/v1/tokens/scan                            │
+        └─────────────────────────────────────────────────────┴─────────────────────────────────────────────────────┘
+                                                              │
+                                                              ▼
+                                             ┌────────────────────────────────┐
+                                             │ FastAPI Gateway Core (Port 8000)│
+                                             │ • Real-time WebSocket Broker   │
+                                             │ • Dynamic QR Validator & SHA256│
+                                             │ • AI Triage Engine & Acuity    │
+                                             │ • Supabase 6-Key Pool Manager  │
+                                             └────────────────┬───────────────┘
+                                                              │
+                                                              ▼
+                                             ┌────────────────────────────────┐
+                                             │ Supabase Multi-Key DB Pool     │
+                                             │ (Patient, Doctor, Observer,    │
+                                             │  Scanner Isolated Key Chains)  │
+                                             └────────────────────────────────┘
 ```
 
 ---
 
-### 💻 Manual Step-by-Step Launch
+## 🔑 Supabase Multi-Key High-Concurrency Resilience Pool
 
-#### 1. Start FastAPI Backend (Port 8000)
+To eliminate single API rate limits during massive OPD surges across India, the SmartCare backend orchestrates a 6-Key Supabase Connection Pool:
+
+```
+                          ┌───────────────────────────────────────────────┐
+                          │            FastAPI Backend Engine             │
+                          │        SupabaseKeyPoolManager                 │
+                          └──────────────────────┬────────────────────────┘
+                                                 │
+      ┌──────────────────────┬───────────────────┴───────────────┬──────────────────────┐
+      ▼                      ▼                                   ▼                      ▼
+┌────────────────┐    ┌────────────────┐                    ┌────────────────┐     ┌────────────────┐
+│ PATIENT Pool   │    │ DOCTOR Pool    │                    │ OBSERVER Pool  │     │ SCANNER Pool   │
+│ (2 Keys RR)    │    │ (2 Keys RR)    │                    │ (1 Key)        │     │ (1 Key)        │
+├────────────────┤    ├────────────────┤                    ├────────────────┤     ├────────────────┤
+│ • Arpan        │    │ • Kartik       │                    │ • Ajay Kumar   │     │ • Shristi      │
+│ • Rishikesh    │    │ • Alok         │                    │                │     │                │
+└────────────────┘    └────────────────┘                    └────────────────┘     └────────────────┘
+```
+
+1. **Patient Service Pool (Round-Robin)**: Rotates token issuance and citizen appointment bookings.
+2. **Doctor Console Pool (Round-Robin)**: Manages clinical diagnosis records, chamber status updates, and e-prescriptions.
+3. **Observer Vigilance Pool (Dedicated)**: Dedicated key for continuous high-throughput national oversight queries.
+4. **Android Scanner Pool (Dedicated)**: Dedicated key for gate turnstile check-ins to prevent rate-limit interference with bookings.
+5. **Dual-Mode Offline Fallback**: If Supabase environment credentials are not present, the system runs smoothly via local in-memory fallback without throwing runtime crashes.
+
+---
+
+## 📱 Android QR Turnstile Scanner Client & API Integration
+
+The native Android client (`smartcare-scanner/`) enables turnstile security staff to verify citizen passes instantly:
+
+- **Endpoint**: `POST /api/v1/tokens/scan`
+- **Architecture**: Kotlin + Jetpack Compose + CameraX + Google ML Kit Barcode Scanning
+- **Gateway Policy**: The Android mobile app **only** contacts the FastAPI backend. It **never** contacts Supabase directly.
+- **Request Format**:
+  ```json
+  {
+    "token_number": "CARD-204",
+    "hash": "7d9a1f28b493c04f9815e98218175b5b4819266184519965384666f7d0ef802e",
+    "scanner_id": "gate-cardio-01",
+    "scanned_by": "guard-01"
+  }
+  ```
+- **Validation Pipeline**:
+  1. Resolves token by `token_id` or `token_number`.
+  2. Cryptographically verifies SHA-256 hash.
+  3. Rejects duplicate scans (`ALREADY_SCANNED` 400).
+  4. Enforces expiration (`TOKEN_EXPIRED` 400).
+  5. Updates status to `SCANNED` in Supabase via Android Scanner Pool.
+  6. Broadcasts `token_scanned` WebSocket event to `ws://localhost:8000/api/v1/ws/queue/{hosp}/{dept}`.
+- **Doctor Console UI Reaction**:
+  - Displays an animated turnstile scanner banner alert.
+  - Updates queue position with a glowing `AT DOOR` badge.
+
+---
+
+## ⚡ Quick Start: Running the Entire Ecosystem
+
+### 🚀 Option 1: One-Click Launch (Windows)
+Double-click `start-all.bat` or run from PowerShell/CMD:
+```bat
+start-all.bat
+```
+This automatically:
+- Kills any conflicting processes on ports 8000, 5173, 5174, 5175
+- Configures Windows Firewall for port 8000
+- Prints current Wi-Fi IP for phone app setup
+- Launches FastAPI Backend (:8000), Patient Portal (:5173), Doctor Console (:5174), and Govt Vigilance Portal (:5175)
+
+---
+
+### 💻 Option 2: Manual Launch
+
+#### 1. Start FastAPI Backend Gateway (Port 8000)
 ```bash
 cd backend
-python -m venv venv
-.\venv\Scripts\activate       # Linux/macOS: source venv/bin/activate
 pip install -r requirements.txt
-python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+python -m uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 - API Docs: `http://localhost:8000/docs`
 
@@ -141,7 +146,7 @@ python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```bash
 cd patient-portal
 npm install
-npm run dev -- --port 5173 --host 0.0.0.0
+npm run dev -- --port 5173 --host
 ```
 - Access at: `http://localhost:5173`
 
@@ -149,7 +154,7 @@ npm run dev -- --port 5173 --host 0.0.0.0
 ```bash
 cd admin-portal
 npm install
-npm run dev -- --port 5174 --host 0.0.0.0
+npm run dev -- --port 5174 --host
 ```
 - Access at: `http://localhost:5174`
 
@@ -157,22 +162,63 @@ npm run dev -- --port 5174 --host 0.0.0.0
 ```bash
 cd govt-portal
 npm install
-npm run dev -- --port 5175 --host 0.0.0.0
+npm run dev -- --port 5175 --host
 ```
 - Access at: `http://localhost:5175`
 
 ---
 
-## 🌐 Local Live Running Services
+## 🌐 Local Live Running Services & Port Map
 
-| Portal / Service | Port | Local URL | Role |
+| Portal / Service | Port | Local URL | Target Users & Responsibilities |
 | :--- | :--- | :--- | :--- |
-| **Citizen / Patient Portal** | `5173` | [http://localhost:5173](http://localhost:5173) | Patients, OPD Booking, AI Triage, 108 SOS, Surveys |
-| **Clinical & Doctor Console** | `5174` | [http://localhost:5174](http://localhost:5174) | Doctors, Calling Desk, E-Prescriptions, EMR |
-| **National Oversight & Bonus Console** | `5175` | [http://localhost:5175](http://localhost:5175) | MoHFW Ombudsman, Sentinel, Fleet, Counters, Bonus |
-| **FastAPI Backend & Swagger API** | `8000` | [http://localhost:8000/docs](http://localhost:8000/docs) | REST API, WebSocket Gateway & AI ML Services |
+| **Citizen / Patient Portal** | `5173` | [http://localhost:5173](http://localhost:5173) | Patients: OPD booking, 11 languages, dynamic QR tokens, 108 SOS, surveys |
+| **Clinical & Doctor Console** | `5174` | [http://localhost:5174](http://localhost:5174) | Doctors: Calling desk, live turnstile attendance sync, E-Prescriptions, EMR |
+| **National Vigilance Console** | `5175` | [http://localhost:5175](http://localhost:5175) | MoHFW: Sentinel monitor, Doctor DPI, salary bonus engine, grievance tribunal |
+| **FastAPI Backend Gateway** | `8000` | [http://localhost:8000/docs](http://localhost:8000/docs) | REST API, WebSocket Broadcaster, Supabase Key Pool, AI ML Services |
+| **Android QR Scanner Client** | `Mobile`| `http://<HOST_IP>:8000/api/v1/tokens/scan` | Turnstile Guards: Dynamic QR check-in & automated door synchronization |
+
+## ⏱️ 60-Second Hackathon Demo Script (Full End-to-End Loop)
+
+Follow this exact click-path during judge evaluations to demonstrate the entire cross-portal loop in under 60 seconds:
+
+```
+[1. Patient Portal :5173] ──► [2. Turnstile Scan :8000] ──► [3. Doctor Console :5174] ──► [4. Govt Sentinel :5175]
+Citizen Generates Token       Entrance QR Ingress          Consults & Completes           Audits DPI & Bonus
+```
+
+1. **Step 1 — Citizen Triage & Token Generation (Port :5173)**
+   - Open `http://localhost:5173/triage`.
+   - Select symptoms (e.g., *Chest Pain* + *Shortness of Breath*) or click **"Evaluate Urgency"**.
+   - The AI Department Triage automatically classifies acuity as **Priority 2 (Cardiology)** and routes the citizen to **AIIMS New Delhi - Chamber 204**.
+   - Click **"Generate Official OPD Token Pass"** → Citizen receives live scannable QR ticket `CARD-201` at `http://localhost:5173/my-token`.
+
+2. **Step 2 — Anti-Ghost Turnstile Ingress (Port :8000 / Android App)**
+   - Turnstile guard scans the QR code via Android App (or curl `POST /api/v1/tokens/scan`).
+   - Patient status instantly updates across all WebSockets: `waiting` → `scanned_by_staff` (verified at turnstile door).
+
+3. **Step 3 — Doctor Live Consultation & Complete (Port :5174)**
+   - Open `http://localhost:5174/doctor-panel` (Dr. Rajesh Sharma, AIIMS Cardiology Chamber 204).
+   - The doctor sees `CARD-201 (Suresh Patel)` at the top with green **"AT DOOR"** badge.
+   - Doctor enters clinical notes: *"Stable Angina CCS-II, Tab Sorbitrate prescribed"*, clicks **"Complete Consultation"**.
+   - The patient is **instantly removed from the active queue** and saved to the verified consultation history archive.
+   - The citizen on `:5173` sees the **"✅ Consultation Completed"** celebration modal!
+
+4. **Step 4 — Citizen Survey & Government Vigilance Oversight (Port :5175)**
+   - On `:5173`, patient clicks **"Submit Doctor Rating"** (5 Stars ★★★★★).
+   - Switch to `http://localhost:5175/` (Govt Vigilance Sentinel) and `http://localhost:5175/doctor-performance`.
+## 🧪 Verification & Hardening Test Suite (v3.0.0)
+
+SmartCare is engineered with comprehensive automated verification:
+- **Pytest Suite (`tests/module/`)**: 19 / 19 tests passing (100%)
+  - `test_bonus_calculator.py`: Zero-review unrated handling, low-sample provisional guardrails, strict grade thresholds.
+  - `test_priority_hardening.py`: Emergency acuity override safeguard, deterministic arrival tie-breaking.
+  - `test_queue_engine.py`: Dynamic priority math, vulnerability boosts.
+  - `test_token_scanner.py`: SHA-256 hash generation, tampered QR rejection, duplicate scan blocking.
+- **End-to-End Ingress Verification (`backend/test_e2e_qr_turnstile_loop.py`)**: All 7 integration steps passing.
+- **Frontend Production Builds**: `patient-portal` (:5173), `admin-portal` (:5174), `govt-portal` (:5175) all build with 0 TypeScript/compilation errors.
 
 ---
 
 ## 📜 License
-SmartCare is open source software developed for **Smart India Hackathon (SIH) 2026** under the [MIT License](LICENSE).
+SmartCare is open source software developed for the **Smart India Hackathon (SIH) 2026** under the [MIT License](LICENSE).

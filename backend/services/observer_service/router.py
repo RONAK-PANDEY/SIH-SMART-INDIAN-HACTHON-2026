@@ -52,6 +52,40 @@ INITIAL_SURVEYS = [
         "created_at": "2026-09-06T10:30:00"
     },
     {
+        "id": "srv-001b",
+        "doctor_id": "doc-001",
+        "doctor_name": "Dr. Rajesh Sharma",
+        "department": "Cardiology",
+        "hospital_name": "AIIMS New Delhi - Main Campus",
+        "token_number": "CARD-043",
+        "patient_name": "Meena Devi",
+        "politeness_rating": 5,
+        "communication_rating": 5,
+        "diagnosis_quality_rating": 5,
+        "wait_time_satisfaction": 5,
+        "overall_score": 5.0,
+        "feedback_text": "Exceptional cardiology consultation. Clear instructions on medicines.",
+        "is_grievance": False,
+        "created_at": "2026-09-06T10:45:00"
+    },
+    {
+        "id": "srv-001c",
+        "doctor_id": "doc-001",
+        "doctor_name": "Dr. Rajesh Sharma",
+        "department": "Cardiology",
+        "hospital_name": "AIIMS New Delhi - Main Campus",
+        "token_number": "CARD-044",
+        "patient_name": "Harish Chandra",
+        "politeness_rating": 5,
+        "communication_rating": 5,
+        "diagnosis_quality_rating": 5,
+        "wait_time_satisfaction": 4,
+        "overall_score": 4.75,
+        "feedback_text": "Prompt and attentive bedside manner.",
+        "is_grievance": False,
+        "created_at": "2026-09-06T11:00:00"
+    },
+    {
         "id": "srv-002",
         "doctor_id": "doc-002",
         "doctor_name": "Dr. Priya Patel",
@@ -67,6 +101,40 @@ INITIAL_SURVEYS = [
         "feedback_text": "Excellent pediatrician. Calm and reassuring with my daughter.",
         "is_grievance": False,
         "created_at": "2026-09-06T11:15:00"
+    },
+    {
+        "id": "srv-002b",
+        "doctor_id": "doc-002",
+        "doctor_name": "Dr. Priya Patel",
+        "department": "Pediatrics",
+        "hospital_name": "Safdarjung Hospital",
+        "token_number": "PED-019",
+        "patient_name": "Deepak Verma",
+        "politeness_rating": 4,
+        "communication_rating": 5,
+        "diagnosis_quality_rating": 5,
+        "wait_time_satisfaction": 4,
+        "overall_score": 4.5,
+        "feedback_text": "Very thorough examination of child.",
+        "is_grievance": False,
+        "created_at": "2026-09-06T11:30:00"
+    },
+    {
+        "id": "srv-002c",
+        "doctor_id": "doc-002",
+        "doctor_name": "Dr. Priya Patel",
+        "department": "Pediatrics",
+        "hospital_name": "Safdarjung Hospital",
+        "token_number": "PED-020",
+        "patient_name": "Ananya Sharma",
+        "politeness_rating": 4,
+        "communication_rating": 4,
+        "diagnosis_quality_rating": 5,
+        "wait_time_satisfaction": 5,
+        "overall_score": 4.5,
+        "feedback_text": "Good pediatric consultation.",
+        "is_grievance": False,
+        "created_at": "2026-09-06T11:45:00"
     },
     {
         "id": "srv-003",
@@ -141,34 +209,53 @@ DOCTOR_REGISTRY = [
 surveys_db = list(INITIAL_SURVEYS)
 grievances_db = list(INITIAL_GRIEVANCES)
 
-def calculate_doctor_performance(doctor_id: str):
+def calculate_doctor_performance(doctor_id: str) -> Dict[str, Any]:
     doc_surveys = [s for s in surveys_db if s["doctor_id"] == doctor_id]
     doc_grievances = [g for g in grievances_db if g["doctor_id"] == doctor_id and g["status"] != "RESOLVED"]
-    
-    if not doc_surveys:
-        # Default baseline if no reviews yet
-        avg_score = 4.5
-        politeness = 4.5
-        communication = 4.5
-        diagnosis = 4.5
-        punctuality = 4.5
-        review_count = 0
-    else:
-        review_count = len(doc_surveys)
-        avg_score = round(sum(s["overall_score"] for s in doc_surveys) / review_count, 2)
-        politeness = round(sum(s["politeness_rating"] for s in doc_surveys) / review_count, 2)
-        communication = round(sum(s["communication_rating"] for s in doc_surveys) / review_count, 2)
-        diagnosis = round(sum(s["diagnosis_quality_rating"] for s in doc_surveys) / review_count, 2)
-        punctuality = round(sum(s["wait_time_satisfaction"] for s in doc_surveys) / review_count, 2)
-        
     grievance_count = len(doc_grievances)
     
-    # Govt Performance Bonus / Penalty Matrix (MoHFW Direct Linkage)
-    if grievance_count > 0 or avg_score < 3.2:
+    if not doc_surveys:
+        # Zero surveys case: Do NOT award default Grade A/B or bonus
+        return {
+            "doctor_id": doctor_id,
+            "avg_score": 0.0,
+            "politeness_score": 0.0,
+            "communication_score": 0.0,
+            "diagnosis_score": 0.0,
+            "punctuality_score": 0.0,
+            "review_count": 0,
+            "grievance_count": grievance_count,
+            "bonus_percentage": 0.0,
+            "performance_grade": "Pending Evaluation (No Surveys Yet)" if grievance_count == 0 else "Grade C (Disciplinary Audit / Grievance Logged)",
+            "vigilance_status": "UNRATED" if grievance_count == 0 else "ALERT"
+        }
+    
+    review_count = len(doc_surveys)
+    avg_score = round(sum(s["overall_score"] for s in doc_surveys) / review_count, 2)
+    politeness = round(sum(s["politeness_rating"] for s in doc_surveys) / review_count, 2)
+    communication = round(sum(s["communication_rating"] for s in doc_surveys) / review_count, 2)
+    diagnosis = round(sum(s["diagnosis_quality_rating"] for s in doc_surveys) / review_count, 2)
+    punctuality = round(sum(s["wait_time_satisfaction"] for s in doc_surveys) / review_count, 2)
+    
+    # Statistical sample size guard (MIN_SAMPLE_SIZE = 3)
+    # Prevents 1-review variance from excessively inflating or deflating permanent compensation
+    MIN_SAMPLE_SIZE = 3
+    
+    if grievance_count > 0:
         bonus_pct = -10.0  # Disciplinary Deduction & Audit Notice
         grade = "Grade C (Disciplinary Audit / Penalty)"
         status = "ALERT"
-    elif avg_score >= 4.75 and review_count >= 1:
+    elif review_count < MIN_SAMPLE_SIZE:
+        # Provisional status for low sample size
+        if avg_score < 3.0:
+            bonus_pct = -5.0
+            grade = f"Grade C- (Provisional Notice - {review_count}/{MIN_SAMPLE_SIZE} Reviews)"
+            status = "WARNING"
+        else:
+            bonus_pct = 0.0
+            grade = f"Grade B (Provisional - {review_count}/{MIN_SAMPLE_SIZE} Reviews)"
+            status = "SATISFACTORY"
+    elif avg_score >= 4.75:
         bonus_pct = 15.0   # Exceptional Citizen Satisfaction (+15%)
         grade = "Grade A+ (Distinguished Excellence)"
         status = "EXCELLENT"
@@ -180,10 +267,14 @@ def calculate_doctor_performance(doctor_id: str):
         bonus_pct = 0.0    # Standard Base Salary
         grade = "Grade B (Standard Compliance)"
         status = "SATISFACTORY"
-    else:
-        bonus_pct = -5.0
+    elif avg_score >= 3.2:
+        bonus_pct = -5.0   # Marginal Performance (-5%)
         grade = "Grade C- (Needs Improvement)"
         status = "WARNING"
+    else:
+        bonus_pct = -10.0  # Substandard Clinical Rating (-10%)
+        grade = "Grade C (Disciplinary Audit / Penalty)"
+        status = "ALERT"
         
     return {
         "doctor_id": doctor_id,

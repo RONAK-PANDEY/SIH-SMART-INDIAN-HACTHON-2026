@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import { 
   QrCode, 
-  Download, 
-  Share2, 
   Clock, 
-  Building2, 
-  User, 
   CheckCircle2, 
   Sparkles, 
   Printer, 
-  CreditCard,
-  Layers,
-  ArrowRight,
-  ShieldCheck,
-  ZoomIn,
-  History,
-  PhoneCall,
-  MapPin
+  ShieldCheck, 
+  ZoomIn, 
+  History, 
+  Activity,
+  AlertCircle,
+  Stethoscope,
+  PartyPopper,
+  Radio,
+  DoorOpen,
+  UserCheck
 } from 'lucide-react';
 import { useTranslation, LanguageSwitcherPill } from '../i18n';
 import { FeedbackModal } from '../components/FeedbackModal';
@@ -27,6 +26,10 @@ export const MyToken: React.FC = () => {
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [allTokens, setAllTokens] = useState<any[]>([]);
   const [activeToken, setActiveToken] = useState<any>(null);
+  const [liveStatus, setLiveStatus] = useState<string>('waiting'); // waiting, scanned_by_staff, in_consultation, completed
+  const [wsConnected, setWsConnected] = useState<boolean>(false);
+  const [liveNotification, setLiveNotification] = useState<string | null>(null);
+  const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     // Load allotted tokens from localStorage
@@ -40,196 +43,284 @@ export const MyToken: React.FC = () => {
       }
     }
 
-    // Default seeded tokens if empty
     if (tokensList.length === 0) {
       tokensList = [
         {
           tokenId: 'tok_01',
+          token_id: 'tok_01',
           tokenNumber: 'CARD-204',
+          token_number: 'CARD-204',
+          qr_hash: '76f121bf67b798594852fb6d05dd6619367d40c8e580a5f4675bf74bb5b654fd',
+          hash: '76f121bf67b798594852fb6d05dd6619367d40c8e580a5f4675bf74bb5b654fd',
+          patientId: 'usr-pat-001',
+          patient_id: 'usr-pat-001',
           patientName: 'Aarav Sharma',
           age: 68,
           gender: 'Male',
-          department: 'Cardiology & Heart Sciences',
-          doctor: 'Dr. Rajesh Sharma (HOD)',
-          chamber: 'Chamber Room 204 (1st Floor Wing B)',
+          department: 'Cardiology & Heart Care',
+          deptId: 'dept-cardio',
+          department_id: 'dept-cardio',
+          doctor: 'Dr. Rajesh Sharma (Senior Cardiologist)',
+          chamber: 'Room 204, Block B',
           hospital: 'AIIMS New Delhi',
-          date: '06 Sep 2026',
+          hospitalId: 'hosp-001',
+          hospital_id: 'hosp-001',
+          date: new Date().toISOString().split('T')[0],
           time: '10:30 AM',
-          slotTime: '10:30 AM - 11:00 AM',
-          queuePosition: 2,
-          estimatedWaitMins: 8,
+          queuePosition: 1,
+          estimatedWaitMins: 7,
           priorityTag: 'P2 - Senior Citizen Accelerated Pass',
           feeStatus: 'Paid (₹50.00 via UPI)',
-          status: 'Active (Turn Soon)'
-        },
-        {
-          tokenId: 'tok_02',
-          tokenNumber: 'GENM-102',
-          patientName: 'Aarav Sharma',
-          age: 68,
-          gender: 'Male',
-          department: 'General Medicine OPD',
-          doctor: 'Dr. Priya Patel',
-          chamber: 'Chamber 105',
-          hospital: 'Safdarjung Multi-Speciality',
-          date: '28 Aug 2026',
-          time: '11:15 AM',
-          slotTime: '11:15 AM - 11:45 AM',
-          queuePosition: 0,
-          estimatedWaitMins: 0,
-          priorityTag: 'P2 - Senior Citizen',
-          feeStatus: 'Covered (PM-JAY Cashless ₹0)',
-          status: 'Completed'
-        },
-        {
-          tokenId: 'tok_03',
-          tokenNumber: 'ORTH-311',
-          patientName: 'Aarav Sharma',
-          age: 68,
-          gender: 'Male',
-          department: 'Orthopedics & Joint Replacement',
-          doctor: 'Dr. Sandeep Mehta',
-          chamber: 'Chamber 312',
-          hospital: 'AIIMS New Delhi',
-          date: '14 Jul 2026',
-          time: '09:45 AM',
-          slotTime: '09:45 AM - 10:15 AM',
-          queuePosition: 0,
-          estimatedWaitMins: 0,
-          priorityTag: 'P2 - Senior Citizen',
-          feeStatus: 'Paid (₹50.00 via UPI GPay)',
-          status: 'Completed'
+          status: 'waiting'
         }
       ];
       localStorage.setItem('smartcare_allotted_tokens', JSON.stringify(tokensList));
     }
 
     setAllTokens(tokensList);
-    setActiveToken(tokensList[0]);
+    const initialToken = tokensList[0];
+    setActiveToken(initialToken);
+    setLiveStatus(initialToken.status || 'waiting');
   }, []);
+
+  // Real WebSocket connection to live backend token channel
+  useEffect(() => {
+    if (!activeToken) return;
+
+    const tokenId = activeToken.tokenId || activeToken.token_id || activeToken.id;
+    const patientId = activeToken.patientId || activeToken.patient_id || 'usr-pat-001';
+    const apiHost = window.location.hostname || 'localhost';
+    const wsUrl = `ws://${apiHost}:8000/api/v1/ws/connect/token:${tokenId}`;
+
+    try {
+      const socket = new WebSocket(wsUrl);
+      wsRef.current = socket;
+
+      socket.onopen = () => {
+        setWsConnected(true);
+        // Also subscribe to patient channel
+        socket.send(JSON.stringify({
+          action: 'subscribe',
+          channel: `patient:${patientId}`
+        }));
+      };
+
+      socket.onmessage = (event) => {
+        try {
+          const payload = JSON.parse(event.data);
+          const eventType = payload.event || payload.type;
+
+          if (eventType === 'token_scanned' || payload.status === 'scanned_by_staff') {
+            setLiveStatus('scanned_by_staff');
+            setLiveNotification(`✅ Turnstile Scanned: Verified by ${payload.scanned_by || 'Gate Scanner'}. Please wait near chamber.`);
+            updateLocalTokenStatus(tokenId, 'scanned_by_staff');
+          } else if (eventType === 'token_called' || eventType === 'PATIENT_CALLED' || payload.status === 'in_consultation') {
+            setLiveStatus('in_consultation');
+            setLiveNotification(`🔔 Doctor Calling: Please enter ${payload.room || activeToken.chamber}!`);
+            updateLocalTokenStatus(tokenId, 'in_consultation');
+          } else if (eventType === 'token_completed' || payload.status === 'completed') {
+            setLiveStatus('completed');
+            setLiveNotification('🎉 Consultation Completed! Doctor notes submitted.');
+            updateLocalTokenStatus(tokenId, 'completed');
+          }
+        } catch (e) {
+          console.error('Error parsing WS message:', e);
+        }
+      };
+
+      socket.onclose = () => {
+        setWsConnected(false);
+      };
+
+      socket.onerror = () => {
+        setWsConnected(false);
+      };
+
+      return () => {
+        socket.close();
+      };
+    } catch (e) {
+      console.warn('WebSocket connection error:', e);
+    }
+  }, [activeToken]);
+
+  const updateLocalTokenStatus = (tokenId: string, newStatus: string) => {
+    setActiveToken((prev: any) => prev ? { ...prev, status: newStatus } : prev);
+    setAllTokens((prev) => {
+      const updated = prev.map((t) => (t.tokenId === tokenId || t.token_id === tokenId) ? { ...t, status: newStatus } : t);
+      localStorage.setItem('smartcare_allotted_tokens', JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   if (!activeToken) {
     return <div className="p-8 text-center text-xs text-slate-500">Loading token pass...</div>;
   }
 
-  // Scannable JSON payload encoded in QR
+  // Cryptographically encoded QR payload
   const qrPayload = JSON.stringify({
-    pass_type: 'SMARTCARE_OPD_TOKEN',
-    token: activeToken.tokenNumber,
-    patient: activeToken.patientName,
-    dept: activeToken.department,
-    hospital: activeToken.hospital,
-    date: activeToken.date,
-    priority: activeToken.priorityTag
+    token_id: activeToken.tokenId || activeToken.token_id || activeToken.id,
+    token_number: activeToken.tokenNumber || activeToken.token_number,
+    hash: activeToken.qr_hash || activeToken.hash || 'hash_secret',
+    dept: activeToken.deptId || activeToken.department_id || activeToken.dept || 'dept-cardio',
+    patient_id: activeToken.patientId || activeToken.patient_id || 'usr-pat-001',
+    hospital_id: activeToken.hospitalId || activeToken.hospital_id || 'hosp-001'
   });
+
+  const getStepActive = (stepName: string) => {
+    const states = ['waiting', 'scanned_by_staff', 'in_consultation', 'completed'];
+    const currentIdx = states.indexOf(liveStatus);
+    const stepIdx = states.indexOf(stepName);
+    return stepIdx <= currentIdx;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-4 max-w-lg mx-auto pb-32">
       {/* Header */}
-      <header className="flex items-center justify-between gap-3 mb-6 pt-2">
+      <header className="flex items-center justify-between gap-3 mb-4 pt-2">
         <div>
           <div className="inline-flex items-center gap-1.5 bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-1">
             <QrCode className="w-3.5 h-3.5" />
-            <span>{t('my_token')}</span>
+            <span>Real-Time Scannable Pass</span>
           </div>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight">Active OPD Queue Pass</h1>
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">Active OPD Pass</h1>
         </div>
 
-        <LanguageSwitcherPill />
+        <div className="flex items-center gap-2">
+          <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full border ${
+            wsConnected ? 'bg-emerald-50 text-emerald-700 border-emerald-300' : 'bg-amber-50 text-amber-700 border-amber-300'
+          }`}>
+            <Radio className={`w-3 h-3 ${wsConnected ? 'text-emerald-500 animate-pulse' : 'text-amber-500'}`} />
+            <span>{wsConnected ? 'Live Sync' : 'Reconnecting'}</span>
+          </span>
+          <LanguageSwitcherPill />
+        </div>
       </header>
+
+      {/* Live Toast Banner */}
+      {liveNotification && (
+        <div className="mb-4 p-3.5 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-2xl shadow-lg flex items-center justify-between text-xs font-bold animate-in fade-in slide-in-from-top-2">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
+            <span>{liveNotification}</span>
+          </div>
+          <button onClick={() => setLiveNotification(null)} className="text-white/80 hover:text-white text-sm font-bold">×</button>
+        </div>
+      )}
+
+      {/* Real-time Consultation Completed Celebration Banner */}
+      {liveStatus === 'completed' && (
+        <div className="mb-5 p-5 bg-gradient-to-r from-emerald-500 via-teal-600 to-emerald-700 text-white rounded-3xl shadow-xl text-center space-y-3 animate-in zoom-in-95">
+          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto shadow-inner">
+            <PartyPopper className="w-6 h-6 text-yellow-300 animate-bounce" />
+          </div>
+          <div>
+            <h3 className="text-xl font-black">✅ Consultation Completed</h3>
+            <p className="text-xs text-emerald-100 mt-0.5">
+              Doctor has finalized your checkup. Your digital prescription is saved to records.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowFeedbackModal(true)}
+            className="w-full bg-white text-emerald-900 hover:bg-emerald-50 font-black py-2.5 rounded-2xl text-xs transition shadow-md cursor-pointer"
+          >
+            ⭐ Submit Doctor Rating (Govt Vigilance Survey)
+          </button>
+        </div>
+      )}
 
       {/* Main Digital Pass Card */}
       <div className="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden relative mb-6">
         {/* Top Banner */}
         <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-slate-900 text-white p-6 text-center relative">
           <div className="flex items-center justify-between text-xs text-blue-200 mb-2">
-            <span className="font-semibold uppercase tracking-wider">{activeToken.hospital}</span>
-            <span className="bg-emerald-500 text-white font-bold px-2.5 py-0.5 rounded-full text-[10px] flex items-center gap-1">
-              <ShieldCheck className="w-3 h-3" /> E-Pass Active
+            <span className="font-semibold uppercase tracking-wider">{activeToken.hospital || 'AIIMS New Delhi'}</span>
+            <span className={`font-bold px-2.5 py-0.5 rounded-full text-[10px] flex items-center gap-1 ${
+              liveStatus === 'completed' ? 'bg-emerald-500 text-white' :
+              liveStatus === 'scanned_by_staff' ? 'bg-indigo-500 text-white' :
+              liveStatus === 'in_consultation' ? 'bg-purple-500 text-white' :
+              'bg-blue-500 text-white'
+            }`}>
+              <ShieldCheck className="w-3 h-3" />
+              {liveStatus === 'completed' ? 'Completed' :
+               liveStatus === 'scanned_by_staff' ? 'At Door (Scanned)' :
+               liveStatus === 'in_consultation' ? 'In Consultation' :
+               'Waiting in Queue'}
             </span>
           </div>
 
           <span className="text-xs uppercase tracking-widest text-blue-200 font-semibold block">TOKEN PASS NUMBER</span>
           <h2 className="text-5xl font-black tracking-tight text-white mt-1">
-            {activeToken.tokenNumber}
+            {activeToken.tokenNumber || activeToken.token_number}
           </h2>
 
           <div className="mt-2 inline-block bg-amber-400 text-amber-950 font-black text-xs px-3 py-1 rounded-lg">
-            {activeToken.priorityTag}
+            {activeToken.priorityTag || 'Priority OPD Pass'}
           </div>
         </div>
 
-        {/* High Density Scannable QR Code */}
-        <div className="p-6 text-center bg-slate-50/50 border-b border-dashed border-slate-200">
+        {/* Live Stepper: waiting -> scanned_by_staff -> in_consultation -> completed */}
+        <div className="p-4 bg-slate-50 border-b border-slate-200">
+          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2 text-center">
+            Live Queue Lifecycle (Auto WebSocket Sync)
+          </span>
+          <div className="grid grid-cols-4 gap-1.5 text-center">
+            <div className={`p-2 rounded-xl border text-[10px] font-bold ${
+              getStepActive('waiting') ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-400 border-slate-200'
+            }`}>
+              <span>1. Waiting</span>
+            </div>
+            <div className={`p-2 rounded-xl border text-[10px] font-bold ${
+              getStepActive('scanned_by_staff') ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-slate-400 border-slate-200'
+            }`}>
+              <span>2. Scanned</span>
+            </div>
+            <div className={`p-2 rounded-xl border text-[10px] font-bold ${
+              getStepActive('in_consultation') ? 'bg-purple-600 text-white border-purple-600' : 'bg-white text-slate-400 border-slate-200'
+            }`}>
+              <span>3. In Room</span>
+            </div>
+            <div className={`p-2 rounded-xl border text-[10px] font-bold ${
+              getStepActive('completed') ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-slate-400 border-slate-200'
+            }`}>
+              <span>4. Done</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Real Scannable QR Code */}
+        <div className="p-6 text-center bg-white border-b border-dashed border-slate-200">
           <div 
             onClick={() => setShowZoomModal(true)}
-            className="w-52 h-52 bg-white border-2 border-slate-300 rounded-3xl p-3 mx-auto shadow-md flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 hover:shadow-xl transition group relative"
+            className="w-56 h-56 bg-white border-2 border-slate-300 rounded-3xl p-3 mx-auto shadow-md flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 hover:shadow-xl transition group relative"
           >
-            {/* Scannable SVG Medical QR Pattern */}
-            <svg viewBox="0 0 120 120" className="w-full h-full text-slate-950">
-              <rect width="120" height="120" fill="white" />
-              {/* Corner 1 */}
-              <rect x="6" y="6" width="32" height="32" fill="#0f172a" rx="4" />
-              <rect x="11" y="11" width="22" height="22" fill="white" rx="2" />
-              <rect x="16" y="16" width="12" height="12" fill="#2563eb" rx="2" />
-              {/* Corner 2 */}
-              <rect x="82" y="6" width="32" height="32" fill="#0f172a" rx="4" />
-              <rect x="87" y="11" width="22" height="22" fill="white" rx="2" />
-              <rect x="92" y="16" width="12" height="12" fill="#2563eb" rx="2" />
-              {/* Corner 3 */}
-              <rect x="6" y="82" width="32" height="32" fill="#0f172a" rx="4" />
-              <rect x="11" y="87" width="22" height="22" fill="white" rx="2" />
-              <rect x="16" y="92" width="12" height="12" fill="#2563eb" rx="2" />
-              
-              {/* High-density Verifiable Data Grid */}
-              <rect x="44" y="8" width="6" height="6" fill="#0f172a" />
-              <rect x="54" y="8" width="6" height="6" fill="#2563eb" />
-              <rect x="64" y="8" width="6" height="6" fill="#0f172a" />
-              <rect x="72" y="16" width="6" height="6" fill="#0f172a" />
-              <rect x="44" y="24" width="6" height="6" fill="#0f172a" />
-              <rect x="60" y="24" width="6" height="6" fill="#2563eb" />
-              <rect x="72" y="32" width="6" height="6" fill="#0f172a" />
-
-              <rect x="8" y="44" width="6" height="6" fill="#0f172a" />
-              <rect x="20" y="44" width="6" height="6" fill="#2563eb" />
-              <rect x="32" y="44" width="6" height="6" fill="#0f172a" />
-              <rect x="8" y="60" width="6" height="6" fill="#2563eb" />
-              <rect x="24" y="60" width="6" height="6" fill="#0f172a" />
-
-              {/* Center Emblem Red Cross */}
-              <rect x="50" y="50" width="20" height="20" fill="#dc2626" rx="4" />
-              <rect x="58" y="54" width="4" height="12" fill="white" />
-              <rect x="54" y="58" width="12" height="4" fill="white" />
-
-              {/* Lower quadrant modules */}
-              <rect x="44" y="82" width="6" height="6" fill="#0f172a" />
-              <rect x="56" y="82" width="6" height="6" fill="#2563eb" />
-              <rect x="68" y="82" width="6" height="6" fill="#0f172a" />
-              <rect x="44" y="96" width="6" height="6" fill="#2563eb" />
-              <rect x="60" y="96" width="6" height="6" fill="#0f172a" />
-              <rect x="82" y="48" width="6" height="6" fill="#0f172a" />
-              <rect x="94" y="48" width="6" height="6" fill="#2563eb" />
-              <rect x="106" y="48" width="6" height="6" fill="#0f172a" />
-              <rect x="82" y="64" width="6" height="6" fill="#2563eb" />
-              <rect x="96" y="64" width="6" height="6" fill="#0f172a" />
-              <rect x="82" y="82" width="6" height="6" fill="#0f172a" />
-              <rect x="94" y="82" width="6" height="6" fill="#2563eb" />
-              <rect x="106" y="82" width="6" height="6" fill="#0f172a" />
-              <rect x="88" y="96" width="6" height="6" fill="#0f172a" />
-              <rect x="102" y="96" width="6" height="6" fill="#2563eb" />
-            </svg>
+            <QRCodeSVG 
+              value={qrPayload} 
+              size={200}
+              level="H"
+              className="w-full h-full"
+            />
             <div className="absolute inset-0 bg-blue-900/10 rounded-3xl opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
               <span className="bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-md">
-                <ZoomIn className="w-3 h-3" /> Tap to Enlarge
+                <ZoomIn className="w-3 h-3" /> Enlarge
               </span>
             </div>
           </div>
           <span className="text-[11px] text-slate-500 mt-2 block font-mono">
-            Scan with any Camera / OPD Chamber Scanner
+            Scan using SmartCare Android App / Turnstile Guard Camera
           </span>
         </div>
 
-        {/* Pass Meta */}
+        {/* WHY THIS MATTERS: ANTI-GHOST TOKEN TURNSTILE VALIDATION */}
+        <div className="p-3 bg-blue-50 border border-blue-200 rounded-2xl mx-6 mt-4 mb-1 flex items-center gap-2.5 text-xs text-blue-950">
+          <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
+          <span>
+            <strong>Why this matters:</strong> Anti-Ghost Token Turnstile Verification prevents queue-jumping and proxy token hoarding. The doctor's queue will only summon your ticket once you physically pass the entrance turnstile.
+          </span>
+        </div>
+
+        {/* Pass Details */}
         <div className="p-6 space-y-3 text-xs">
           <div className="flex justify-between py-1.5 border-b border-slate-100">
             <span className="text-slate-500">Patient Name:</span>
@@ -247,18 +338,14 @@ export const MyToken: React.FC = () => {
             <span className="text-slate-500">Chamber:</span>
             <strong className="text-slate-800 font-bold">{activeToken.chamber}</strong>
           </div>
-          <div className="flex justify-between py-1.5 border-b border-slate-100">
-            <span className="text-slate-500">Queue Ahead:</span>
-            <strong className="text-emerald-700 font-bold">{activeToken.queuePosition} Patients ahead</strong>
-          </div>
-          <div className="flex justify-between py-1.5 border-b border-slate-100">
-            <span className="text-slate-500">Est. Consultation Turn:</span>
-            <strong className="text-amber-700 font-black text-sm">~{activeToken.estimatedWaitMins} mins</strong>
-          </div>
           <div className="flex justify-between py-1.5">
-            <span className="text-slate-500">Payment Status:</span>
-            <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-              ✓ {activeToken.feeStatus}
+            <span className="text-slate-500">Token Status:</span>
+            <span className={`font-bold px-2 py-0.5 rounded-md border text-[11px] ${
+              liveStatus === 'completed' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' :
+              liveStatus === 'scanned_by_staff' ? 'bg-indigo-100 text-indigo-800 border-indigo-300' :
+              'bg-blue-100 text-blue-800 border-blue-300'
+            }`}>
+              {liveStatus.toUpperCase()}
             </span>
           </div>
         </div>
@@ -272,24 +359,16 @@ export const MyToken: React.FC = () => {
               className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-2xl transition text-xs flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <Printer className="w-4 h-4" />
-              <span>Print Token Slip</span>
+              <span>Print Pass</span>
             </button>
             <a
-              href="/live-queue"
+              href="/book-appointment"
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-2xl transition text-xs flex items-center justify-center gap-1.5 cursor-pointer text-center"
             >
-              <Layers className="w-4 h-4" />
-              <span>Track Live Queue</span>
+              <QrCode className="w-4 h-4" />
+              <span>Get Another Token</span>
             </a>
           </div>
-
-          <button
-            type="button"
-            onClick={() => setShowFeedbackModal(true)}
-            className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-2xl transition text-xs flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
-          >
-            <span>⭐ Rate Doctor Consultation (Govt Salary Bonus Survey)</span>
-          </button>
         </div>
       </div>
 
@@ -298,19 +377,23 @@ export const MyToken: React.FC = () => {
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <span className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
             <History className="w-4 h-4 text-blue-600" />
-            <span>History of All Allotted Tokens ({allTokens.length})</span>
+            <span>History of Allotted Tokens ({allTokens.length})</span>
           </span>
         </div>
 
         <div className="space-y-2.5">
           {allTokens.map((tok) => {
-            const isSelected = activeToken.tokenNumber === tok.tokenNumber;
+            const tokNum = tok.tokenNumber || tok.token_number;
+            const isSelected = (activeToken.tokenNumber || activeToken.token_number) === tokNum;
             return (
               <button
-                key={tok.tokenId || tok.tokenNumber}
+                key={tok.tokenId || tok.token_id || tokNum}
                 type="button"
-                onClick={() => setActiveToken(tok)}
-                className={`w-full p-3.5 rounded-2xl border text-left text-xs transition flex items-center justify-between ${
+                onClick={() => {
+                  setActiveToken(tok);
+                  setLiveStatus(tok.status || 'waiting');
+                }}
+                className={`w-full p-3.5 rounded-2xl border text-left text-xs transition flex items-center justify-between cursor-pointer ${
                   isSelected
                     ? 'border-blue-600 bg-blue-50/80 font-semibold shadow-xs ring-1 ring-blue-300'
                     : 'border-slate-200 bg-slate-50/70 hover:bg-slate-100 text-slate-700'
@@ -320,7 +403,7 @@ export const MyToken: React.FC = () => {
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs ${
                     isSelected ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-700'
                   }`}>
-                    {tok.tokenNumber}
+                    {tokNum}
                   </div>
                   <div>
                     <strong className="text-slate-900 block">{tok.department}</strong>
@@ -330,11 +413,11 @@ export const MyToken: React.FC = () => {
 
                 <div className="text-right">
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${
-                    tok.status?.includes('Active')
+                    tok.status === 'completed'
                       ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
-                      : 'bg-slate-200 text-slate-700 border-slate-300'
+                      : 'bg-blue-100 text-blue-800 border-blue-300'
                   }`}>
-                    {tok.status || 'Active'}
+                    {tok.status || 'waiting'}
                   </span>
                   <span className="text-[10px] text-blue-700 font-bold block mt-1">Tap to View Pass →</span>
                 </div>
@@ -355,12 +438,16 @@ export const MyToken: React.FC = () => {
             className="bg-white rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl border border-slate-200 space-y-4"
           >
             <div className="w-64 h-64 mx-auto bg-white p-4 border border-slate-200 rounded-2xl shadow-inner flex items-center justify-center">
-              <QrCode className="w-full h-full text-slate-950" />
+              <QRCodeSVG 
+                value={qrPayload} 
+                size={220}
+                level="H"
+                className="w-full h-full"
+              />
             </div>
             <div>
-              <h3 className="text-3xl font-black text-blue-700">{activeToken.tokenNumber}</h3>
+              <h3 className="text-3xl font-black text-blue-700">{activeToken.tokenNumber || activeToken.token_number}</h3>
               <p className="text-xs text-slate-500 font-bold">{activeToken.patientName} • {activeToken.department}</p>
-              <p className="text-[11px] text-slate-400 mt-1 font-mono">{activeToken.chamber}</p>
             </div>
             <button
               type="button"
@@ -373,7 +460,7 @@ export const MyToken: React.FC = () => {
         </div>
       )}
 
-      {/* Citizen Feedback & Doctor Behavioral Rating Modal */}
+      {/* Citizen Feedback Rating Modal */}
       <FeedbackModal
         isOpen={showFeedbackModal}
         onClose={() => setShowFeedbackModal(false)}
@@ -381,7 +468,7 @@ export const MyToken: React.FC = () => {
         doctorName={activeToken?.doctor || 'Dr. Rajesh Sharma'}
         department={activeToken?.department || 'Cardiology'}
         hospitalName={activeToken?.hospital || 'AIIMS New Delhi - Main Campus'}
-        tokenNumber={activeToken?.tokenNumber || 'CARD-042'}
+        tokenNumber={activeToken?.tokenNumber || activeToken?.token_number || 'CARD-204'}
         patientName={activeToken?.patientName || 'Citizen Patient'}
       />
     </div>

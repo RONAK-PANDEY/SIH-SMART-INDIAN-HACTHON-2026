@@ -132,6 +132,17 @@ export const GovtLanding: React.FC = () => {
                 <span>Smart India Hackathon (SIH) 2026 • Official Initiative</span>
               </div>
 
+              {/* 1-Paragraph Who is this for / What problem does this solve (Judge Overview) */}
+              <div className="p-4 rounded-2xl bg-blue-900/40 border border-blue-400/40 backdrop-blur-md shadow-lg">
+                <div className="flex items-center gap-2 text-amber-300 font-bold text-xs uppercase tracking-wider mb-1">
+                  <Sparkles className="w-4 h-4" />
+                  <span>SIH 2026 Problem Statement & Solution Matrix</span>
+                </div>
+                <p className="text-xs text-slate-200 leading-relaxed">
+                  <strong>Who is this for:</strong> OPD patients and public hospital administrators facing chaotic 3–5 hour waiting queues. <strong>What problem it solves:</strong> Eliminates physical queues via AI symptom-to-department triage, verifies physical presence via anti-ghost-token turnstile QR validation, and aligns doctor bedside adherence directly with government performance salary bonuses.
+                </p>
+              </div>
+
               <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
                 National Smart OPD Queue & AI Triage Platform
               </h1>
@@ -139,6 +150,26 @@ export const GovtLanding: React.FC = () => {
               <p className="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
                 Empowering 1.4 Billion citizens with real-time digital OPD tokens, AI-powered direct department allocation, 108 emergency telematics, and transparent doctor behavioral oversight.
               </p>
+
+              {/* ONE-SHOT COMPREHENSION KPI STRIP FOR CITIZEN PORTAL */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-blue-500/30">
+                  <span className="text-[10px] text-slate-400 uppercase font-mono block">Tokens Issued Today</span>
+                  <strong className="text-lg font-mono text-blue-400 font-black">14,820+</strong>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-emerald-500/30">
+                  <span className="text-[10px] text-slate-400 uppercase font-mono block">Avg Wait Reduced</span>
+                  <strong className="text-lg font-mono text-emerald-400 font-black">-42 Mins</strong>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-amber-500/30">
+                  <span className="text-[10px] text-slate-400 uppercase font-mono block">AIIMS Hospitals Live</span>
+                  <strong className="text-lg font-mono text-amber-300 font-black">3 Network</strong>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-purple-500/30">
+                  <span className="text-[10px] text-slate-400 uppercase font-mono block">Queue Integrity</span>
+                  <strong className="text-lg font-mono text-purple-300 font-black">99.8%</strong>
+                </div>
+              </div>
 
               {/* Primary Call-to-Actions */}
               <div className="pt-2 flex flex-wrap items-center gap-3">

@@ -12,50 +12,59 @@ import {
   CheckCircle2, 
   AlertTriangle,
   FileText,
-  MapPin
+  MapPin,
+  QrCode
 } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
   const [user, setUser] = useState<any>(null);
-  const [activeToken, setActiveToken] = useState<any>({
-    token_number: 'CARD-204',
-    department: 'Cardiology & Heart Care',
-    doctor: 'Dr. Rajesh Sharma',
-    room: 'Room 204 (1st Floor)',
-    position: 2,
-    estimated_wait_mins: 8,
-    status: 'WAITING_CALLED',
-    priority_level: 'P2 - Senior Citizen Accelerated'
-  });
+  const [activeToken, setActiveToken] = useState<any>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem('smartcare_user');
-    if (saved) {
+    const savedUser = localStorage.getItem('smartcare_user');
+    if (savedUser) {
       try {
-        setUser(JSON.parse(saved));
+        setUser(JSON.parse(savedUser));
       } catch (e) {
         console.error(e);
       }
     } else {
-      // Default demo profile
       setUser({
         full_name: 'Aarav Sharma',
-        aadhaar_id: '982144321109',
+        id: 'usr_982144',
+        phone: '9821443211',
         abha_id: 'ABHA-9821-4432-1109',
         age: 68,
         gender: 'Male',
-        phone: '+91 98765 43210',
         address: 'Sector 62, Noida, UP - 201309',
-        blood_group: 'B+',
         is_senior: true,
         is_pregnant: false,
         is_pwd: false
       });
     }
+
+    // Load current active token
+    const savedToken = localStorage.getItem('smartcare_current_token');
+    const allottedTokens = localStorage.getItem('smartcare_allotted_tokens');
+    if (savedToken) {
+      try {
+        setActiveToken(JSON.parse(savedToken));
+      } catch (e) {
+        console.error(e);
+      }
+    } else if (allottedTokens) {
+      try {
+        const list = JSON.parse(allottedTokens);
+        if (list.length > 0) setActiveToken(list[0]);
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('smartcare_user');
+    localStorage.removeItem('smartcare_token');
     window.location.href = '/login';
   };
 
@@ -69,7 +78,7 @@ export const Dashboard: React.FC = () => {
               Patient Central Hub
             </span>
             <span className="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5" /> Aadhaar Verified
+              <ShieldCheck className="w-3.5 h-3.5" /> Backend JWT Authenticated
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
@@ -80,19 +89,62 @@ export const Dashboard: React.FC = () => {
 
         <div className="flex items-center gap-2">
           <a
-            href="/triage"
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-1.5"
+            href="/book-appointment"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-1.5 cursor-pointer"
           >
-            <Sparkles className="w-4 h-4 text-yellow-300" />
-            <span>Smart AI Triage</span>
+            <QrCode className="w-4 h-4" />
+            <span>Get New OPD Token</span>
           </a>
           <button
             type="button"
             onClick={handleLogout}
-            className="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-semibold text-xs px-3 py-2.5 rounded-xl transition"
+            className="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-semibold text-xs px-3 py-2.5 rounded-xl transition cursor-pointer"
           >
             Switch Account
           </button>
+        </div>
+      </div>
+
+      {/* ONE-SHOT COMPREHENSION KPI STRIP FOR CITIZEN DASHBOARD */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+            <QrCode className="w-5 h-5" />
+          </div>
+          <div>
+            <span className="text-[10px] text-slate-400 uppercase font-mono block">Tokens Issued Today</span>
+            <strong className="text-base font-black text-slate-900 font-mono">14,820+</strong>
+          </div>
+        </div>
+
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+            <Clock className="w-5 h-5" />
+          </div>
+          <div>
+            <span className="text-[10px] text-slate-400 uppercase font-mono block">Avg Wait Reduced</span>
+            <strong className="text-base font-black text-emerald-600 font-mono">-42 mins</strong>
+          </div>
+        </div>
+
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+            <Building2 className="w-5 h-5" />
+          </div>
+          <div>
+            <span className="text-[10px] text-slate-400 uppercase font-mono block">Hospitals Active</span>
+            <strong className="text-base font-black text-indigo-600 font-mono">3 AIIMS/RML</strong>
+          </div>
+        </div>
+
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+            <Activity className="w-5 h-5" />
+          </div>
+          <div>
+            <span className="text-[10px] text-slate-400 uppercase font-mono block">Your Pass Status</span>
+            <strong className="text-base font-black text-purple-700 font-mono">{activeToken ? 'Active Pass' : 'Ready to Book'}</strong>
+          </div>
         </div>
       </div>
 
@@ -107,24 +159,24 @@ export const Dashboard: React.FC = () => {
               <div>
                 <h3 className="text-base font-bold text-slate-900">{user?.full_name}</h3>
                 <span className="text-xs text-slate-500 block">{user?.gender}, {user?.age} years</span>
-                <span className="text-xs text-slate-500 block font-mono">Blood: {user?.blood_group || 'O+'}</span>
+                <span className="text-xs text-slate-500 block font-mono">Mobile: {user?.phone}</span>
               </div>
             </div>
 
             <div className="space-y-2 pt-3 border-t border-slate-100 text-xs">
               <div className="flex justify-between py-1 border-b border-slate-50">
-                <span className="text-slate-500">Phone:</span>
-                <span className="font-semibold text-slate-800">{user?.phone}</span>
+                <span className="text-slate-500">ABHA Health ID:</span>
+                <span className="font-semibold text-slate-800">{user?.abha_id}</span>
               </div>
               <div className="flex justify-between py-1 border-b border-slate-50">
-                <span className="text-slate-500">Aadhaar (UIDAI):</span>
+                <span className="text-slate-500">Patient ID:</span>
                 <span className="font-mono font-semibold text-slate-800">
-                  XXXX-XXXX-{user?.aadhaar_id ? user.aadhaar_id.slice(-4) : '1109'}
+                  {user?.id || 'usr-pat-001'}
                 </span>
               </div>
               <div className="flex justify-between py-1">
                 <span className="text-slate-500">Address:</span>
-                <span className="font-semibold text-slate-800 text-right max-w-[180px] truncate">{user?.address}</span>
+                <span className="font-semibold text-slate-800 text-right max-w-[180px] truncate">{user?.address || 'Noida, UP'}</span>
               </div>
             </div>
 
@@ -179,10 +231,10 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column (2 spans): Active Token & OPD Actions */}
+        {/* Right Column: Active Token & OPD Actions */}
         <div className="lg:col-span-2 space-y-6">
           {/* Active Live Token Banner */}
-          {activeToken && (
+          {activeToken ? (
             <div className="bg-gradient-to-br from-blue-600 via-indigo-700 to-slate-900 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
               <div className="absolute right-0 top-0 translate-x-4 -translate-y-4 w-40 h-40 bg-white/10 rounded-full blur-2xl" />
 
@@ -191,7 +243,7 @@ export const Dashboard: React.FC = () => {
                   <Activity className="w-3.5 h-3.5 text-emerald-300 animate-pulse" /> Live Active OPD Pass
                 </span>
                 <span className="text-xs bg-amber-400 text-amber-950 font-black px-2.5 py-0.5 rounded-md">
-                  {activeToken.priority_level}
+                  {activeToken.priorityTag || 'Priority Pass'}
                 </span>
               </div>
 
@@ -199,7 +251,7 @@ export const Dashboard: React.FC = () => {
                 <div>
                   <span className="text-xs text-blue-200 uppercase font-semibold">Your Token Number</span>
                   <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white mt-0.5">
-                    {activeToken.token_number}
+                    {activeToken.tokenNumber || activeToken.token_number}
                   </h2>
                   <p className="text-sm font-medium text-blue-100 mt-1">{activeToken.department}</p>
                 </div>
@@ -211,15 +263,11 @@ export const Dashboard: React.FC = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-blue-200">Assigned Chamber:</span>
-                    <strong className="text-white">{activeToken.room}</strong>
+                    <strong className="text-white">{activeToken.chamber}</strong>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-blue-200">Queue Ahead:</span>
-                    <strong className="text-emerald-300 font-bold">{activeToken.position} Patients</strong>
-                  </div>
-                  <div className="flex items-center justify-between pt-1 border-t border-white/10">
-                    <span className="text-blue-200">Estimated Turn:</span>
-                    <strong className="text-amber-300 font-black text-sm">{activeToken.estimated_wait_mins} Mins</strong>
+                    <span className="text-blue-200">Token Status:</span>
+                    <strong className="text-emerald-300 font-bold uppercase">{activeToken.status || 'WAITING'}</strong>
                   </div>
                 </div>
               </div>
@@ -227,100 +275,89 @@ export const Dashboard: React.FC = () => {
               <div className="mt-5 pt-4 border-t border-white/15 flex flex-wrap items-center justify-between gap-3 relative z-10">
                 <span className="text-xs text-blue-200 flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  Please proceed towards 1st Floor Wing B when position is 1.
+                  Pass synchronized with Turnstile & Doctor Console.
                 </span>
                 <a
-                  href="/live-queue"
-                  className="bg-white text-slate-900 hover:bg-slate-100 font-bold text-xs px-4 py-2 rounded-xl transition shadow-sm flex items-center gap-1"
+                  href="/my-token"
+                  className="bg-white text-slate-900 hover:bg-slate-100 font-bold text-xs px-4 py-2 rounded-xl transition shadow-sm flex items-center gap-1 cursor-pointer"
                 >
-                  <span>Open Full Queue Display</span>
+                  <span>View Scannable QR Pass</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </a>
               </div>
             </div>
+          ) : (
+            <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm text-center space-y-4">
+              <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto">
+                <QrCode className="w-7 h-7" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-slate-800">No Active OPD Token</h3>
+                <p className="text-xs text-slate-500 mt-1">Book a consultation slot now to get your instant scannable QR pass.</p>
+              </div>
+              <a
+                href="/book-appointment"
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md transition cursor-pointer"
+              >
+                <span>Get Real OPD Token Now</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
           )}
 
-          {/* Quick OPD Modules Grid */}
+          {/* OPD Modules Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <a
-              href="/triage"
-              className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow-md transition group"
+              href="/book-appointment"
+              className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow-md transition group cursor-pointer"
             >
               <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
-                <Sparkles className="w-5 h-5 text-blue-600" />
+                <QrCode className="w-5 h-5 text-blue-600" />
               </div>
-              <h4 className="font-bold text-sm text-slate-900 group-hover:text-blue-600 transition">Smart AI Triage Assessment</h4>
+              <h4 className="font-bold text-sm text-slate-900 group-hover:text-blue-600 transition">Book Real OPD Token</h4>
               <p className="text-xs text-slate-500 mt-1">
-                Describe symptoms in your own words, check 100+ conditions, and get routed to the right specialist.
+                Select clinical department, generate real SHA-256 scannable QR pass, and track live queue turn.
+              </p>
+            </a>
+
+            <a
+              href="/my-token"
+              className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow-md transition group cursor-pointer"
+            >
+              <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+              </div>
+              <h4 className="font-bold text-sm text-slate-900 group-hover:text-emerald-600 transition">Active Scannable QR Pass</h4>
+              <p className="text-xs text-slate-500 mt-1">
+                Display high-density QR code for Android turnstile scan and monitor live lifecycle state.
+              </p>
+            </a>
+
+            <a
+              href="/triage"
+              className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow-md transition group cursor-pointer"
+            >
+              <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
+                <Sparkles className="w-5 h-5 text-purple-600" />
+              </div>
+              <h4 className="font-bold text-sm text-slate-900 group-hover:text-purple-600 transition">AI Triage Assessment</h4>
+              <p className="text-xs text-slate-500 mt-1">
+                Assess clinical symptoms and receive priority triage score before booking.
               </p>
             </a>
 
             <a
               href="/hospital-select"
-              className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow-md transition group"
-            >
-              <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
-                <Building2 className="w-5 h-5 text-emerald-600" />
-              </div>
-              <h4 className="font-bold text-sm text-slate-900 group-hover:text-emerald-600 transition">City Hospital Network</h4>
-              <p className="text-xs text-slate-500 mt-1">
-                Check real-time congestion and queue wait times across all connected city hospitals.
-              </p>
-            </a>
-
-            <a
-              href="/book-appointment"
-              className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow-md transition group"
-            >
-              <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
-                <Calendar className="w-5 h-5 text-purple-600" />
-              </div>
-              <h4 className="font-bold text-sm text-slate-900 group-hover:text-purple-600 transition">Book Direct Doctor Slot</h4>
-              <p className="text-xs text-slate-500 mt-1">
-                Reserve dedicated time slots for specialist consultation and follow-up visits.
-              </p>
-            </a>
-
-            <a
-              href="/referral"
-              className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow-md transition group"
+              className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-blue-400 hover:shadow-md transition group cursor-pointer"
             >
               <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition">
-                <MapPin className="w-5 h-5 text-amber-600" />
+                <Building2 className="w-5 h-5 text-amber-600" />
               </div>
-              <h4 className="font-bold text-sm text-slate-900 group-hover:text-amber-600 transition">Inter-Hospital Fast-Track Referral</h4>
+              <h4 className="font-bold text-sm text-slate-900 group-hover:text-amber-600 transition">Hospital Network Monitor</h4>
               <p className="text-xs text-slate-500 mt-1">
-                Transfer queue passes to nearby less-congested hospitals to save up to 60+ minutes.
+                Check live queue congestion across all connected city trauma and hospital centers.
               </p>
             </a>
-          </div>
-
-          {/* Past Health Records / OPD Summary */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
-            <h4 className="font-bold text-sm text-slate-900 mb-3 flex items-center gap-2">
-              <FileText className="w-4 h-4 text-blue-600" />
-              <span>Recent OPD Visits & Prescriptions</span>
-            </h4>
-            <div className="space-y-3 text-xs">
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
-                <div>
-                  <span className="font-bold text-slate-800 block">Cardiology Follow-Up (ECG & Vitals Checked)</span>
-                  <span className="text-[11px] text-slate-500">AIIMS New Delhi • Dr. Rajesh Sharma • 28 Aug 2026</span>
-                </div>
-                <span className="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-md text-[10px]">
-                  Completed
-                </span>
-              </div>
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
-                <div>
-                  <span className="font-bold text-slate-800 block">General Medicine Seasonal Flu Checkup</span>
-                  <span className="text-[11px] text-slate-500">Safdarjung Hospital • Dr. Priya Patel • 15 Jul 2026</span>
-                </div>
-                <span className="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-md text-[10px]">
-                  Completed
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

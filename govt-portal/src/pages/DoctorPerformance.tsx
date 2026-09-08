@@ -79,6 +79,14 @@ export const DoctorPerformance: React.FC = () => {
           <p className="text-xs text-slate-400 max-w-2xl">
             Detailed breakdown of doctor talking courtesy, diagnosis explanation clarity, and punctuality collected from genuine patient OPD post-consultation surveys.
           </p>
+
+          {/* WHY THIS MATTERS: DOCTOR PERFORMANCE -> SALARY BONUS LINK MICROCOPY */}
+          <div className="mt-3 p-3 bg-amber-950/40 border border-amber-500/30 rounded-2xl flex items-center gap-2.5 text-xs text-amber-200">
+            <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+            <span>
+              <strong>Why this matters:</strong> Linking citizen survey ratings directly to statutory DPI formulas eliminates doctor absenteeism and bedside neglect. High performers earn up to +15% monthly merit bonuses, while substandard adherence triggers automatic audit reviews.
+            </span>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">

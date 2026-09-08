@@ -85,11 +85,19 @@ export const Dashboard: React.FC = () => {
       
       {/* Top Banner: Statutory Mission Declaration */}
       <div className="bg-gradient-to-r from-amber-500/15 via-slate-900 to-slate-900 border border-amber-500/30 rounded-3xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="space-y-1">
+        <div className="space-y-2">
           <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
             <Scale className="w-4 h-4" />
             <span>Statutory Mediator & Vigilance Sentinel</span>
           </div>
+
+          {/* 1-Paragraph Who is this for / What problem does this solve (Judge Overview) */}
+          <div className="p-3.5 rounded-2xl bg-amber-950/40 border border-amber-500/30 max-w-2xl">
+            <p className="text-xs text-amber-200 leading-relaxed">
+              <strong>Who is this for:</strong> MoHFW directors, Chief Medical Officers (CMO), and hospital superintendents. <strong>What problem it solves:</strong> Eliminates hospital queue corruption, detects ghost tokens and queue-jumping at turnstiles, and algorithmically links doctor bedside manner and consultation punctuality directly to monthly government salary bonuses.
+            </p>
+          </div>
+
           <h2 className="text-xl sm:text-2xl font-black text-white">
             Hospital Queue Sentinel & Doctor Behavioral Surveillance
           </h2>
@@ -101,7 +109,7 @@ export const Dashboard: React.FC = () => {
         <button
           onClick={fetchData}
           disabled={loading}
-          className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs transition flex items-center gap-1.5 shadow-md self-start md:self-auto cursor-pointer"
+          className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs transition flex items-center gap-1.5 shadow-md self-start md:self-auto cursor-pointer shrink-0"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           <span>Audit Now</span>

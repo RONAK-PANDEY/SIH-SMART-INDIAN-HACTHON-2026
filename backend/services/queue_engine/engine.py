@@ -59,8 +59,8 @@ class QueueEngine:
             if item.status == "WAITING":
                 item.priority_score = PriorityCalculator.calculate(item.issued_at, item.triage_level, item.vulnerability)
         
-        # Sort descending by priority score
-        self._queues[key].sort(key=lambda x: x.priority_score, reverse=True)
+        # Sort descending by priority score, with deterministic tie-breaking on arrival time (earlier arrival first)
+        self._queues[key].sort(key=lambda x: (-x.priority_score, x.issued_at.replace(tzinfo=None) if hasattr(x.issued_at, 'replace') else x.issued_at))
 
     def pop_next(self, hospital_id: str, department_id: str) -> Optional[QueueTokenItem]:
         key = self._get_key(hospital_id, department_id)

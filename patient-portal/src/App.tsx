@@ -15,6 +15,7 @@ import { Ambulance } from './pages/Ambulance';
 import { Referral } from './pages/Referral';
 import { Profile } from './pages/Profile';
 import { Navbar } from './components/Navbar';
+import { ChatbotWidget } from './components/ChatbotWidget';
 import { I18nProvider } from './i18n';
 
 export const App: React.FC = () => {
@@ -39,6 +40,7 @@ export const App: React.FC = () => {
             <Route path="/profile" element={<Profile />} />
           </Routes>
           <Navbar />
+          <ChatbotWidget />
         </div>
       </Router>
     </I18nProvider>

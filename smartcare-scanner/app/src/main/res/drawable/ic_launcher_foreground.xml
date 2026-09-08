@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- QR Corner Viewfinder Brackets (cyan teal) -->
+    <!-- Top-left corner -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="3.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M32,41 L32,34 A3,3 0 0,1 35,31 L42,31" />
+    <!-- Top-right corner -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="3.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M66,31 L73,31 A3,3 0 0,1 76,34 L76,41" />
+    <!-- Bottom-left corner -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="3.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M32,67 L32,74 A3,3 0 0,0 35,77 L42,77" />
+    <!-- Bottom-right corner -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="3.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M66,77 L73,77 A3,3 0 0,0 76,74 L76,67" />
+
+    <!-- Center Medical Cross (pure white with rounded caps) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M51,41 H57 A2,2 0 0,1 59,43 V49 H65 A2,2 0 0,1 67,51 V57 A2,2 0 0,1 65,59 H59 V65 A2,2 0 0,1 57,67 H51 A2,2 0 0,1 49,65 V59 H43 A2,2 0 0,1 41,57 V51 A2,2 0 0,1 43,49 H49 V43 A2,2 0 0,1 51,41 Z" />
+
+    <!-- Scanning Laser Beam -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#38EF7D"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M36,54 L72,54" />
+</vector>
