@@ -33,7 +33,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRefresh, loading }) => {
               </span>
             </div>
             <h1 className="text-base font-extrabold text-white tracking-tight">
-              National OPD Vigilance & Doctor Salary Bonus Oversight Console
+              National Healthcare Vigilance & Doctor Recognition Oversight Console
             </h1>
           </div>
         </div>

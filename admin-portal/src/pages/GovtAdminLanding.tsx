@@ -52,7 +52,7 @@ export const GovtAdminLanding: React.FC = () => {
         role: 'counter',
         designation: 'OPD Registration & Token Operator',
         hospital: 'Safdarjung Hospital',
-        redirect: '/counter-desk'
+        redirect: '/doctor-panel'
       };
     } else if (selectedRole === 'admin') {
       empData = {
@@ -60,7 +60,7 @@ export const GovtAdminLanding: React.FC = () => {
         role: 'admin',
         designation: 'Medical Superintendent & Administrator',
         hospital: 'National Hospital Network',
-        redirect: '/dashboard'
+        redirect: '/doctor-panel'
       };
     } else if (selectedRole === 'ambulance') {
       empData = {
@@ -68,12 +68,14 @@ export const GovtAdminLanding: React.FC = () => {
         role: 'ambulance',
         designation: '108 Central Dispatch Controller',
         hospital: 'Delhi Emergency EMS Command',
-        redirect: '/ambulance-fleet'
+        redirect: '/doctor-panel'
       };
     }
 
     localStorage.setItem('smartcare_admin_employee', JSON.stringify(empData));
-    window.location.href = empData.redirect;
+    localStorage.setItem('smartcare_staff', JSON.stringify(empData));
+    localStorage.setItem('smartcare_auth', 'true');
+    window.location.href = '/doctor-panel';
   };
 
   return (
@@ -104,18 +106,10 @@ export const GovtAdminLanding: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline-flex items-center gap-1.5 bg-emerald-500/15 text-emerald-400 px-3 py-1 rounded-full text-xs font-semibold border border-emerald-500/30">
+            <span className="inline-flex items-center gap-1.5 bg-emerald-500/15 text-emerald-400 px-3 py-1 rounded-full text-xs font-semibold border border-emerald-500/30">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
               Secure Staff Network Active
             </span>
-            <a
-              href="http://localhost:5175"
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs font-bold text-amber-400 hover:text-amber-300 bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-lg transition"
-            >
-              Govt Observer Portal (Port 5175) →
-            </a>
           </div>
         </div>
       </header>

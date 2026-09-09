@@ -25,7 +25,7 @@ export const Sidebar: React.FC = () => {
 
   const oversightItems = [
     { label: 'Doctor Performance & Ratings', icon: Stethoscope, path: '/doctor-performance' },
-    { label: 'Doctor Incentive Engine', icon: Coins, path: '/salary-bonus' },
+    { label: 'Doctor Recognition Index (DRI)', icon: Coins, path: '/salary-bonus' },
     { label: 'Citizen Grievances', icon: Scale, path: '/grievances' },
     { label: 'Hospital Network', icon: Building2, path: '/hospitals' },
   ];
@@ -34,13 +34,13 @@ export const Sidebar: React.FC = () => {
     <aside className="w-68 bg-slate-950 text-slate-300 min-h-screen flex flex-col p-4 border-r border-slate-800 shrink-0 overflow-y-auto">
       
       {/* Oversight Authority Badge */}
-      <div className="p-3 mb-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-850 border border-slate-800 text-xs">
+      <div className="p-3 mb-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-855 border border-slate-800 text-xs">
         <div className="flex items-center gap-2 text-amber-400 font-bold mb-1">
           <Radio className="w-3.5 h-3.5 animate-pulse" />
           <span>GOVERNMENT OBSERVER CONSOLE</span>
         </div>
         <p className="text-[11px] text-slate-400 leading-tight">
-          Central statutory vigilance overseeing patient queue flow, token turnstiles, and doctor performance bonuses.
+          Central statutory vigilance overseeing patient queue flow, token turnstiles, and doctor recognition metrics.
         </p>
       </div>
 
