@@ -96,7 +96,7 @@ class GeminiMultiKeyRouter:
             
             try:
                 # Call Google Gemini API (gemini-1.5-flash)
-                url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={slot.key_value}"
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={slot.key_value}"
                 payload = {
                     "contents": [
                         {
@@ -107,7 +107,7 @@ class GeminiMultiKeyRouter:
                     ]
                 }
 
-                async with httpx.AsyncClient(timeout=10.0) as client:
+                async with httpx.AsyncClient(verify=False, timeout=30.0) as client:
                     resp = await client.post(url, json=payload)
                     if resp.status_code == 200:
                         data = resp.json()
