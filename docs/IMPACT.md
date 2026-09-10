@@ -1,11 +1,11 @@
-# 📈 SmartCare Impact Assessment, Success Metrics & ROI
+#  SmartCare Impact Assessment, Success Metrics & ROI
 
 > **SIH 2026 Problem Statement**: SIH26133 | **System Version**: v3.0.0  
 > **Prepared for**: Ministry of Health & Family Welfare (MoHFW) & NITI Aayog Evaluators
 
 ---
 
-## 🎯 Executive Summary
+##  Executive Summary
 
 SmartCare is engineered to eliminate the systemic OPD bottlenecks plaguing India's 750+ district hospitals and 25,000+ primary/community health centres (PHCs/CHCs). By replacing chaotic physical queues with AI-directed triage, anti-ghost QR turnstiles, and transparent doctor incentives, SmartCare delivers measurable clinical, operational, and financial returns on investment (ROI).
 
@@ -13,17 +13,17 @@ SmartCare is engineered to eliminate the systemic OPD bottlenecks plaguing India
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        CORE IMPACT AT A GLANCE                         │
 ├─────────────────────────┬────────────────────────┬─────────────────────┤
-│ ⏱️ Wait Time Reduction  │ 85.5% Drop             │ 180 min ➔ 26 min    │
-│ 🛡️ Queue Jumping        │ 100% Eliminated        │ 38% ➔ 0.0%          │
-│ 👻 Ghost Tokens         │ 90.0% Reduction        │ 28% ➔ 2.8%          │
-│ 💰 Cost Savings         │ ₹72.2 Lakhs / Hospital │ ₹541 Cr Nationally  │
-│ ⭐ Citizen Satisfaction │ 119% Increase          │ 2.1 ➔ 4.6 / 5.0     │
+│    Wait Time Reduction  │ 85.5% Drop             │ 180 min ➔ 26 min    │
+│    Queue Jumping        │ 100% Eliminated        │ 38% ➔ 0.0%          │
+│    Ghost Tokens         │ 90.0% Reduction        │ 28% ➔ 2.8%          │
+│    Cost Savings         │ ₹72.2 Lakhs / Hospital │ ₹541 Cr Nationally  │
+│    Citizen Satisfaction │ 119% Increase          │ 2.1 ➔ 4.6 / 5.0     │
 └─────────────────────────┴────────────────────────┴─────────────────────┘
 ```
 
 ---
 
-## ⏱️ 1. Projected Wait Time Reduction
+##  1. Projected Wait Time Reduction
 
 ### Before vs After SmartCare
 
@@ -47,7 +47,7 @@ SmartCare Digital OPD Journey (Total: ~28 minutes)
 
 ---
 
-## 🩺 2. Clinical & Doctor Efficiency Gains
+##  2. Clinical & Doctor Efficiency Gains
 
 ### Elimination of Ghost Patients & No-Shows
 
@@ -85,7 +85,7 @@ In standard Indian public hospitals, 25% to 30% of OPD token holders abandon the
 
 ---
 
-## 🏛️ 3. Government Accountability & DPI Tracking
+##  3. Government Accountability & DPI Tracking
 
 SmartCare introduces the first automated, citizen-audited governance loop in India's public health administration:
 
@@ -110,7 +110,7 @@ Where:
 
 ---
 
-## 💰 4. Financial Cost Savings & ROI Model
+##  4. Financial Cost Savings & ROI Model
 
 ### Annual Savings Breakdown per Typical District Hospital (500-Bed, 2,000 OPD/Day)
 
@@ -134,7 +134,7 @@ Where:
 
 ---
 
-## 🌟 5. Social & Qualitative Return on Investment (S-ROI)
+##  5. Social & Qualitative Return on Investment (S-ROI)
 
 Beyond monetary savings, SmartCare addresses critical social determinants of health:
 
