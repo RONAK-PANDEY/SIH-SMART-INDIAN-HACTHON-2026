@@ -366,9 +366,20 @@ cd govt-portal && npx vercel --prod
 
 ---
 
-##  Video Demo
+## 🎥 Video Demo
 
-Watch the complete live video walkthrough of the SmartCare SIH26133 ecosystem:
+Watch the live video walkthroughs of the SmartCare SIH26133 ecosystem:
+
+<p align="center">
+  <a href="https://youtu.be/5lo4N6f5Wzg?si=QXpxGRpMQ4XfA89y" target="_blank">
+    <img src="https://img.youtube.com/vi/5lo4N6f5Wzg/hqdefault.jpg" alt="SmartCare Complete System Walkthrough" style="width: 100%; max-width: 860px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #30363d;" />
+  </a>
+  <br/>
+  <h3><a href="https://youtu.be/5lo4N6f5Wzg?si=QXpxGRpMQ4XfA89y" target="_blank">▶️ Watch: Complete Full-Stack System Walkthrough (All Portals & Hardware Scanner)</a></h3>
+  <sub><b>Comprehensive 360° Evaluation:</b> Covers the complete end-to-end loop — Citizen AI triage, cryptographic QR token pass issuance, physical turnstile gate scan verification, live doctor consultation desk "AT DOOR" updates, and national MoHFW vigilance audit.</sub>
+</p>
+
+### Specialized Deep-Dive Walkthroughs
 
 <table>
   <tr>
@@ -377,7 +388,7 @@ Watch the complete live video walkthrough of the SmartCare SIH26133 ecosystem:
         <img src="https://img.youtube.com/vi/7UB7GF05wXQ/maxresdefault.jpg" alt="Patient Portal & AI Triage Video Walkthrough" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
       </a>
       <br/>
-      <h4><a href="https://youtu.be/7UB7GF05wXQ?si=JIkmr-HIjUOTUFmU" target="_blank">▶️ Watch: Citizen / Patient Portal Walkthrough</a></h4>
+      <h4><a href="https://youtu.be/7UB7GF05wXQ?si=JIkmr-HIjUOTUFmU" target="_blank">▶️ Deep-Dive: Citizen / Patient Portal</a></h4>
       <p align="left">
         <sub><b>Key Highlights:</b> AI-driven symptom triage • Real-time emergency detection • Cryptographic SHA-256 QR token generation • 11 Indian language switchers • Emergency 108 SOS dispatch.</sub>
       </p>
@@ -387,7 +398,7 @@ Watch the complete live video walkthrough of the SmartCare SIH26133 ecosystem:
         <img src="https://img.youtube.com/vi/SVS6n4_AQyE/maxresdefault.jpg" alt="Doctor / Clinical Console Video Walkthrough" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
       </a>
       <br/>
-      <h4><a href="https://youtu.be/SVS6n4_AQyE?si=C_7klp1zQuRxKevs" target="_blank">▶️ Watch: Doctor & Clinical Console Walkthrough</a></h4>
+      <h4><a href="https://youtu.be/SVS6n4_AQyE?si=C_7klp1zQuRxKevs" target="_blank">▶️ Deep-Dive: Doctor & Clinical Console</a></h4>
       <p align="left">
         <sub><b>Key Highlights:</b> Live patient calling desk • Real-time <b>"AT DOOR"</b> gate scan badge update via WebSocket • E-Prescription writer • Diagnostic lab order dispatcher • Consultation completion & DPI rating.</sub>
       </p>
