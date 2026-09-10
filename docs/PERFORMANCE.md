@@ -1,4 +1,4 @@
-# 📊 SmartCare Performance Benchmarks
+#  SmartCare Performance Benchmarks
 
 > **Version**: v3.0.0 | **Test Date**: September 2026  
 > **Environment**: Intel i7-12th Gen, 16GB RAM, Windows 11, Python 3.11, Node 18  
