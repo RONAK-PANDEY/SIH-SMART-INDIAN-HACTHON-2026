@@ -1,4 +1,4 @@
-# 🔒 SmartCare Security Architecture & Compliance Documentation
+#  SmartCare Security Architecture & Compliance Documentation
 
 > **Version**: v3.0.0 | **Problem Statement**: SIH26133  
 > **Classification**: Public — Approved for SIH 2026 evaluation  
