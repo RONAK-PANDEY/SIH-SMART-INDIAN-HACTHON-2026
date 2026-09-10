@@ -4,6 +4,17 @@
 
 ---
 
+## 🎥 Live Video Demonstrations
+
+Watch the video walkthroughs of the SmartCare system in action:
+
+| Portal | Video Link | Highlights |
+|---|---|---|
+| **Patient Portal Walkthrough** | [▶️ **Watch on YouTube**](https://youtu.be/7UB7GF05wXQ?si=JIkmr-HIjUOTUFmU) | AI symptom triage, token generation, 11 languages, 108 emergency SOS |
+| **Doctor Portal Walkthrough** | [▶️ **Watch on YouTube**](https://youtu.be/SVS6n4_AQyE?si=C_7klp1zQuRxKevs) | Live calling desk, real-time "AT DOOR" status updates, E-Rx, lab orders & visit completion |
+
+---
+
 ##  60-Second End-to-End Demo Script
 
 Follow this exact click-path during judge evaluations to demonstrate the **entire cross-portal loop** in under 60 seconds:

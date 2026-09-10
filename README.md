@@ -26,6 +26,7 @@
   <a href="#-features">Features</a> •
   <a href="#-architecture">Architecture</a> •
   <a href="#-api-reference">API Reference</a> •
+  <a href="#-video-demo">Video Demo</a> •
   <a href="#-live-demo--ui-showcase">Demo</a> •
   <a href="docs/DEPLOYMENT.md">Deployment Guide</a> •
   <a href="docs/IMPACT.md">ROI & Impact</a> •
@@ -364,6 +365,21 @@ cd govt-portal && npx vercel --prod
 ```
 
 ---
+
+## 🎥 Video Demo
+
+Watch the complete live video walkthrough of the SmartCare SIH26133 ecosystem:
+
+| Walkthrough Video | YouTube Link | Description |
+|---|---|---|
+| **Patient Portal & AI Triage Walkthrough** | [▶️ **Watch Patient Portal Demo**](https://youtu.be/7UB7GF05wXQ?si=JIkmr-HIjUOTUFmU) | End-to-end citizen experience: AI symptom triage, dynamic SHA-256 QR token generation, multilingual support & 108 emergency SOS. |
+| **Doctor / Clinical Console Walkthrough** | [▶️ **Watch Doctor Portal Demo**](https://youtu.be/SVS6n4_AQyE?si=C_7klp1zQuRxKevs) | Doctor calling desk, real-time "AT DOOR" gate scan updates via WebSocket, digital Rx writing, lab orders & consultation completion. |
+
+### End-to-End Evaluation Flow:
+1. **Patient AI Triage → Token Generation:** Citizen selects symptoms, AI determines urgency (P1–P4), routes to clinical department, and generates a tamper-proof SHA-256 QR pass.
+2. **Turnstile QR Gate Scan Verification:** Hospital entrance scanner (or Android scanner app) validates token cryptographic signature via `/api/v1/tokens/scan`.
+3. **Doctor Console "AT DOOR" Badge Update:** Live WebSocket instantly notifies the doctor's queue that the patient has arrived and cleared the gate.
+4. **Government DPI Bonus Calculation:** MoHFW sentinel dashboard computes Doctor Performance Index (DPI) and automatically calculates monthly +15% performance bonuses.
 
 ##  Live Demo & UI Showcase
 
