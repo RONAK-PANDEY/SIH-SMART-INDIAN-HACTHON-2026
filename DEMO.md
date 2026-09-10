@@ -10,7 +10,7 @@ Watch the video walkthroughs of the SmartCare system in action:
 
 <p align="center">
   <a href="https://youtu.be/5lo4N6f5Wzg?si=QXpxGRpMQ4XfA89y" target="_blank">
-    <img src="https://img.youtube.com/vi/5lo4N6f5Wzg/hqdefault.jpg" alt="SmartCare Complete System Walkthrough" style="width: 100%; max-width: 820px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);" />
+    <img src="docs/screenshots/video_complete_walkthrough.png" alt="SmartCare Complete System Walkthrough" style="width: 100%; max-width: 820px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);" />
   </a>
   <br/>
   <b><a href="https://youtu.be/5lo4N6f5Wzg?si=QXpxGRpMQ4XfA89y" target="_blank">▶️ Full End-to-End System Walkthrough (Complete Demo)</a></b>

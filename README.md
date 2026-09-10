@@ -372,7 +372,7 @@ Watch the live video walkthroughs of the SmartCare SIH26133 ecosystem:
 
 <p align="center">
   <a href="https://youtu.be/5lo4N6f5Wzg?si=QXpxGRpMQ4XfA89y" target="_blank">
-    <img src="https://img.youtube.com/vi/5lo4N6f5Wzg/hqdefault.jpg" alt="SmartCare Complete System Walkthrough" style="width: 100%; max-width: 860px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #30363d;" />
+    <img src="docs/screenshots/video_complete_walkthrough.png" alt="SmartCare Complete System Walkthrough" style="width: 100%; max-width: 860px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #30363d;" />
   </a>
   <br/>
   <h3><a href="https://youtu.be/5lo4N6f5Wzg?si=QXpxGRpMQ4XfA89y" target="_blank">▶️ Watch: Complete Full-Stack System Walkthrough (All Portals & Hardware Scanner)</a></h3>
