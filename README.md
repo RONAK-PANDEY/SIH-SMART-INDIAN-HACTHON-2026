@@ -511,7 +511,7 @@ SmartCare is open source software developed for the **Smart India Hackathon (SIH
 
 ---
 
-## 📽️ Official Presentation & Pitch Deck
+##  Official Presentation & Pitch Deck
 
 The official presentation slides for **SmartCare (Team Quantum Coders)** submitted for the **Smart India Hackathon 2026 (Problem Statement: SIH26133)** are showcased below with interactive viewing and download options:
 
