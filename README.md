@@ -406,26 +406,38 @@ Cryptographically signed SHA-256 scannable QR pass with live 4-stage lifecycle t
 ---
 
 ### 🩺 Doctor Consultation Console (`:5174`)
-*(Screenshots coming soon)*
 
-<!-- INSERT SCREENSHOT: Doctor Live Calling Desk with real-time AT DOOR badge -->
-<!-- INSERT SCREENSHOT: Clinical Consultation, Digital Rx & Longitudinal EMR -->
+Specialist workflow suite eliminating no-shows, synchronizing entrance turnstile scans in real time, and tracking consultation quality:
+
+![Doctor Live Calling Desk & AT-DOOR Turnstile Sync](docs/screenshots/doctor/01_doctor_consultation_console.png)
+
+- **Real-Time Turnstile Notification**: Displays instant blue banner when security scans incoming citizens (*"Token CARD-928 scanned by STAFF-DESK-01. Patient verified and waiting at door."*).
+- **Acuity & Gate Status Indicators**: Highlights prioritized patients with `P2 - SCANNED AT DOOR (VERIFIED)` and `Inside Chamber` status.
+- **Synchronized Chamber Queue**: Live ordering list displays patients physically present with green `AT DOOR` badges, eliminating doctor idle time caused by missing patients.
+- **Clinical Performance Tracking**: Real-time metrics tracking average consultation duration (6.2m vs 8m target), daily patient throughput (23 completed), and the doctor's live **Doctor Recognition Index (DRI: 4.85 ★ Gold Tier)**.
 
 ---
 
 ### 🏛️ Government Vigilance & Sentinel Command Dashboard (`:5175`)
-*(Screenshots coming soon)*
 
-<!-- INSERT SCREENSHOT: Sentinel Command Dashboard with National OPD Congestion Heatmap -->
-<!-- INSERT SCREENSHOT: Doctor Performance Index (DPI) & Salary Bonus Engine (+15%) -->
+National OPD oversight console for Ministry of Health & Family Welfare (MoHFW) directors, Chief Medical Officers (CMO), and hospital ombudsmen:
+
+![Government Vigilance & Sentinel Command Dashboard](docs/screenshots/govt/01_govt_sentinel_dashboard.png)
+
+- **Live Sentinel Compliance Metrics**: Real-time network-wide monitoring across AIIMS and apex hospitals (`96.4% Network Compliance`, `28 Active OPD Queues`, `2 Flagged Queue Anomalies`).
+- **Real-Time Vigilance Event Stream**: Live WebSocket event feed monitoring queue subscriptions, connections, and automated anomaly code detection (`WWT_TIME_EXCEEDED` with one-click `Dispatch Flash Inspection`).
+- **Doctor Recognition Index (DRI) National Leaderboard**: Transparent ranking of clinical specialists based on direct citizen feedback and consultation compliance (Gold tier vs Under Review), directly driving performance bonus incentives (+15%).
 
 ---
 
 ### 📱 Android Turnstile QR Scanner (Hardware Gate Verification)
-*(Screenshots coming soon)*
 
-<!-- INSERT SCREENSHOT: CameraX ML Kit Barcode Scanner Interface -->
-<!-- INSERT SCREENSHOT: Cryptographic SHA-256 Pass Verification & Turnstile Unlock -->
+Native Kotlin + Jetpack Compose turnstile terminal app with Google ML Kit barcode scanning and SHA-256 cryptographic verification:
+
+| Camera Viewfinder (Physical Turnstile) | Instant Cryptographic Verification |
+|:---:|:---:|
+| ![Android Scanner Viewfinder](docs/screenshots/scanner/01_scanner_camera_viewfinder.png) | ![Android Token Verified Success](docs/screenshots/scanner/02_scanner_token_verified.png) |
+| **High-Density QR Scan Viewfinder**<br>Point-and-shoot CameraX scanner linked to terminal `STAFF-DESK-01` targeting token `CARD-928` with auto-focus and low-latency frame analysis. | **Instant SHA-256 Gate Authorization**<br>Verifies token authenticity (`tok_8cba54f5`), confirms department (`dept-cardio`), unlocks turnstile gate, and broadcasts WebSocket event to doctor console. |
 
 ---
 

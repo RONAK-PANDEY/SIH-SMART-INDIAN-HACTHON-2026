@@ -78,8 +78,9 @@ curl -X POST "http://localhost:8000/api/v1/tokens/scan" \
 - Expired token rejection (`TOKEN_EXPIRED` error)
 - Real-time WebSocket propagation to doctor console
 
-<!-- INSERT SCREENSHOT: Android Scanner - Camera View with QR -->
-<!-- INSERT SCREENSHOT: Android Scanner - "TOKEN VERIFIED" Success Screen -->
+| Camera Viewfinder | Token Verified Success |
+|:---:|:---:|
+| ![Android Scanner Viewfinder](docs/screenshots/scanner/01_scanner_camera_viewfinder.png) | ![Android Token Verified Success](docs/screenshots/scanner/02_scanner_token_verified.png) |
 
 ---
 
@@ -88,7 +89,7 @@ curl -X POST "http://localhost:8000/api/v1/tokens/scan" \
 **Portal**: Doctor Console at [http://localhost:5174/doctor-panel](http://localhost:5174/doctor-panel)
 
 1. Open the Doctor Console (Dr. Rajesh Sharma, AIIMS Cardiology Chamber 204).
-2. See `CARD-201 (Suresh Patel)` at the **top of the queue** with green **"AT DOOR"** badge.
+2. See `CARD-928` at the **top of the queue** with green **"AT DOOR"** badge.
    - This badge appeared **instantly** when the turnstile scan happened in Step 2.
 3. Doctor reviews patient info and enters clinical notes:
    - *"Stable Angina CCS-II, Tab Sorbitrate prescribed"*
@@ -102,8 +103,8 @@ curl -X POST "http://localhost:8000/api/v1/tokens/scan" \
 - Cross-portal state synchronization
 - Digital prescription capability
 
-<!-- INSERT SCREENSHOT: Doctor Console - Queue with "AT DOOR" Badge -->
-<!-- INSERT SCREENSHOT: Doctor Console - Clinical Notes Entry -->
+![Doctor Console - Live Calling Desk & AT-DOOR Turnstile Sync](docs/screenshots/doctor/01_doctor_consultation_console.png)
+<!-- INSERT SCREENSHOT: Clinical Notes Entry -->
 <!-- INSERT SCREENSHOT: Patient Portal - "Consultation Completed" Modal -->
 
 ---
@@ -115,10 +116,10 @@ curl -X POST "http://localhost:8000/api/v1/tokens/scan" \
 1. On Patient Portal, patient clicks **"Submit Doctor Rating"** → Gives **5 Stars ★★★★★**.
 2. Switch to Govt Vigilance Portal at [http://localhost:5175](http://localhost:5175).
 3. **Sentinel Command Dashboard** shows:
-   - Live OPD metrics across all hospitals
-   - Real-time patient flow visualization
+   - Live OPD metrics across all hospitals (96.4% Network Compliance, 28 Active OPD Queues)
+   - Real-time patient flow and live queue vigilance feed
 4. Navigate to [http://localhost:5175/doctor-performance](http://localhost:5175/doctor-performance):
-   - Dr. Rajesh Sharma's DPI (Doctor Performance Index) updated
+   - Dr. Rajesh Sharma's DPI (Doctor Performance Index) updated (4.85 Gold Tier)
    - Bonus eligibility calculated: **+15% salary bonus** for Grade A performance
 5. Navigate to Grievance Tribunal (if applicable).
 
@@ -128,8 +129,7 @@ curl -X POST "http://localhost:8000/api/v1/tokens/scan" \
 - National-level oversight capability
 - Data-driven governance
 
-<!-- INSERT SCREENSHOT: Patient Portal - Doctor Rating Survey (5 Stars) -->
-<!-- INSERT SCREENSHOT: Govt Vigilance - Sentinel Command Dashboard -->
+![Govt Vigilance - Sentinel Command Dashboard](docs/screenshots/govt/01_govt_sentinel_dashboard.png)
 <!-- INSERT SCREENSHOT: Govt Vigilance - Doctor Performance Index Table -->
 <!-- INSERT SCREENSHOT: Govt Vigilance - Bonus Disbursement Panel -->
 
@@ -154,35 +154,31 @@ curl -X POST "http://localhost:8000/api/v1/tokens/scan" \
 
 ### Doctor Console (`:5174`)
 
-| Screen | Description | Filename |
-|--------|-------------|----------|
-| Login | Doctor duty authentication | `doctor_login.png` |
-| Queue Panel | Live patient queue with priority ordering | `doctor_queue.png` |
-| AT DOOR Badge | Turnstile-verified patient indicator | `doctor_at_door.png` |
-| Consultation | Clinical notes + E-Prescription writer | `doctor_consultation.png` |
-| Patient EMR | Longitudinal electronic medical record | `doctor_emr.png` |
-| Referral | Inter-hospital referral interface | `doctor_referral.png` |
+| Screen | Description | File Path | Status |
+|--------|-------------|-----------|--------|
+| **Consultation Console & Queue** | Live calling desk with AT DOOR turnstile sync & DRI badge | `docs/screenshots/doctor/01_doctor_consultation_console.png` | ✅ Uploaded |
+| Login | Doctor duty authentication | `docs/screenshots/doctor/doctor_login.png` | ⏳ Pending |
+| Patient EMR | Longitudinal electronic medical record | `docs/screenshots/doctor/doctor_emr.png` | ⏳ Pending |
+| Referral | Inter-hospital referral interface | `docs/screenshots/doctor/doctor_referral.png` | ⏳ Pending |
 
 ### Government Vigilance Portal (`:5175`)
 
-| Screen | Description | Filename |
-|--------|-------------|----------|
-| Sentinel Dashboard | National OPD command center | `govt_dashboard.png` |
-| Doctor Performance | DPI index with ratings breakdown | `govt_dpi.png` |
-| Bonus Engine | Salary bonus calculation panel | `govt_bonus.png` |
-| Grievance Tribunal | Citizen complaint management | `govt_grievance.png` |
-| NCR Heatmap | Geographic congestion visualization | `govt_heatmap.png` |
-| 108 Fleet Map | Ambulance fleet tracking | `govt_fleet.png` |
-| Live Scan Feed | Real-time turnstile scan activity | `govt_scan_feed.png` |
+| Screen | Description | File Path | Status |
+|--------|-------------|-----------|--------|
+| **Sentinel Command Dashboard** | National OPD surveillance, compliance metrics & live feed | `docs/screenshots/govt/01_govt_sentinel_dashboard.png` | ✅ Uploaded |
+| Bonus Engine | Salary bonus calculation panel | `docs/screenshots/govt/govt_bonus.png` | ⏳ Pending |
+| Grievance Tribunal | Citizen complaint management | `docs/screenshots/govt/govt_grievance.png` | ⏳ Pending |
+| NCR Heatmap | Geographic congestion visualization | `docs/screenshots/govt/govt_heatmap.png` | ⏳ Pending |
+| 108 Fleet Map | Ambulance fleet tracking | `docs/screenshots/govt/govt_fleet.png` | ⏳ Pending |
 
 ### Android QR Scanner
 
-| Screen | Description | Filename |
-|--------|-------------|----------|
-| Camera View | QR scanning with overlay | `scanner_camera.png` |
-| Success | Token verified confirmation | `scanner_success.png` |
-| Settings | Backend URL configuration | `scanner_settings.png` |
-| Error | Invalid/expired token rejection | `scanner_error.png` |
+| Screen | Description | File Path | Status |
+|--------|-------------|-----------|--------|
+| **Camera Viewfinder** | High-density QR scanner with CameraX & ML Kit auto-focus | `docs/screenshots/scanner/01_scanner_camera_viewfinder.png` | ✅ Uploaded |
+| **Token Verified Success** | Cryptographic SHA-256 validation & gate unlock confirmation | `docs/screenshots/scanner/02_scanner_token_verified.png` | ✅ Uploaded |
+| Settings | Backend URL configuration | `docs/screenshots/scanner/scanner_settings.png` | ⏳ Pending |
+| Error | Invalid/expired token rejection | `docs/screenshots/scanner/scanner_error.png` | ⏳ Pending |
 
 ---
 
