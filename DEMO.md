@@ -1,10 +1,10 @@
-# 🎬 SmartCare — Live Demo & Screenshots Guide
+#  SmartCare — Live Demo & Screenshots Guide
 
 > **For SIH 2026 Judges** | Problem Statement: SIH26133 | Ministry of Health & Family Welfare
 
 ---
 
-## ⏱️ 60-Second End-to-End Demo Script
+##  60-Second End-to-End Demo Script
 
 Follow this exact click-path during judge evaluations to demonstrate the **entire cross-portal loop** in under 60 seconds:
 
@@ -135,7 +135,7 @@ curl -X POST "http://localhost:8000/api/v1/tokens/scan" \
 
 ---
 
-## 📸 Screenshot Placeholders
+##  Screenshot Placeholders
 
 > **Instructions**: Replace each placeholder below with actual screenshots. Save images in `docs/screenshots/` and update the paths.
 
@@ -182,7 +182,7 @@ curl -X POST "http://localhost:8000/api/v1/tokens/scan" \
 
 ---
 
-## 📊 Before/After: OPD Efficiency Comparison
+##  Before/After: OPD Efficiency Comparison
 
 | Metric | Before SmartCare | After SmartCare | Improvement |
 |--------|-----------------|-----------------|-------------|
@@ -197,14 +197,14 @@ curl -X POST "http://localhost:8000/api/v1/tokens/scan" \
 
 ---
 
-## 🎥 Video Demo
+##  Video Demo
 
 <!-- INSERT: Link to video demo (YouTube / Google Drive / Loom) -->
-> **📹 Video Demo**: *[Link to be added after recording]*
+> ** Video Demo**: *[Link to be added after recording]*
 
 ---
 
-## 💡 Key Talking Points for Judges
+##  Key Talking Points for Judges
 
 1. **Real-time cross-portal synchronization** — All 4 portals update within 50ms via WebSocket
 2. **Cryptographic anti-fraud** — SHA-256 signed QR tokens, not simple barcodes
