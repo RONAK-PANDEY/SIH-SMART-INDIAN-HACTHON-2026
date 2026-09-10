@@ -370,16 +370,38 @@ cd govt-portal && npx vercel --prod
 
 Watch the complete live video walkthrough of the SmartCare SIH26133 ecosystem:
 
-| Walkthrough Video | YouTube Link | Description |
-|---|---|---|
-| **Patient Portal & AI Triage Walkthrough** | [▶️ **Watch Patient Portal Demo**](https://youtu.be/7UB7GF05wXQ?si=JIkmr-HIjUOTUFmU) | End-to-end citizen experience: AI symptom triage, dynamic SHA-256 QR token generation, multilingual support & 108 emergency SOS. |
-| **Doctor / Clinical Console Walkthrough** | [▶️ **Watch Doctor Portal Demo**](https://youtu.be/SVS6n4_AQyE?si=C_7klp1zQuRxKevs) | Doctor calling desk, real-time "AT DOOR" gate scan updates via WebSocket, digital Rx writing, lab orders & consultation completion. |
+<table>
+  <tr>
+    <td width="50%" align="center" style="vertical-align: top;">
+      <a href="https://youtu.be/7UB7GF05wXQ?si=JIkmr-HIjUOTUFmU" target="_blank">
+        <img src="https://img.youtube.com/vi/7UB7GF05wXQ/maxresdefault.jpg" alt="Patient Portal & AI Triage Video Walkthrough" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+      </a>
+      <br/>
+      <h4><a href="https://youtu.be/7UB7GF05wXQ?si=JIkmr-HIjUOTUFmU" target="_blank">▶️ Watch: Citizen / Patient Portal Walkthrough</a></h4>
+      <p align="left">
+        <sub><b>Key Highlights:</b> AI-driven symptom triage • Real-time emergency detection • Cryptographic SHA-256 QR token generation • 11 Indian language switchers • Emergency 108 SOS dispatch.</sub>
+      </p>
+    </td>
+    <td width="50%" align="center" style="vertical-align: top;">
+      <a href="https://youtu.be/SVS6n4_AQyE?si=C_7klp1zQuRxKevs" target="_blank">
+        <img src="https://img.youtube.com/vi/SVS6n4_AQyE/maxresdefault.jpg" alt="Doctor / Clinical Console Video Walkthrough" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+      </a>
+      <br/>
+      <h4><a href="https://youtu.be/SVS6n4_AQyE?si=C_7klp1zQuRxKevs" target="_blank">▶️ Watch: Doctor & Clinical Console Walkthrough</a></h4>
+      <p align="left">
+        <sub><b>Key Highlights:</b> Live patient calling desk • Real-time <b>"AT DOOR"</b> gate scan badge update via WebSocket • E-Prescription writer • Diagnostic lab order dispatcher • Consultation completion & DPI rating.</sub>
+      </p>
+    </td>
+  </tr>
+</table>
 
-### End-to-End Evaluation Flow:
+### End-to-End Walkthrough Flow:
 1. **Patient AI Triage → Token Generation:** Citizen selects symptoms, AI determines urgency (P1–P4), routes to clinical department, and generates a tamper-proof SHA-256 QR pass.
 2. **Turnstile QR Gate Scan Verification:** Hospital entrance scanner (or Android scanner app) validates token cryptographic signature via `/api/v1/tokens/scan`.
 3. **Doctor Console "AT DOOR" Badge Update:** Live WebSocket instantly notifies the doctor's queue that the patient has arrived and cleared the gate.
 4. **Government DPI Bonus Calculation:** MoHFW sentinel dashboard computes Doctor Performance Index (DPI) and automatically calculates monthly +15% performance bonuses.
+
+---
 
 ##  Live Demo & UI Showcase
 
@@ -489,13 +511,52 @@ SmartCare is open source software developed for the **Smart India Hackathon (SIH
 
 ---
 
-##  Official Presentation & Pitch Deck
+## 📽️ Official Presentation & Pitch Deck
 
-The final presentation slides for **SmartCare (Team Quantum Coders)** for the **Smart India Hackathon 2026 (Problem Statement: SIH26133)** are available to view and download directly:
+The official presentation slides for **SmartCare (Team Quantum Coders)** submitted for the **Smart India Hackathon 2026 (Problem Statement: SIH26133)** are showcased below with interactive viewing and download options:
 
-| Resource | Link | Format |
+<p align="center">
+  <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/RONAK-PANDEY/SIH-SMART-INDIAN-HACTHON-2026/main/SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx" target="_blank">
+    <img src="docs/screenshots/presentation/Slide1.JPG" alt="SmartCare SIH 2026 Presentation Deck Cover" style="width: 85%; border-radius: 8px; border: 1px solid #30363d; box-shadow: 0 4px 16px rgba(0,0,0,0.2);" />
+  </a>
+  <br/>
+  <sub><i>Click slide frame above to open the complete presentation in the Online PowerPoint Viewer</i></sub>
+</p>
+
+### Slide Deck Previews
+
+<table>
+  <tr>
+    <td width="33%" align="center">
+      <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/RONAK-PANDEY/SIH-SMART-INDIAN-HACTHON-2026/main/SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx" target="_blank">
+        <img src="docs/screenshots/presentation/Slide2.JPG" alt="Slide 2: Proposed Solution Architecture" style="width: 100%; border-radius: 6px; border: 1px solid #e1e4e8;" />
+      </a>
+      <br/>
+      <small><b>Slide 2: Proposed Solution</b></small>
+    </td>
+    <td width="33%" align="center">
+      <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/RONAK-PANDEY/SIH-SMART-INDIAN-HACTHON-2026/main/SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx" target="_blank">
+        <img src="docs/screenshots/presentation/Slide3.JPG" alt="Slide 3: Technical Implementation" style="width: 100%; border-radius: 6px; border: 1px solid #e1e4e8;" />
+      </a>
+      <br/>
+      <small><b>Slide 3: Technical Approach</b></small>
+    </td>
+    <td width="33%" align="center">
+      <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/RONAK-PANDEY/SIH-SMART-INDIAN-HACTHON-2026/main/SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx" target="_blank">
+        <img src="docs/screenshots/presentation/Slide4.JPG" alt="Slide 4: System Architecture & DPI" style="width: 100%; border-radius: 6px; border: 1px solid #e1e4e8;" />
+      </a>
+      <br/>
+      <small><b>Slide 4: Architecture & DPI</b></small>
+    </td>
+  </tr>
+</table>
+
+### Access & Download Options
+
+| Action | Link | Format / Platform |
 |---|---|---|
-| **Direct Download (.pptx)** | [📥 **Download Presentation Deck (PPTX)**](https://github.com/RONAK-PANDEY/SIH-SMART-INDIAN-HACTHON-2026/raw/main/SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx) | Microsoft PowerPoint (.pptx, 292 KB) |
-| **Repository File** | [📄 `SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx`](./SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx) | GitHub PPTX Viewer |
+| **Online Interactive Viewer** | [🌐 **Open in Microsoft PowerPoint Online Viewer**](https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/RONAK-PANDEY/SIH-SMART-INDIAN-HACTHON-2026/main/SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx) | Browser / No software required |
+| **Direct Download** | [📥 **Download SIH 2026 Presentation Deck (.pptx)**](https://github.com/RONAK-PANDEY/SIH-SMART-INDIAN-HACTHON-2026/raw/main/SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx) | Microsoft PowerPoint (`.pptx`, 292 KB) |
+| **Repository File** | [📄 `SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx`](./SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx) | GitHub PPTX File |
 
-> **Note:** Click the direct download link above to download the slide deck directly to your system. The presentation covers problem statement analysis, technical architecture, multi-portal workflows, AI queue & triage engines, live Android scan verification loop, and national government vigilance metrics.
+> **Presentation Overview:** The deck articulates problem analysis for Indian public hospitals, end-to-end technical workflows, AI triage algorithms, multi-key Supabase & Gemini routing, turnstile anti-ghost verification, and national DPI oversight incentives.

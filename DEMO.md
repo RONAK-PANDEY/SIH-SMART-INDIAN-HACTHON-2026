@@ -8,10 +8,24 @@
 
 Watch the video walkthroughs of the SmartCare system in action:
 
-| Portal | Video Link | Highlights |
-|---|---|---|
-| **Patient Portal Walkthrough** | [▶️ **Watch on YouTube**](https://youtu.be/7UB7GF05wXQ?si=JIkmr-HIjUOTUFmU) | AI symptom triage, token generation, 11 languages, 108 emergency SOS |
-| **Doctor Portal Walkthrough** | [▶️ **Watch on YouTube**](https://youtu.be/SVS6n4_AQyE?si=C_7klp1zQuRxKevs) | Live calling desk, real-time "AT DOOR" status updates, E-Rx, lab orders & visit completion |
+<table>
+  <tr>
+    <td width="50%" align="center" style="vertical-align: top;">
+      <a href="https://youtu.be/7UB7GF05wXQ?si=JIkmr-HIjUOTUFmU" target="_blank">
+        <img src="https://img.youtube.com/vi/7UB7GF05wXQ/maxresdefault.jpg" alt="Patient Portal Video Walkthrough" style="width: 100%; border-radius: 8px;" />
+      </a>
+      <br/>
+      <b><a href="https://youtu.be/7UB7GF05wXQ?si=JIkmr-HIjUOTUFmU" target="_blank">▶️ Patient Portal & AI Triage Walkthrough</a></b>
+    </td>
+    <td width="50%" align="center" style="vertical-align: top;">
+      <a href="https://youtu.be/SVS6n4_AQyE?si=C_7klp1zQuRxKevs" target="_blank">
+        <img src="https://img.youtube.com/vi/SVS6n4_AQyE/maxresdefault.jpg" alt="Doctor Console Video Walkthrough" style="width: 100%; border-radius: 8px;" />
+      </a>
+      <br/>
+      <b><a href="https://youtu.be/SVS6n4_AQyE?si=C_7klp1zQuRxKevs" target="_blank">▶️ Doctor & Clinical Console Walkthrough</a></b>
+    </td>
+  </tr>
+</table>
 
 ---
 
