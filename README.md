@@ -366,7 +366,7 @@ cd govt-portal && npx vercel --prod
 
 ---
 
-## 🎥 Video Demo
+##  Video Demo
 
 Watch the live video walkthroughs of the SmartCare SIH26133 ecosystem:
 
