@@ -4,7 +4,7 @@ Thank you for your interest in contributing to **SmartCare** — the AI-powered 
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -32,7 +32,7 @@ npm install
 
 ---
 
-## 📐 Code Style
+##  Code Style
 
 ### Python (Backend)
 - Follow **PEP 8** style guidelines
@@ -55,7 +55,7 @@ npm install
 
 ---
 
-## 🌿 Branch Naming Convention
+##  Branch Naming Convention
 
 | Type | Format | Example |
 |------|--------|-------|
@@ -67,7 +67,7 @@ npm install
 
 ---
 
-## 📝 Commit Messages
+##  Commit Messages
 
 Follow the **Conventional Commits** specification:
 
@@ -99,7 +99,7 @@ test(queue): add priority calculation edge case tests
 
 ---
 
-## 🔄 Pull Request Process
+##  Pull Request Process
 
 1. **Create a branch** from `main` using the naming convention above
 2. **Make your changes** with clear, focused commits
@@ -126,7 +126,7 @@ test(queue): add priority calculation edge case tests
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 # Unit tests
@@ -146,7 +146,7 @@ cd govt-portal && npx tsc --noEmit
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 | Directory | Language | Owner | Description |
 |-----------|----------|-------|-------------|
