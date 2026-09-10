@@ -366,7 +366,7 @@ cd govt-portal && npx vercel --prod
 
 ---
 
-## 🎥 Video Demo
+##  Video Demo
 
 Watch the complete live video walkthrough of the SmartCare SIH26133 ecosystem:
 
@@ -449,7 +449,7 @@ National OPD oversight console for Ministry of Health & Family Welfare (MoHFW) d
 
 ---
 
-### 📱 Android Turnstile QR Scanner (Hardware Gate Verification)
+###  Android Turnstile QR Scanner (Hardware Gate Verification)
 
 Native Kotlin + Jetpack Compose turnstile terminal app with Google ML Kit barcode scanning and SHA-256 cryptographic verification:
 
