@@ -87,6 +87,7 @@ export const Header: React.FC = () => {
         {/* Back Button */}
         <button
           onClick={handleBack}
+          aria-label="Go back"
           className="p-2 rounded-xl bg-slate-50 text-slate-600 hover:bg-slate-100 transition"
           title="Go Back"
         >
@@ -97,6 +98,7 @@ export const Header: React.FC = () => {
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
           <input
             type="text"
+            aria-label="Search doctors, tokens, or patients"
             placeholder="Search doctor, token, or patient ABHA..."
             className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -108,6 +110,8 @@ export const Header: React.FC = () => {
         <div className="relative" ref={notifRef}>
           <button
             onClick={() => setShowNotifications(!showNotifications)}
+            aria-label={`Notifications${unreadCount ? `, ${unreadCount} unread` : ''}`}
+            aria-expanded={showNotifications}
             className="relative p-2 rounded-xl bg-slate-50 text-slate-600 hover:bg-slate-100 transition"
           >
             <Bell className="w-4 h-4" />
@@ -151,6 +155,7 @@ export const Header: React.FC = () => {
                       </div>
                       <button
                         onClick={() => dismissNotification(n.id)}
+                        aria-label={`Dismiss ${n.title} notification`}
                         className="text-slate-300 hover:text-slate-500 p-0.5"
                       >
                         <X className="w-3 h-3" />

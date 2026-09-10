@@ -54,6 +54,7 @@ export const Sidebar: React.FC = () => {
               key={item.label}
               to={item.path}
               aria-label={item.label}
+              aria-current={isActive ? 'page' : undefined}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition cursor-pointer ${
                 isActive
                   ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'
@@ -80,6 +81,7 @@ export const Sidebar: React.FC = () => {
               key={item.label}
               to={item.path}
               aria-label={item.label}
+              aria-current={isActive ? 'page' : undefined}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition cursor-pointer ${
                 isActive
                   ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'

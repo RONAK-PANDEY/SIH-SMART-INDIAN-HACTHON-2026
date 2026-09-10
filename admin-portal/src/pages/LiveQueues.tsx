@@ -333,6 +333,7 @@ export const LiveQueues: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search doctor, room, or token..."
+            aria-label="Search queues"
             className="w-full pl-9 pr-4 py-2 rounded-xl bg-[#061224] border border-[#1E2E4A] text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>

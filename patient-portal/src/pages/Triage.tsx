@@ -168,6 +168,7 @@ export const Triage: React.FC = () => {
           value={freeText}
           onChange={(e) => setFreeText(e.target.value)}
           placeholder="For example: Started having mild chest tightness and slight dizziness while walking up stairs this morning..."
+          aria-label="Describe your symptoms"
           className="w-full px-4 py-3 rounded-lg border border-slate-300 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-700/30 focus:border-teal-700 transition-colors"
         />
         <p className="text-[11px] text-slate-500">
@@ -195,6 +196,7 @@ export const Triage: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search symptoms or organ..."
+              aria-label="Search symptoms"
               className="w-full pl-9 pr-3 py-2 rounded-lg border border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-teal-700 min-h-[40px]"
             />
           </div>

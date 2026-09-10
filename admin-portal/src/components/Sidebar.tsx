@@ -44,7 +44,7 @@ export const Sidebar: React.FC = () => {
         </div>
         <div>
           <span className="block leading-tight">SmartCare Clinical</span>
-          <span className="text-[10px] text-slate-400 font-normal">Doctor Consultation Suite</span>
+          <span className="text-[10px] text-slate-400 font-normal">Demo environment</span>
         </div>
       </div>
 
@@ -67,6 +67,7 @@ export const Sidebar: React.FC = () => {
               key={item.label}
               to={item.path}
               aria-label={item.label}
+              aria-current={isActive ? 'page' : undefined}
               className={`flex items-center gap-3 px-3.5 py-3 rounded-xl font-medium transition ${
                 isActive
                   ? 'bg-blue-600 text-white font-bold shadow-md shadow-blue-600/30'
@@ -88,7 +89,7 @@ export const Sidebar: React.FC = () => {
             <span>Operations overview</span>
           </div>
           <p className="text-[10px] text-slate-300 leading-tight">
-            Counter Desk, 108 Fleet, Analytics, Heatmap & Bonus Engine shifted to Port 5175.
+            Review network performance and service quality.
           </p>
           <a
             href={`${window.location.protocol}//${window.location.hostname}:5175`}
@@ -96,7 +97,7 @@ export const Sidebar: React.FC = () => {
             rel="noreferrer"
             className="flex items-center justify-between px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg font-bold text-[11px] transition shadow-xs"
           >
-            <span>Open Govt Console</span>
+            <span>Open operations</span>
             <ExternalLink className="w-3 h-3" />
           </a>
         </div>

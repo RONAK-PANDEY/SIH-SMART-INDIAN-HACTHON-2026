@@ -425,6 +425,7 @@ export const DoctorPanel: React.FC = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search patient or token..."
+                aria-label="Search patients or tokens"
                 className="w-full pl-9 pr-3 py-2.5 rounded-xl border-2 border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 min-h-[44px]"
               />
             </div>
@@ -565,6 +566,7 @@ export const DoctorPanel: React.FC = () => {
                   value={doctorNotes}
                   onChange={(e) => setDoctorNotes(e.target.value)}
                   placeholder="Type clinical diagnosis, medications prescribed, or dietary advice..."
+                  aria-label="Consultation notes"
                   className="w-full p-4 rounded-xl border-2 border-slate-200 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 transition-colors"
                 />
               </div>

@@ -196,6 +196,7 @@ export const Ambulance: React.FC = () => {
                 value={patientCondition}
                 onChange={(e) => setPatientCondition(e.target.value)}
                 placeholder="State symptoms e.g. severe chest pain, breathing difficulty, unconscious..."
+                aria-label="Emergency symptoms"
                 className="w-full px-4 py-2.5 rounded-2xl border border-slate-300 text-xs focus:outline-none focus:ring-2 focus:ring-rose-500"
               />
             </div>

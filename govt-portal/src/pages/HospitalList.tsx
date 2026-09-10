@@ -16,14 +16,14 @@ export const HospitalList: React.FC = () => {
             <Building2 className="w-4 h-4" />
             <span>Hospital network</span>
           </div>
-          <h1 className="text-2xl font-black text-white">Regional Healthcare Facilities & Bed Capacity</h1>
+          <h1 className="text-2xl font-bold text-white">Hospitals and capacity</h1>
           <p className="text-xs text-slate-400 mt-0.5">
-            Monitor real-time bed occupancy, OPD queue congestion, and inter-hospital load balancing.
+            Compare beds, active doctors, and expected OPD wait times. Sample data is shown for this demo.
           </p>
         </div>
 
         <span className="text-xs font-mono bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 px-3.5 py-1.5 rounded-full font-bold">
-          3 APEX CENTRAL HOSPITALS ACTIVE
+          3 sample hospitals
         </span>
       </div>
 
@@ -71,7 +71,7 @@ export const HospitalList: React.FC = () => {
               href={`/hospital/${h.id}`}
               className="flex items-center justify-center gap-1.5 w-full bg-slate-800 hover:bg-slate-750 text-white font-bold py-2.5 rounded-xl text-xs transition cursor-pointer"
             >
-              <span>View Department Telemetry</span>
+              <span>View departments</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>

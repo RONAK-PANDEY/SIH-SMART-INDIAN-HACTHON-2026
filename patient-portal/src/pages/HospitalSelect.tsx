@@ -55,6 +55,7 @@ export const HospitalSelect: React.FC = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by hospital name or department (e.g., Cardiology)..."
+          aria-label="Search hospitals or departments"
           className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
         />
       </div>

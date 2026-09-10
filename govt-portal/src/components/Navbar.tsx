@@ -30,6 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRefresh, loading }) => {
             <h1 className="text-base font-extrabold text-white tracking-tight">
               Network operations
             </h1>
+            <span className="text-xs text-amber-300">Demo environment</span>
           </div>
         </div>
 
@@ -44,6 +45,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRefresh, loading }) => {
             <button
               onClick={onRefresh}
               disabled={loading}
+              aria-label={loading ? 'Refreshing data' : 'Refresh data'}
               className="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white transition cursor-pointer"
               title="Refresh Live Audit Data"
             >

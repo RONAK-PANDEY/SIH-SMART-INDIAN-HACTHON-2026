@@ -19,6 +19,7 @@ export const Navbar: React.FC = () => {
             isActive('/dashboard') ? 'text-teal-700 font-semibold' : 'text-slate-500 hover:text-slate-900'
           }`}
           aria-label="Dashboard Overview"
+          aria-current={isActive('/dashboard') ? 'page' : undefined}
         >
           <LayoutDashboard className="w-5 h-5 mb-1" />
           <span className="text-[11px] leading-none">{t('dashboard') || 'Overview'}</span>
@@ -31,6 +32,7 @@ export const Navbar: React.FC = () => {
             isActive('/live-queue') ? 'text-teal-700 font-semibold' : 'text-slate-500 hover:text-slate-900'
           }`}
           aria-label="Live Queue"
+          aria-current={isActive('/live-queue') ? 'page' : undefined}
         >
           <Layers className="w-5 h-5 mb-1" />
           <span className="text-[11px] leading-none">Live Queue</span>
@@ -46,6 +48,7 @@ export const Navbar: React.FC = () => {
                 : 'bg-teal-700 text-white hover:bg-teal-800 active:scale-95'
             }`}
             aria-label="My Digital OPD Pass"
+            aria-current={isActive('/my-token') ? 'page' : undefined}
           >
             <QrCode className="w-6 h-6" />
           </Link>
@@ -58,6 +61,7 @@ export const Navbar: React.FC = () => {
             isActive('/health-records') ? 'text-teal-700 font-semibold' : 'text-slate-500 hover:text-slate-900'
           }`}
           aria-label="Health Records"
+          aria-current={isActive('/health-records') ? 'page' : undefined}
         >
           <FileText className="w-5 h-5 mb-1" />
           <span className="text-[11px] leading-none">Records</span>
@@ -70,6 +74,7 @@ export const Navbar: React.FC = () => {
             isActive('/profile') ? 'text-teal-700 font-semibold' : 'text-slate-500 hover:text-slate-900'
           }`}
           aria-label="User Profile"
+          aria-current={isActive('/profile') ? 'page' : undefined}
         >
           <User className="w-5 h-5 mb-1" />
           <span className="text-[11px] leading-none">{t('profile') || 'Profile'}</span>

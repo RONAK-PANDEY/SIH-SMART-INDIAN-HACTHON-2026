@@ -8,7 +8,7 @@
 body {
   background-color: #f7f8fa;
   color: #0F172A;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -21,6 +21,10 @@ h1, h2, h3 { letter-spacing: -0.02em; }
 :focus-visible { outline: 3px solid #0f766e; outline-offset: 3px; }
 button:disabled { cursor: not-allowed; opacity: .55; }
 .rounded-3xl { border-radius: 1rem !important; }
+
+button { min-height: 44px; }
+input:not([type='checkbox']):not([type='radio']), select { min-height: 44px; }
+[class*='text-[9px]'], [class*='text-[10px]'], [class*='text-[11px]'] { font-size: 0.75rem !important; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition-duration: 0.01ms !important; }
@@ -69,3 +73,6 @@ button:disabled { cursor: not-allowed; opacity: .55; }
   transform: translateY(2px);
   border-bottom: 2px solid #94A3B8;
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

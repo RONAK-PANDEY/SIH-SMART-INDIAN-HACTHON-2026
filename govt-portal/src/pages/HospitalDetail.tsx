@@ -167,6 +167,7 @@ export const HospitalDetail: React.FC = () => {
           <button 
             type="button"
             onClick={() => setLastScanNotice(null)} 
+            aria-label="Dismiss arrival update"
             className="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-slate-800/60 transition cursor-pointer"
           >
             <X className="w-4 h-4" />

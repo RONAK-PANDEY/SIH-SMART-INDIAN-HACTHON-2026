@@ -218,6 +218,7 @@ export const SalaryBonus: React.FC = () => {
               value={simFeedback}
               onChange={(e) => setSimFeedback(e.target.value)}
               placeholder="Enter citizen survey remarks..."
+              aria-label="Patient survey remarks"
               className="flex-1 bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-white text-xs focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
             <button

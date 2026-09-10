@@ -20,11 +20,13 @@ export const Grievances: React.FC = () => {
   const [actionType, setActionType] = useState('ISSUE_NOTICE');
   const [actionNotes, setActionNotes] = useState('A notice was sent requesting a written response within 48 hours.');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [statusFilter, setStatusFilter] = useState('ALL');
 
   const fetchGrievances = async () => {
     setLoading(true);
+    setError('');
     try {
       const res = await fetch(`${API_V1_URL}/observer/grievances`);
       const data = await res.json();
@@ -34,6 +36,7 @@ export const Grievances: React.FC = () => {
       }
     } catch (e) {
       console.warn('Failed to fetch grievances', e);
+      setError('Complaints could not be loaded. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -106,6 +109,15 @@ export const Grievances: React.FC = () => {
         </div>
       </div>
 
+      {error && (
+        <div role="alert" className="rounded-xl border border-rose-700 bg-rose-950/40 p-4 text-sm text-rose-200 flex flex-wrap items-center justify-between gap-3">
+          <span>{error}</span>
+          <button type="button" onClick={fetchGrievances} className="rounded-lg bg-rose-700 px-4 py-2 font-semibold text-white">Try again</button>
+        </div>
+      )}
+
+      {loading && <p role="status" className="text-sm text-slate-300">Loading complaints…</p>}
+
       {/* Main Grid: Grievance List & Inspector Panel */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
@@ -116,6 +128,9 @@ export const Grievances: React.FC = () => {
           </h3>
 
           <div className="space-y-2.5">
+            {!loading && !error && filtered.length === 0 && (
+              <p className="rounded-xl border border-slate-800 bg-slate-900 p-4 text-sm text-slate-300">No complaints match this filter.</p>
+            )}
             {filtered.map((grv) => {
               const isSelected = selectedGrievance?.id === grv.id;
               return (
@@ -262,7 +277,7 @@ export const Grievances: React.FC = () => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full py-3 bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-700 hover:to-amber-700 text-white font-extrabold rounded-xl shadow-lg transition text-xs flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full py-3 bg-rose-700 hover:bg-rose-800 text-white font-semibold rounded-xl transition text-sm flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>{submitting ? 'Saving…' : 'Save resolution'}</span>

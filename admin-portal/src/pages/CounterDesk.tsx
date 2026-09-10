@@ -152,6 +152,7 @@ export const CounterDesk: React.FC = () => {
                 value={patientSearch}
                 onChange={(e) => setPatientSearch(e.target.value)}
                 placeholder="Enter 12-digit Aadhaar (e.g. 982144321109) or Mobile Number..."
+                aria-label="Aadhaar or mobile number"
                 className="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
@@ -212,6 +213,7 @@ export const CounterDesk: React.FC = () => {
               value={complaintText}
               onChange={(e) => setComplaintText(e.target.value)}
               placeholder="Operator note: Type patient stated symptoms (e.g. severe shortness of breath with high fever and chest pressure)..."
+              aria-label="Patient symptoms"
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 

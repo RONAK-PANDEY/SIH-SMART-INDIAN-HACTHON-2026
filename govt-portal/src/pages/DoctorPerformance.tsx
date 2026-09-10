@@ -21,9 +21,11 @@ export const DoctorPerformance: React.FC = () => {
   const [doctorSurveys, setDoctorSurveys] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   const fetchDoctors = async () => {
     setLoading(true);
+    setError('');
     try {
       const res = await fetch(`${API_V1_URL}/observer/doctors/performance`);
       const data = await res.json();
@@ -34,6 +36,7 @@ export const DoctorPerformance: React.FC = () => {
       }
     } catch (e) {
       console.warn('Failed to fetch doctors', e);
+      setError('Doctor performance data could not be loaded. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -70,29 +73,24 @@ export const DoctorPerformance: React.FC = () => {
       {/* Header */}
       <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-amber-400 text-xs font-bold mb-1">
             <HeartHandshake className="w-4 h-4" />
-            <span>Citizen Satisfaction & Behavioral Accountability</span>
+            <span>Service quality</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-white">
-            Doctor Behavioral & Performance Index (DPI)
+            Doctor performance
           </h2>
           <p className="text-xs text-slate-400 max-w-2xl">
-            Detailed breakdown of doctor talking courtesy, diagnosis explanation clarity, and punctuality collected from genuine patient OPD post-consultation surveys.
+            Review patient feedback, communication, and appointment punctuality.
           </p>
 
-          {/* WHY THIS MATTERS: DOCTOR PERFORMANCE -> SALARY BONUS LINK MICROCOPY */}
-          <div className="mt-3 p-3 bg-amber-950/40 border border-amber-500/30 rounded-2xl flex items-center gap-2.5 text-xs text-amber-200">
-            <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
-            <span>
-              <strong>Why this matters:</strong> Linking citizen survey ratings directly to statutory DPI formulas eliminates doctor absenteeism and bedside neglect. High performers earn up to +15% monthly merit bonuses, while substandard adherence triggers automatic audit reviews.
-            </span>
-          </div>
         </div>
 
         <div className="flex items-center gap-3">
           <div className="relative">
+            <label htmlFor="doctor-search" className="sr-only">Search doctors</label>
             <input
+              id="doctor-search"
               type="text"
               placeholder="Search doctor or department..."
               value={searchQuery}
@@ -104,6 +102,15 @@ export const DoctorPerformance: React.FC = () => {
         </div>
       </div>
 
+      {error && (
+        <div role="alert" className="rounded-xl border border-rose-700 bg-rose-950/40 p-4 text-sm text-rose-200 flex flex-wrap items-center justify-between gap-3">
+          <span>{error}</span>
+          <button type="button" onClick={fetchDoctors} className="rounded-lg bg-rose-700 px-4 py-2 font-semibold text-white">Try again</button>
+        </div>
+      )}
+
+      {loading && <p role="status" className="text-sm text-slate-300">Loading doctor performance…</p>}
+
       {/* Main Grid: Doctor List & Selected Doctor Detail View */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
@@ -114,6 +121,9 @@ export const DoctorPerformance: React.FC = () => {
           </h3>
 
           <div className="space-y-2.5">
+            {!loading && !error && filteredDoctors.length === 0 && (
+              <p className="rounded-xl border border-slate-800 bg-slate-900 p-4 text-sm text-slate-300">No doctors match your search. Try a name, department, or hospital.</p>
+            )}
             {filteredDoctors.map((doc) => {
               const isSelected = selectedDoctor?.id === doc.id;
               return (

@@ -254,6 +254,7 @@ export const LiveScanFeed: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search token, patient name, or gate..."
+            aria-label="Search arrival scans"
             className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>

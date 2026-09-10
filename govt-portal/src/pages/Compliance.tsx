@@ -62,18 +62,18 @@ export const Compliance: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">
             <Award className="w-4 h-4" />
-            <span>National Health Authority • Quality Accreditation</span>
+            <span>Service comparison</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-white">
-            Apex Hospital Quality & Queue Compliance Leaderboard
+            Hospital service overview
           </h2>
           <p className="text-xs text-slate-400 max-w-2xl">
-            Compare hospital wait times, emergency response, patient feedback, and staff performance.
+            Compare sample wait times, patient feedback, and staffing indicators for this demo.
           </p>
         </div>
 
         <span className="text-xs font-mono bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 px-3.5 py-1.5 rounded-full font-bold">
-          2026 CENTRAL AUDIT BENCHMARK
+          Sample data
         </span>
       </div>
 
