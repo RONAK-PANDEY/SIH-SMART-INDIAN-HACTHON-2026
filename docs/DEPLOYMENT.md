@@ -1,11 +1,11 @@
-# 🚀 SmartCare Production Deployment & Operations Guide
+#  SmartCare Production Deployment & Operations Guide
 
 > **SIH 2026 Problem Statement**: SIH26133 | **System Version**: v3.0.0  
 > **Target Audience**: DevOps Engineers, Hospital IT Administrators, MoHFW Cloud Architects
 
 ---
 
-## 📋 Table of Contents
+##  Table of Contents
 - [1. Architecture Overview](#1-architecture-overview)
 - [2. Production Docker Compose Setup](#2-production-docker-compose-setup)
 - [3. Multi-Cloud Deployment Architecture](#3-multi-cloud-deployment-architecture)
