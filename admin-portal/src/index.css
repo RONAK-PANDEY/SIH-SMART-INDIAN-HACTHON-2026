@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: #F8FAFC;
+  background-color: #f7f8fa;
   color: #0F172A;
   font-size: 15px;
   line-height: 1.5;
@@ -14,12 +14,23 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1, h2, h3 { letter-spacing: -0.02em; }
+.shadow-2xl, .shadow-xl, .shadow-lg, .shadow-md { box-shadow: 0 1px 3px rgb(15 23 42 / 0.12) !important; }
+.rounded-3xl, .rounded-2xl { border-radius: 0.75rem !important; }
+
 :focus-visible { outline: 3px solid #60a5fa; outline-offset: 3px; }
 button:disabled { cursor: not-allowed; opacity: .55; }
 .rounded-3xl { border-radius: 1rem !important; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition-duration: 0.01ms !important; }
+}
+
+@media (max-width: 639px) {
+  .staff-sidebar span,
+  .staff-sidebar p,
+  .staff-sidebar > div:not(:first-child):not(:nth-child(3)) { display: none !important; }
+  .staff-sidebar nav a { justify-content: center; padding-inline: 0.5rem; }
 }
 
 /* 2.5D Tactile Pressable Button Styling */

@@ -35,7 +35,7 @@ export const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-64 bg-slate-900 text-slate-300 min-h-screen flex flex-col p-4 border-r border-slate-800 shrink-0">
+    <aside className="staff-sidebar w-16 sm:w-64 bg-slate-900 text-slate-300 min-h-screen flex flex-col p-2 sm:p-4 border-r border-slate-800 shrink-0">
       
       {/* Brand Header */}
       <div className="flex items-center gap-2.5 px-3 py-4 mb-4 border-b border-slate-800 text-white font-bold text-base">
@@ -66,6 +66,7 @@ export const Sidebar: React.FC = () => {
             <Link
               key={item.label}
               to={item.path}
+              aria-label={item.label}
               className={`flex items-center gap-3 px-3.5 py-3 rounded-xl font-medium transition ${
                 isActive
                   ? 'bg-blue-600 text-white font-bold shadow-md shadow-blue-600/30'

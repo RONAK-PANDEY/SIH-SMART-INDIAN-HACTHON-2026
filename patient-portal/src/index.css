@@ -6,13 +6,17 @@
 }
 
 body {
-  background-color: #F8FAFC;
+  background-color: #f7f8fa;
   color: #0F172A;
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+h1, h2, h3 { letter-spacing: -0.02em; }
+.shadow-2xl, .shadow-xl, .shadow-lg, .shadow-md { box-shadow: 0 1px 3px rgb(15 23 42 / 0.08) !important; }
+.rounded-3xl, .rounded-2xl { border-radius: 0.75rem !important; }
 
 :focus-visible { outline: 3px solid #0f766e; outline-offset: 3px; }
 button:disabled { cursor: not-allowed; opacity: .55; }

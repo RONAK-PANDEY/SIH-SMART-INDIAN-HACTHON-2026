@@ -82,7 +82,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between">
+    <header className="h-16 bg-white border-b border-slate-200 px-2 sm:px-6 flex items-center justify-between gap-2">
       <div className="flex items-center gap-3">
         {/* Back Button */}
         <button
@@ -93,7 +93,7 @@ export const Header: React.FC = () => {
           <ArrowLeft className="w-4 h-4" />
         </button>
 
-        <div className="relative w-72">
+        <div className="relative w-72 hidden sm:block">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
           <input
             type="text"
@@ -120,7 +120,7 @@ export const Header: React.FC = () => {
 
           {/* Notifications Dropdown */}
           {showNotifications && (
-            <div className="absolute right-0 top-12 w-80 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 overflow-hidden">
+            <div className="fixed sm:absolute right-3 sm:right-0 left-20 sm:left-auto top-16 sm:top-12 sm:w-80 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50">
                 <h4 className="text-xs font-bold text-slate-800">Notifications</h4>
                 {unreadCount > 0 && (
@@ -164,7 +164,7 @@ export const Header: React.FC = () => {
         </div>
 
         {/* User Info */}
-        <div className="flex items-center gap-2.5 pl-3 border-l border-slate-200">
+        <div className="hidden md:flex items-center gap-2.5 pl-3 border-l border-slate-200">
           <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">
             AD
           </div>
@@ -181,7 +181,7 @@ export const Header: React.FC = () => {
           title="Logout"
         >
           <LogOut className="w-3.5 h-3.5" />
-          <span>Logout</span>
+          <span className="hidden sm:inline">Logout</span>
         </button>
       </div>
     </header>

@@ -25,15 +25,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onRefresh, loading }) => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase font-mono tracking-widest text-amber-400 font-bold">
-                Ministry of Health & Family Welfare (MoHFW)
-              </span>
-              <span className="bg-rose-500/20 text-rose-400 text-[10px] font-bold px-2 py-0.2 rounded-full border border-rose-500/30">
-                Operations
-              </span>
+              <span className="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">SmartCare</span>
             </div>
             <h1 className="text-base font-extrabold text-white tracking-tight">
-              Hospital network operations
+              Network operations
             </h1>
           </div>
         </div>
@@ -81,7 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRefresh, loading }) => {
 
           <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 text-amber-300 px-3 py-1.5 rounded-xl font-bold">
             <ShieldCheck className="w-4 h-4 text-amber-400" />
-            <span className="text-[11px]">Operations officer</span>
+            <span className="text-[11px]">Operator</span>
           </div>
         </div>
 

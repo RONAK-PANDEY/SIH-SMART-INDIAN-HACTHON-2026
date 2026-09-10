@@ -227,57 +227,6 @@ export const GovtLanding: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Three Pillars Section - Generous negative space */}
-      <section className="py-12 bg-white border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="max-w-2xl mb-8">
-            <h2 className="text-2xl font-semibold text-slate-900 tracking-tight">
-              One clear journey from booking to consultation.
-            </h2>
-            <p className="text-sm text-slate-600 mt-2 font-normal">
-              Urgent cases are prioritised while every patient gets a clear place in the queue.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* Card 1 */}
-            <div className="bg-slate-50 rounded-xl p-6 border border-slate-200 hover:border-slate-300 transition-colors space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-teal-100/70 text-teal-800 flex items-center justify-center">
-                <QrCode className="w-5 h-5 text-teal-700" />
-              </div>
-              <h3 className="text-base font-semibold text-slate-900">1. Instant QR Gate Check-in</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Avoid the morning 6:00 AM queue rush. Scan your digital token at the physical turnstile reader to instantly confirm attendance.
-              </p>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-slate-50 rounded-xl p-6 border border-slate-200 hover:border-slate-300 transition-colors space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-teal-100/70 text-teal-800 flex items-center justify-center">
-                <Stethoscope className="w-5 h-5 text-teal-700" />
-              </div>
-              <h3 className="text-base font-semibold text-slate-900">2. Clinical Triage Routing</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Emergency and acute cases are automatically flagged and prioritized, while regular follow-ups receive clear time slots.
-              </p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-slate-50 rounded-xl p-6 border border-slate-200 hover:border-slate-300 transition-colors space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-teal-100/70 text-teal-800 flex items-center justify-center">
-                <Activity className="w-5 h-5 text-teal-700" />
-              </div>
-              <h3 className="text-base font-semibold text-slate-900">3. Live Transparent Queue</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                See exactly how many patients are ahead of you and the expected call time. Rest comfortably in the waiting hall until your turn.
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
       {/* 5. Clean MoHFW Footer */}
       <footer className="mt-16 border-t border-slate-200 pt-8 pb-12 px-4 sm:px-6 max-w-7xl mx-auto text-xs text-slate-500">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">

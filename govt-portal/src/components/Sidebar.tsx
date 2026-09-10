@@ -18,36 +18,33 @@ export const Sidebar: React.FC = () => {
   const location = useLocation();
 
   const vigilanceItems = [
-    { label: 'Live Hospital Overview', icon: LayoutDashboard, path: '/' },
-    { label: 'National Turnstile QR Feed', icon: QrCode, path: '/live-scan-feed' },
-    { label: 'Live Department Queues', icon: Layers, path: '/live-queues' },
+    { label: 'Overview', icon: LayoutDashboard, path: '/' },
+    { label: 'Arrival scans', icon: QrCode, path: '/live-scan-feed' },
+    { label: 'Department queues', icon: Layers, path: '/live-queues' },
   ];
 
   const oversightItems = [
-    { label: 'Doctor Performance & Ratings', icon: Stethoscope, path: '/doctor-performance' },
-    { label: 'Doctor Recognition Index (DRI)', icon: Coins, path: '/salary-bonus' },
-    { label: 'Citizen Grievances', icon: Scale, path: '/grievances' },
-    { label: 'Hospital Network', icon: Building2, path: '/hospitals' },
+    { label: 'Service quality', icon: Stethoscope, path: '/doctor-performance' },
+    { label: 'Recognition', icon: Coins, path: '/salary-bonus' },
+    { label: 'Grievances', icon: Scale, path: '/grievances' },
+    { label: 'Hospitals', icon: Building2, path: '/hospitals' },
   ];
 
   return (
-    <aside className="w-68 bg-slate-950 text-slate-300 min-h-screen flex flex-col p-4 border-r border-slate-800 shrink-0 overflow-y-auto">
+    <aside className="app-sidebar w-16 sm:w-60 bg-slate-950 text-slate-300 min-h-screen flex flex-col p-2 sm:p-4 border-r border-slate-800 shrink-0 overflow-y-auto">
       
       {/* Oversight Authority Badge */}
-      <div className="p-3 mb-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-855 border border-slate-800 text-xs">
-        <div className="flex items-center gap-2 text-amber-400 font-bold mb-1">
-          <Radio className="w-3.5 h-3.5 animate-pulse" />
-          <span>NETWORK OPERATIONS</span>
+      <div className="px-3 py-2 mb-5 text-xs">
+        <div className="flex items-center gap-2 text-white font-semibold">
+          <Radio className="w-4 h-4 text-emerald-400" />
+          <span>Network operations</span>
         </div>
-        <p className="text-[11px] text-slate-400 leading-tight">
-          Queue flow, arrival scans and service quality across participating hospitals.
-        </p>
       </div>
 
       {/* Group 1: Live Queues & Turnstiles */}
       <div className="space-y-1 mb-5">
         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 block">
-          Live Queues & Vigilance
+          Operations
         </span>
         {vigilanceItems.map((item) => {
           const Icon = item.icon;
@@ -56,6 +53,7 @@ export const Sidebar: React.FC = () => {
             <Link
               key={item.label}
               to={item.path}
+              aria-label={item.label}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition cursor-pointer ${
                 isActive
                   ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'
@@ -72,7 +70,7 @@ export const Sidebar: React.FC = () => {
       {/* Group 2: Doctor Oversight & Ethics */}
       <div className="space-y-1 mb-5">
         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 block">
-          Doctor Oversight & Ethics
+          Quality
         </span>
         {oversightItems.map((item) => {
           const Icon = item.icon;
@@ -81,6 +79,7 @@ export const Sidebar: React.FC = () => {
             <Link
               key={item.label}
               to={item.path}
+              aria-label={item.label}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition cursor-pointer ${
                 isActive
                   ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'
@@ -101,7 +100,7 @@ export const Sidebar: React.FC = () => {
           <span className="text-emerald-400 font-bold">ACTIVE</span>
         </div>
         <p>
-          Governed under the National Digital Health Ethics & Patient Rights Charter 2026.
+          Hospital network online
         </p>
       </div>
 
