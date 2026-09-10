@@ -27,8 +27,9 @@
   <a href="#-architecture">Architecture</a> •
   <a href="#-api-reference">API Reference</a> •
   <a href="#-live-demo--ui-showcase">Demo</a> •
-  <a href="#-deployment">Deployment</a> •
-  <a href="DEMO.md">Screenshots & Demo</a> •
+  <a href="docs/DEPLOYMENT.md">Deployment Guide</a> •
+  <a href="docs/IMPACT.md">ROI & Impact</a> •
+  <a href="DEMO.md">Live Walkthrough</a> •
   <a href="docs/SECURITY.md">Security</a> •
   <a href="docs/PERFORMANCE.md">Performance</a>
 </p>
@@ -301,7 +302,7 @@ cd govt-portal && npm install && npm run dev -- --port 5175 --host
 
 ##  Performance Highlights
 
-> Full benchmarks: [docs/PERFORMANCE.md](docs/PERFORMANCE.md)
+> Full benchmarks: [docs/PERFORMANCE.md](docs/PERFORMANCE.md) | ROI & Impact Analysis: [docs/IMPACT.md](docs/IMPACT.md)
 
 | Metric | Result | Industry Standard |
 |--------|--------|-------------------|
@@ -347,6 +348,8 @@ cd backend && python -m pytest tests/ -v --tb=short
 ---
 
 ##  Deployment
+
+> **Comprehensive Multi-Cloud & Operations Manual**: See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for AWS ECS, GCP Cloud Run, Azure Container Apps, Automated DB Backups & Prometheus Alerting.
 
 ### Docker Compose
 ```bash
