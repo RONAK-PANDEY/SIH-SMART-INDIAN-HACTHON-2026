@@ -15,7 +15,7 @@
   <img src="https://img.shields.io/badge/License-MIT-purple?style=flat-square" />
 </p>
 
-<h1 align="center">🏥 SmartCare — AI-Powered Smart OPD Queue, Triage & Government Vigilance Platform</h1>
+<h1 align="center"> SmartCare — AI-Powered Smart OPD Queue, Triage & Government Vigilance Platform</h1>
 
 <p align="center">
   <strong>Transforming India's public hospital OPD experience through AI-driven queue management, real-time triage, anti-ghost verification, and government accountability — built for 1.4 billion citizens.</strong>
@@ -35,7 +35,7 @@
 
 ---
 
-## 📋 Problem Statement (SIH26133)
+##  Problem Statement (SIH26133)
 
 > **Ministry of Health & Family Welfare (MoHFW), Government of India**
 >
@@ -58,7 +58,7 @@
 
 ---
 
-## ✨ Features
+##  Features
 
 ### Feature Matrix
 
@@ -91,7 +91,7 @@
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ### System Architecture Diagram
 
@@ -165,7 +165,7 @@ To eliminate single API rate limits during massive OPD surges across India, the 
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology | Version | Purpose |
 |-------|-----------|---------|--------|
@@ -194,7 +194,7 @@ To eliminate single API rate limits during massive OPD surges across India, the 
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
@@ -246,7 +246,7 @@ cd govt-portal && npm install && npm run dev -- --port 5175 --host
 
 ---
 
-## 🌐 Service Port Map
+##  Service Port Map
 
 | Service | Port | URL | Users |
 |---------|------|-----|------|
@@ -258,7 +258,7 @@ cd govt-portal && npm install && npm run dev -- --port 5175 --host
 
 ---
 
-## 📡 API Reference
+##  API Reference
 
 ### Authentication & RBAC
 
@@ -299,7 +299,7 @@ cd govt-portal && npm install && npm run dev -- --port 5175 --host
 
 ---
 
-## 📊 Performance Highlights
+##  Performance Highlights
 
 > Full benchmarks: [docs/PERFORMANCE.md](docs/PERFORMANCE.md)
 
@@ -314,7 +314,7 @@ cd govt-portal && npm install && npm run dev -- --port 5175 --host
 
 ---
 
-## 🔒 Security & Compliance
+##  Security & Compliance
 
 > Full documentation: [docs/SECURITY.md](docs/SECURITY.md) | [docs/COMPLIANCE.md](docs/COMPLIANCE.md)
 
@@ -328,7 +328,7 @@ cd govt-portal && npm install && npm run dev -- --port 5175 --host
 
 ---
 
-## 🧪 Test Suite
+##  Test Suite
 
 | Suite | Tests | Status |
 |-------|-------|--------|
@@ -346,7 +346,7 @@ cd backend && python -m pytest tests/ -v --tb=short
 
 ---
 
-## 🐳 Deployment
+##  Deployment
 
 ### Docker Compose
 ```bash
@@ -362,7 +362,7 @@ cd govt-portal && npx vercel --prod
 
 ---
 
-## 👥 Team
+##  Team
 
 | Member | Role | Responsibilities |
 |--------|------|-----------------|
@@ -375,7 +375,7 @@ cd govt-portal && npx vercel --prod
 
 ---
 
-## 📜 License
+##  License
 
 SmartCare is open source software developed for the **Smart India Hackathon (SIH) 2026** under the [MIT License](LICENSE).
 
