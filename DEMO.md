@@ -39,8 +39,11 @@ Follow this exact click-path during judge evaluations to demonstrate the **entir
 - Dynamic SHA-256 QR code (changes with each token, tamper-proof)
 - Multi-language support (switch to Hindi/Tamil/Bengali live)
 
-<!-- INSERT SCREENSHOT: Patient Portal - Triage Page (symptoms selected) -->
-<!-- INSERT SCREENSHOT: Patient Portal - Generated QR Token Pass (CARD-201) -->
+![Step 1: Patient Landing Page](docs/screenshots/patient/01_patient_landing.png)
+![Step 2: Patient Central Hub](docs/screenshots/patient/02_patient_hub.png)
+![Step 3: Real OPD Queue Token Booking](docs/screenshots/patient/03_patient_booking.png)
+![Step 4: Real DB Token Issued](docs/screenshots/patient/04_token_issued.png)
+![Step 5: Active Scannable QR Pass](docs/screenshots/patient/05_active_qr_pass.png)
 
 ---
 
@@ -138,16 +141,16 @@ curl -X POST "http://localhost:8000/api/v1/tokens/scan" \
 
 ### Patient Portal (`:5173`)
 
-| Screen | Description | Filename |
-|--------|-------------|----------|
-| Landing Page | MoHFW-branded entry with language selector | `patient_landing.png` |
-| AI Triage | Symptom selection + urgency evaluation | `patient_triage.png` |
-| Token Generation | SHA-256 QR pass with token details | `patient_qr_token.png` |
-| My Token Status | Real-time token tracking page | `patient_token_status.png` |
-| 108 SOS | Emergency ambulance dispatch screen | `patient_sos.png` |
-| Health Vault | Digital health records | `patient_health_vault.png` |
-| Doctor Rating | Post-consultation survey form | `patient_rating.png` |
-| Multi-Language | Interface in Hindi/Tamil/Bengali | `patient_multilang.png` |
+| Screen | Description | File Path | Status |
+|--------|-------------|-----------|--------|
+| **1. Landing Page** | MoHFW-branded entry with 11 language switchers & stats | `docs/screenshots/patient/01_patient_landing.png` | ✅ Uploaded |
+| **2. Patient Hub** | Citizen dashboard with ABHA ID & active pass indicator | `docs/screenshots/patient/02_patient_hub.png` | ✅ Uploaded |
+| **3. Token Booking** | Specialty symptom category & appointment slot selection | `docs/screenshots/patient/03_patient_booking.png` | ✅ Uploaded |
+| **4. Token Issuance** | Instant database registration with CARD-267 & chamber | `docs/screenshots/patient/04_token_issued.png` | ✅ Uploaded |
+| **5. Active QR Pass** | SHA-256 scannable QR pass with 4-stage lifecycle | `docs/screenshots/patient/05_active_qr_pass.png` | ✅ Uploaded |
+| 108 SOS | Emergency ambulance dispatch screen | `docs/screenshots/patient/patient_sos.png` | ⏳ Pending |
+| Health Vault | Digital health records vault | `docs/screenshots/patient/patient_health_vault.png` | ⏳ Pending |
+| Doctor Rating | Post-consultation survey form | `docs/screenshots/patient/patient_rating.png` | ⏳ Pending |
 
 ### Doctor Console (`:5174`)
 

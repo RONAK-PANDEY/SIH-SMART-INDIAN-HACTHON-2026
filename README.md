@@ -26,7 +26,7 @@
   <a href="#-features">Features</a> •
   <a href="#-architecture">Architecture</a> •
   <a href="#-api-reference">API Reference</a> •
-  <a href="#-demo-script">Demo</a> •
+  <a href="#-live-demo--ui-showcase">Demo</a> •
   <a href="#-deployment">Deployment</a> •
   <a href="DEMO.md">Screenshots & Demo</a> •
   <a href="docs/SECURITY.md">Security</a> •
@@ -359,6 +359,73 @@ cd patient-portal && npx vercel --prod
 cd admin-portal && npx vercel --prod
 cd govt-portal && npx vercel --prod
 ```
+
+---
+
+##  Live Demo & UI Showcase
+
+> **Full 60-Second Judge Walkthrough Script**: See [DEMO.md](DEMO.md) for the end-to-end evaluation flow.
+
+### 📱 Patient Portal Workflow (`http://localhost:5173`)
+
+The citizen OPD journey eliminates 3–5 hour physical waiting lines through a synchronized 5-step digital lifecycle:
+
+#### Step 1 — National Smart OPD Queue & AI Triage Platform (Landing Page)
+Citizen entry point featuring MoHFW & ABDM branding, 11 Indian language switchers, emergency 108 SOS dispatch, live network status counters (14,820+ tokens issued today, -42 mins wait reduced), and instant Quick Gateway cards.
+
+![Step 1: National Smart OPD Queue & AI Triage Platform](docs/screenshots/patient/01_patient_landing.png)
+
+---
+
+#### Step 2 — Patient Central Hub & ABHA Profile Dashboard
+Personalized citizen dashboard displaying authenticated ABHA Health ID (`ABHA-7719-2304-8512`), real-time active pass indicator (`CARD-646`), assigned clinical department & chamber, priority criteria badges, and direct hospital emergency & triage nurse desks.
+
+![Step 2: Patient Central Hub & ABHA Profile Dashboard](docs/screenshots/patient/02_patient_hub.png)
+
+---
+
+#### Step 3 — Real OPD Queue Token Booking (Specialty & Slot Selection)
+Specialty condition selector with intelligent clinical triage categories (Cardiology & Heart Care, General Medicine, Orthopedics, Pediatrics, Neurology) paired with target hospital selection and preferred appointment time slots.
+
+![Step 3: Real OPD Queue Token Booking](docs/screenshots/patient/03_patient_booking.png)
+
+---
+
+#### Step 4 — Instant Database Token Issuance & Chamber Routing
+Real-time confirmation of instant token registration directly into the hospital database with official token identifier (`CARD-267`), assigned consulting specialist (Dr. Rajesh Sharma), chamber location (Room 204, Block B), and initial status (`WAITING`).
+
+![Step 4: Real DB Token Issued](docs/screenshots/patient/04_token_issued.png)
+
+---
+
+#### Step 5 — Active Digital OPD Pass with Anti-Ghost Turnstile QR Code
+Cryptographically signed SHA-256 scannable QR pass with live 4-stage lifecycle tracking (`1. Waiting ➔ 2. Scanned ➔ 3. In Room ➔ 4. Done`). Verifies physical presence at the hospital entrance turnstile to eliminate ghost tokens, prevent proxy queuing, and notify the consulting doctor instantly upon arrival.
+
+![Step 5: Active Digital OPD Pass with Anti-Ghost QR Code](docs/screenshots/patient/05_active_qr_pass.png)
+
+---
+
+### 🩺 Doctor Consultation Console (`:5174`)
+*(Screenshots coming soon)*
+
+<!-- INSERT SCREENSHOT: Doctor Live Calling Desk with real-time AT DOOR badge -->
+<!-- INSERT SCREENSHOT: Clinical Consultation, Digital Rx & Longitudinal EMR -->
+
+---
+
+### 🏛️ Government Vigilance & Sentinel Command Dashboard (`:5175`)
+*(Screenshots coming soon)*
+
+<!-- INSERT SCREENSHOT: Sentinel Command Dashboard with National OPD Congestion Heatmap -->
+<!-- INSERT SCREENSHOT: Doctor Performance Index (DPI) & Salary Bonus Engine (+15%) -->
+
+---
+
+### 📱 Android Turnstile QR Scanner (Hardware Gate Verification)
+*(Screenshots coming soon)*
+
+<!-- INSERT SCREENSHOT: CameraX ML Kit Barcode Scanner Interface -->
+<!-- INSERT SCREENSHOT: Cryptographic SHA-256 Pass Verification & Turnstile Unlock -->
 
 ---
 
