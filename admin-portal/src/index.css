@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -22,7 +26,7 @@ h1, h2, h3 { letter-spacing: -0.02em; }
 button:disabled { cursor: not-allowed; opacity: .55; }
 .rounded-3xl { border-radius: 1rem !important; }
 
-button { min-height: 44px; }
+button { min-height: 44px !important; }
 input:not([type='checkbox']):not([type='radio']), select { min-height: 44px; }
 [class*='text-[9px]'], [class*='text-[10px]'], [class*='text-[11px]'] { font-size: 0.75rem !important; }
 
@@ -80,6 +84,3 @@ input:not([type='checkbox']):not([type='radio']), select { min-height: 44px; }
   transform: translateY(2px);
   border-bottom: 2px solid #94A3B8;
 }
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
