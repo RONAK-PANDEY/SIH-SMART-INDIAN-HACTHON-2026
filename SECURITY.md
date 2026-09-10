@@ -10,7 +10,7 @@ The SmartCare team takes security vulnerabilities seriously. We appreciate your 
 
 Instead, please report them via email to the project maintainers:
 
-- **Email**: [security@smartcare-sih.in] *(replace with actual team contact)*
+- **Email**: [security@smartcare-sih.in] 
 - **Subject Line**: `[SECURITY] SmartCare Vulnerability Report`
 
 ### What to Include
