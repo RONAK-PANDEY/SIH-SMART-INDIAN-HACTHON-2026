@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/🏆_SIH_2026-Problem_SIH26133-gold?style=for-the-badge&labelColor=1a1a2e" alt="SIH 2026" />
+  <img src="https://img.shields.io/badge/_SIH_2026-Problem_SIH26133-gold?style=for-the-badge&labelColor=1a1a2e" alt="SIH 2026" />
   <img src="https://img.shields.io/badge/Ministry-Health_&_Family_Welfare-00796b?style=for-the-badge&logo=government&labelColor=004d40" alt="MoHFW" />
   <img src="https://img.shields.io/badge/Status-Production_Ready-brightgreen?style=for-the-badge" alt="Status" />
 </p>
@@ -369,7 +369,7 @@ cd govt-portal && npx vercel --prod
 
 > **Full 60-Second Judge Walkthrough Script**: See [DEMO.md](DEMO.md) for the end-to-end evaluation flow.
 
-### 📱 Patient Portal Workflow (`http://localhost:5173`)
+###  Patient Portal Workflow (`http://localhost:5173`)
 
 The citizen OPD journey eliminates 3–5 hour physical waiting lines through a synchronized 5-step digital lifecycle:
 
@@ -408,7 +408,7 @@ Cryptographically signed SHA-256 scannable QR pass with live 4-stage lifecycle t
 
 ---
 
-### 🩺 Doctor Consultation Console (`:5174`)
+###  Doctor Consultation Console (`:5174`)
 
 Specialist workflow suite eliminating no-shows, synchronizing entrance turnstile scans in real time, and tracking consultation quality:
 
@@ -421,7 +421,7 @@ Specialist workflow suite eliminating no-shows, synchronizing entrance turnstile
 
 ---
 
-### 🏛️ Government Vigilance & Sentinel Command Dashboard (`:5175`)
+###  Government Vigilance & Sentinel Command Dashboard (`:5175`)
 
 National OPD oversight console for Ministry of Health & Family Welfare (MoHFW) directors, Chief Medical Officers (CMO), and hospital ombudsmen:
 
