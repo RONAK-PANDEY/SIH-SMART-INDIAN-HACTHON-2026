@@ -239,7 +239,7 @@ export const Profile: React.FC = () => {
               className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-1.5"
             >
               <Sparkles className="w-4 h-4 text-yellow-300" />
-              <span>Launch AI Triage</span>
+              <span>Check symptoms</span>
             </a>
           </div>
         </div>
@@ -251,7 +251,7 @@ export const Profile: React.FC = () => {
             { id: 'medical', label: 'Full Medical History', icon: Stethoscope },
             { id: 'tokens', label: 'Recent Token History', icon: Clock },
             { id: 'billing', label: 'Billing & Invoices', icon: Receipt },
-            { id: 'triage', label: 'AI Triage Hub', icon: Sparkles },
+            { id: 'triage', label: 'Symptom check', icon: Sparkles },
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -292,7 +292,7 @@ export const Profile: React.FC = () => {
                   <Languages className="w-4 h-4 text-blue-600" />
                   <span>1. Preferred Communication Language (11 Languages)</span>
                 </span>
-                <span className="text-[11px] text-slate-500">Government Portal Localization</span>
+                <span className="text-[11px] text-slate-500">Portal language</span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2">
@@ -729,7 +729,7 @@ export const Profile: React.FC = () => {
               <Sparkles className="w-6 h-6 text-blue-600" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900">Smart OPD Triage & Specialty Matcher</h3>
+              <h3 className="text-lg font-bold text-slate-900">Find the right department</h3>
               <p className="text-xs text-slate-500">Access full 100+ symptoms assessment, priority calculator, and auto-triage.</p>
             </div>
           </div>
@@ -742,7 +742,7 @@ export const Profile: React.FC = () => {
             href="/triage"
             className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-2xl shadow-md transition text-xs flex items-center justify-center gap-2"
           >
-            <span>Open Comprehensive AI Triage Page</span>
+            <span>Start symptom check</span>
             <ArrowRight className="w-4 h-4" />
           </a>
         </div>

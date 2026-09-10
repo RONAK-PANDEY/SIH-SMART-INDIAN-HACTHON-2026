@@ -123,7 +123,7 @@ export const Login: React.FC = () => {
           </div>
           <div className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 text-[11px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200 mb-2">
             <UserCheck className="w-3.5 h-3.5" />
-            <span>Digital Health Mission (Real Backend JWT Auth)</span>
+            <span>Secure patient access</span>
           </div>
           <h2 className="text-2xl font-black text-slate-900 tracking-tight">Patient Portal Login</h2>
           <p className="text-xs text-slate-500 mt-1">
@@ -135,7 +135,7 @@ export const Login: React.FC = () => {
         <div className="mb-6 bg-slate-50 border border-slate-200 rounded-xl p-3">
           <span className="text-[11px] font-bold text-slate-600 uppercase tracking-wider block mb-2 flex items-center gap-1">
             <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-            <span>1-Click Real Auth Personas:</span>
+            <span>Try a sample patient</span>
           </span>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {demoCitizens.map((item) => (
@@ -205,7 +205,7 @@ export const Login: React.FC = () => {
             disabled={loading}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-md transition text-xs flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
           >
-            {loading ? 'Authenticating with Backend...' : (
+            {loading ? 'Signing in…' : (
               <>
                 <span>Sign In to Patient Portal</span>
                 <ArrowRight className="w-4 h-4" />

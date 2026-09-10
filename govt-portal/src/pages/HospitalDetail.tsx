@@ -114,7 +114,7 @@ export const HospitalDetail: React.FC = () => {
             <span className="text-xs text-slate-400 font-mono">Facility ID: {hospitalId.toUpperCase()}</span>
           </div>
           <h1 className="text-2xl font-black text-white">
-            {hospitalId === 'hosp-002' ? 'Safdarjung Multi-Speciality Hospital' : 'AIIMS New Delhi - Department Telemetry'}
+            {hospitalId === 'hosp-002' ? 'Safdarjung Hospital' : 'AIIMS New Delhi'}
           </h1>
           <p className="text-xs text-slate-400 mt-0.5">
             Ansari Nagar, New Delhi • Apex Super-Speciality Hospital & National Referral Node
@@ -183,12 +183,12 @@ export const HospitalDetail: React.FC = () => {
               <span>OPD Department Capacities & Real-time Telemetry</span>
             </h3>
             <p className="text-[11px] text-slate-400 mt-0.5">
-              Live consultation throughput and queue accumulation monitored via WebSocket gateway
+              Live consultation progress and queue size
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
             <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>Auto-refreshed via WebSocket Sentinel</span>
+            <span>Updates automatically</span>
           </div>
         </div>
 

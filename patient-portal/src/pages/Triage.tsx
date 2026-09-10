@@ -281,7 +281,7 @@ export const Triage: React.FC = () => {
           </div>
 
           <div className="bg-slate-50 rounded-lg p-4 border border-slate-100 text-xs text-slate-700 space-y-1">
-            <span className="font-semibold text-slate-900 block">Doctor Intake Summary (Generated)</span>
+            <span className="font-semibold text-slate-900 block">Summary for your clinician</span>
             <p className="text-slate-600 font-normal leading-relaxed">{result.auto_clinical_note}</p>
           </div>
 
@@ -290,7 +290,7 @@ export const Triage: React.FC = () => {
               href={`/book-appointment?dept=${result.department_id}&level=${result.triage_level}`}
               className="w-full sm:w-auto flex-1 bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs px-6 py-3.5 rounded-xl transition-colors shadow-subtle flex items-center justify-center gap-2 min-h-[48px]"
             >
-              <span>Confirm & Issue OPD Turnstile Pass</span>
+              <span>Continue to appointment</span>
               <ArrowRight className="w-4 h-4" />
             </a>
 

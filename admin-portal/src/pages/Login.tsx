@@ -81,7 +81,7 @@ export const Login: React.FC = () => {
         <div className="mb-6 bg-slate-900/80 border border-slate-700 rounded-xl p-3">
           <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2 flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>Select Staff Role (1-Click Demo Login):</span>
+            <span>Try a staff role:</span>
           </span>
           <div className="space-y-1.5">
             {demoAccounts.map((acc) => (

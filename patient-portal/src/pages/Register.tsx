@@ -88,7 +88,7 @@ export const Register: React.FC = () => {
             <Shield className="w-6 h-6" />
           </div>
           <h2 className="text-2xl font-bold text-slate-800">New Patient Registration</h2>
-          <p className="text-xs text-slate-500 mt-1">Direct backend integration with ABHA Health ID and instant OPD queue access</p>
+          <p className="text-xs text-slate-500 mt-1">Create your profile to book appointments and manage your visits.</p>
         </div>
 
         {/* 1-Click Fast Pre-fill Demo */}
@@ -96,7 +96,7 @@ export const Register: React.FC = () => {
           <div>
             <span className="text-xs font-bold text-blue-900 block flex items-center gap-1">
               <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              <span>Demo Quick Fill</span>
+              <span>Use sample details</span>
             </span>
             <span className="text-[11px] text-blue-700">Pre-fill profile & priority data from Aadhaar</span>
           </div>
@@ -105,7 +105,7 @@ export const Register: React.FC = () => {
             onClick={handleFetchAadhaarDemo}
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition shadow-xs cursor-pointer"
           >
-            Load Demo Data
+            Fill form
           </button>
         </div>
 
@@ -216,7 +216,7 @@ export const Register: React.FC = () => {
 
           {/* Priority Criteria Checkboxes */}
           <div className="pt-2 border-t border-slate-100">
-            <span className="block text-xs font-bold text-slate-700 uppercase mb-2">Government Priority Categories:</span>
+            <span className="block text-xs font-bold text-slate-700 uppercase mb-2">Accessibility and care needs</span>
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
                 <input
@@ -253,7 +253,7 @@ export const Register: React.FC = () => {
             disabled={loading}
             className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
-            {loading ? 'Creating Account on Backend...' : (
+            {loading ? 'Creating account…' : (
               <>
                 <span>Complete Registration & Open Dashboard</span>
                 <ArrowRight className="w-4 h-4" />

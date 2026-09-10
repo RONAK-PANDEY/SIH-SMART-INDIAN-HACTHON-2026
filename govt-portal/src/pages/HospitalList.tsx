@@ -14,7 +14,7 @@ export const HospitalList: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-blue-400 text-xs font-bold uppercase tracking-wider mb-1">
             <Building2 className="w-4 h-4" />
-            <span>National Health Network</span>
+            <span>Hospital network</span>
           </div>
           <h1 className="text-2xl font-black text-white">Regional Healthcare Facilities & Bed Capacity</h1>
           <p className="text-xs text-slate-400 mt-0.5">

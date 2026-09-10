@@ -13,7 +13,7 @@ export const Referral: React.FC = () => {
           <Share2 className="w-5 h-5" />
           <span className="font-bold text-xs uppercase tracking-wider">Inter-Hospital Fast-Track</span>
         </div>
-        <h1 className="text-2xl font-bold text-slate-800">Smart Hospital Transfer Pass</h1>
+        <h1 className="text-2xl font-bold text-slate-800">Hospital transfer</h1>
         <p className="text-xs text-slate-500 mt-1">
           When primary hospital OPD capacity is exceeded (&gt;90%), transfer your queue priority to nearby tier-2/3 network facilities.
         </p>
@@ -63,7 +63,7 @@ export const Referral: React.FC = () => {
           <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
             <CheckCircle className="w-8 h-8" />
           </div>
-          <h2 className="text-xl font-bold text-slate-800">Referral Slip Generated</h2>
+          <h2 className="text-xl font-bold text-slate-800">Referral ready</h2>
           <div className="bg-slate-50 p-4 rounded-xl text-left text-xs space-y-2 border border-slate-100">
             <div className="flex justify-between">
               <span className="text-slate-400">Referral ID:</span>

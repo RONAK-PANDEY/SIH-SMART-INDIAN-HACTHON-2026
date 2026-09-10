@@ -123,7 +123,7 @@ export const CounterDesk: React.FC = () => {
           </div>
           <h1 className="text-2xl font-black text-white">Walk-in Triage & Rapid Token Issuance</h1>
           <p className="text-xs text-slate-400 mt-0.5">
-            Instant Aadhaar e-KYC lookup, AI symptom specialty matcher, and thermal token generation for walk-in citizens.
+            Find a patient, note their symptoms and issue a queue token.
           </p>
         </div>
 
@@ -195,7 +195,7 @@ export const CounterDesk: React.FC = () => {
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>2. Chief Complaint & AI Specialty Matcher</span>
+                <span>2. Reason for visit</span>
               </span>
               <button
                 type="button"
@@ -204,7 +204,7 @@ export const CounterDesk: React.FC = () => {
                 className="text-[11px] bg-amber-500/10 text-amber-400 font-bold px-3 py-1.5 rounded-xl border border-amber-500/30 hover:bg-amber-500/20 transition flex items-center gap-1.5 cursor-pointer"
               >
                 <Activity className="w-3.5 h-3.5" />
-                <span>{evaluating ? 'Analyzing...' : 'AI Auto-Detect Specialty'}</span>
+                <span>{evaluating ? 'Checking…' : 'Suggest department'}</span>
               </button>
             </div>
 
@@ -245,7 +245,7 @@ export const CounterDesk: React.FC = () => {
               className="w-full bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-xs flex items-center justify-center gap-2 cursor-pointer"
             >
               <Printer className="w-4 h-4" />
-              <span>Issue Smart OPD Token & Send SMS Notification</span>
+              <span>Issue token</span>
             </button>
           </div>
         </div>
@@ -320,7 +320,7 @@ export const CounterDesk: React.FC = () => {
             ) : (
               <div className="border-2 border-dashed border-slate-800 rounded-2xl p-8 text-center text-slate-500 space-y-2">
                 <Printer className="w-8 h-8 mx-auto text-slate-600" />
-                <p className="text-xs">No token generated yet. Lookup patient and click "Issue Smart OPD Token".</p>
+                <p className="text-xs">Find a patient and issue a token to see it here.</p>
               </div>
             )}
           </div>

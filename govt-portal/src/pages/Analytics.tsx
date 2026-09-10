@@ -10,7 +10,7 @@ export const Analytics: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider mb-1">
             <BarChart3 className="w-4 h-4" />
-            <span>National AI Queue Analytics</span>
+            <span>Queue analytics</span>
           </div>
           <h1 className="text-2xl font-black text-white">OPD Flow Rate & Predictive Wait Analytics</h1>
           <p className="text-xs text-slate-400 mt-0.5">
@@ -19,7 +19,7 @@ export const Analytics: React.FC = () => {
         </div>
 
         <span className="text-xs font-mono bg-indigo-500/15 border border-indigo-500/30 text-indigo-400 px-3.5 py-1.5 rounded-full font-bold">
-          AI MODEL ACCURACY 98.4%
+          Forecast accuracy 98.4%
         </span>
       </div>
 
@@ -37,7 +37,7 @@ export const Analytics: React.FC = () => {
         </div>
 
         <div className="bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-sm space-y-1">
-          <span className="text-xs text-slate-400 font-bold uppercase">AI Wait-Time Model R² Score</span>
+          <span className="text-xs text-slate-400 font-bold uppercase">Wait-time forecast score</span>
           <div className="text-3xl font-black text-amber-400">0.942</div>
           <p className="text-xs text-slate-400">Trained on 45,000+ verified OPD episodes</p>
         </div>

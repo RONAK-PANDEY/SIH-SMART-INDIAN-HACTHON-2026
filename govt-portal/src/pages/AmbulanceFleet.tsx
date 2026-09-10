@@ -65,13 +65,13 @@ export const AmbulanceFleet: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xs bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5 text-rose-400" /> National 108 Emergency Command
+              <Flame className="w-3.5 h-3.5 text-rose-400" /> Emergency 108
             </span>
-            <span className="text-xs text-slate-400 font-mono">Live GPS Telematics & Telemedicine</span>
+            <span className="text-xs text-slate-400">Fleet status</span>
           </div>
           <h1 className="text-2xl font-black text-white">Emergency 108 Ambulance Fleet & Trauma Dispatch</h1>
           <p className="text-xs text-slate-400 mt-0.5">
-            Real-time fleet monitoring, GPS route tracking, and trauma bed reservation across central hospitals.
+            Track available vehicles, active journeys and driver contact details.
           </p>
         </div>
 

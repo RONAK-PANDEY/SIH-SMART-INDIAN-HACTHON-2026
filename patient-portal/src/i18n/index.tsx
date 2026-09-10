@@ -35,8 +35,8 @@ export const SUPPORTED_LANGUAGES: LanguageInfo[] = [
 
 const translations: Record<SupportedLanguage, Record<string, string>> = {
   en: {
-    hero_title: 'Smart OPD Queue & Instant Emergency Triage',
-    hero_subtitle: 'Skip long waiting lines at hospitals. Get real-time queue tokens with AI triage & government e-KYC.',
+    hero_title: 'Hospital visits, made simpler',
+    hero_subtitle: 'Book an OPD appointment, check your place in line, and get help choosing a department.',
     check_symptoms: 'Check Symptoms & Triage',
     book_token: 'Book OPD Token',
     track_queue: 'Track Live Queue',

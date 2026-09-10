@@ -99,11 +99,11 @@ export const LiveQueues: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-blue-400 text-xs font-bold uppercase tracking-wider mb-1">
             <Layers className="w-4 h-4" />
-            <span>National Queue Sentinel</span>
+            <span>Queue status</span>
           </div>
-          <h1 className="text-2xl font-black text-white">Live OPD Consoles & Turn-by-Turn Matrix</h1>
+          <h1 className="text-2xl font-black text-white">Department queues</h1>
           <p className="text-xs text-slate-400 mt-0.5">
-            Real-time multi-hospital OPD room turn tracking, pacing metrics, and active consultation auditing.
+            Current waiting and consultation status across hospitals.
           </p>
         </div>
 
@@ -112,7 +112,7 @@ export const LiveQueues: React.FC = () => {
             wsConnected ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400' : 'bg-amber-500/15 border-amber-500/30 text-amber-400'
           }`}>
             <Radio className={`w-3 h-3 ${wsConnected ? 'animate-pulse' : ''}`} />
-            <span>{wsConnected ? 'Global Live WS Sync' : 'Reconnecting...'}</span>
+            <span>{wsConnected ? 'Live updates on' : 'Reconnecting…'}</span>
           </span>
         </div>
       </div>

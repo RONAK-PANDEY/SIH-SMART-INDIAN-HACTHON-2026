@@ -15,10 +15,10 @@ export const Home: React.FC = () => {
             <span className="font-bold text-xl tracking-wide">SmartCare OPD</span>
           </div>
           <h1 className="text-3xl font-extrabold sm:text-4xl leading-tight">
-            {t('hero_title') || 'Smart OPD Queue & Instant Emergency Triage'}
+            {t('hero_title') || 'Hospital visits, made simpler'}
           </h1>
           <p className="mt-3 text-blue-100 text-sm sm:text-base max-w-xl">
-            {t('hero_subtitle') || 'Skip long waiting lines at government & private hospitals. Get real-time queue tokens with AI-powered triage.'}
+            {t('hero_subtitle') || 'Book an OPD appointment, check your place in line, and get help choosing a department.'}
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -64,8 +64,8 @@ export const Home: React.FC = () => {
         <section className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
           <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
             <Clock className="w-8 h-8 text-indigo-600 mb-3" />
-            <h4 className="font-bold text-slate-800">Live AI Wait Predictor</h4>
-            <p className="text-xs text-slate-500 mt-1">Get high-accuracy estimated time of consultation powered by machine learning models.</p>
+            <h4 className="font-bold text-slate-800">Estimated wait time</h4>
+            <p className="text-xs text-slate-500 mt-1">See an updated estimate before you leave for the hospital.</p>
           </div>
           <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
             <Activity className="w-8 h-8 text-rose-500 mb-3" />

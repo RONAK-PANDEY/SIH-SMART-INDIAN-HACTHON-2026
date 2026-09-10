@@ -37,7 +37,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRefresh, loading }) => {
         <div className="flex items-center gap-3 text-xs">
           <div className="hidden md:flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span className="text-slate-300 font-mono text-[11px]">Realtime Queue Sentinel Active</span>
+            <span className="text-slate-300 text-[11px]">Live queue updates</span>
           </div>
 
           {onRefresh && (

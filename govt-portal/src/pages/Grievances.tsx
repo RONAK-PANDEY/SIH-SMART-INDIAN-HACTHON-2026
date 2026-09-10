@@ -18,7 +18,7 @@ export const Grievances: React.FC = () => {
   const [grievances, setGrievances] = useState<any[]>([]);
   const [selectedGrievance, setSelectedGrievance] = useState<any>(null);
   const [actionType, setActionType] = useState('ISSUE_NOTICE');
-  const [actionNotes, setActionNotes] = useState('Official show cause notice issued requiring doctor written response within 48 hours.');
+  const [actionNotes, setActionNotes] = useState('A notice was sent requesting a written response within 48 hours.');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [statusFilter, setStatusFilter] = useState('ALL');
@@ -81,13 +81,13 @@ export const Grievances: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-rose-400 text-xs font-bold uppercase tracking-wider mb-1">
             <Scale className="w-4 h-4" />
-            <span>Statutory Grievance & Disciplinary Tribunal</span>
+            <span>Patient support</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-white">
-            Citizen Grievance Redressal & Investigation Unit
+            Complaints and resolutions
           </h2>
           <p className="text-xs text-slate-400 max-w-2xl">
-            Neutral mediation of patient complaints against doctor misconduct, queue bypassing, and unauthorized counter fees. Enforcing show-cause inquiries and salary adjustments.
+            Review patient complaints, record follow-up actions, and track each case to resolution.
           </p>
         </div>
 
@@ -97,7 +97,7 @@ export const Grievances: React.FC = () => {
             onChange={(e) => setStatusFilter(e.target.value)}
             className="bg-slate-950 border border-slate-700 text-white rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-rose-500"
           >
-            <option value="ALL">All Grievances ({grievances.length})</option>
+            <option value="ALL">All complaints ({grievances.length})</option>
             <option value="OPEN">Open / Pending</option>
             <option value="UNDER_INVESTIGATION">Under Investigation</option>
             <option value="SHOW_CAUSE_ISSUED">Show Cause Issued</option>
@@ -112,7 +112,7 @@ export const Grievances: React.FC = () => {
         {/* Left 5 Cols: Complaints List */}
         <div className="lg:col-span-5 space-y-3">
           <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">
-            Complaints Docket ({filtered.length})
+            Complaints ({filtered.length})
           </h3>
 
           <div className="space-y-2.5">
@@ -149,7 +149,7 @@ export const Grievances: React.FC = () => {
                   </p>
 
                   <div className="flex items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-slate-800">
-                    <span>Against: <strong className="text-slate-400">{grv.doctor_name}</strong></span>
+                    <span>Staff: <strong className="text-slate-400">{grv.doctor_name}</strong></span>
                     <span>{new Date(grv.created_at).toLocaleDateString()}</span>
                   </div>
                 </button>
@@ -173,31 +173,31 @@ export const Grievances: React.FC = () => {
                     <h3 className="text-lg font-black text-white">{selectedGrievance.category}</h3>
                   </div>
                   <span className="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full font-bold">
-                    Severity: {selectedGrievance.severity}
+                    Priority: {selectedGrievance.severity}
                   </span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 text-xs bg-slate-950 p-4 rounded-2xl border border-slate-800">
                   <div>
-                    <span className="text-slate-500 block">Reported By Citizen:</span>
+                    <span className="text-slate-500 block">Patient</span>
                     <strong className="text-white">{selectedGrievance.patient_name} (Token: {selectedGrievance.token_number})</strong>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">Respondent Doctor / Staff:</span>
+                    <span className="text-slate-500 block">Staff member</span>
                     <strong className="text-amber-400">{selectedGrievance.doctor_name}</strong>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">Hospital Facility:</span>
+                    <span className="text-slate-500 block">Hospital</span>
                     <strong className="text-white">{selectedGrievance.hospital_name}</strong>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">Clinical Department:</span>
+                    <span className="text-slate-500 block">Department</span>
                     <strong className="text-white">{selectedGrievance.department}</strong>
                   </div>
                 </div>
 
                 <div className="space-y-1 text-xs">
-                  <span className="font-bold text-slate-400">Citizen Testimonial:</span>
+                  <span className="font-bold text-slate-400">Complaint</span>
                   <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 italic">
                     "{selectedGrievance.description}"
                   </div>
@@ -205,7 +205,7 @@ export const Grievances: React.FC = () => {
 
                 {/* Action History / Investigation Timeline */}
                 <div className="space-y-2 pt-2 text-xs">
-                  <span className="font-bold text-slate-400">Investigation Timeline:</span>
+                  <span className="font-bold text-slate-400">Case history</span>
                   <div className="space-y-2">
                     {selectedGrievance.action_history?.map((act: any, idx: number) => (
                       <div key={idx} className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-start gap-2.5">
@@ -225,32 +225,32 @@ export const Grievances: React.FC = () => {
               <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4">
                 <div className="flex items-center gap-2 text-amber-400">
                   <Scale className="w-4 h-4" />
-                  <h4 className="font-bold text-sm text-white">Ombudsman Statutory Action Execution</h4>
+                  <h4 className="font-bold text-sm text-white">Resolve grievance</h4>
                 </div>
 
                 <form onSubmit={handleTakeAction} className="space-y-4 text-xs">
                   <div>
-                    <label className="text-slate-400 font-bold block mb-1">Select Disciplinary Ruling</label>
+                    <label className="text-slate-400 font-bold block mb-1">Action</label>
                     <select
                       value={actionType}
                       onChange={(e) => {
                         setActionType(e.target.value);
-                        if (e.target.value === 'ISSUE_NOTICE') setActionNotes('Official show cause notice issued requiring doctor written response within 48 hours.');
-                        else if (e.target.value === 'DEDUCT_BONUS') setActionNotes('-10% Salary deduction penalty applied to payroll due to substantiated citizen complaint.');
-                        else if (e.target.value === 'RESOLVE') setActionNotes('Grievance resolved following amicable patient clarification and corrective staff counselling.');
-                        else if (e.target.value === 'INITIATE_INQUIRY') setActionNotes('Formal three-member inquiry panel initiated under Civil Services Medical Rules.');
+                        if (e.target.value === 'ISSUE_NOTICE') setActionNotes('A notice was sent requesting a written response within 48 hours.');
+                        else if (e.target.value === 'DEDUCT_BONUS') setActionNotes('A 10% bonus adjustment was applied after the complaint was confirmed.');
+                        else if (e.target.value === 'RESOLVE') setActionNotes('The complaint was resolved after speaking with the patient and staff member.');
+                        else if (e.target.value === 'INITIATE_INQUIRY') setActionNotes('A formal review has started.');
                       }}
                       className="w-full bg-slate-950 border border-slate-700 text-white rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium text-xs"
                     >
-                      <option value="ISSUE_NOTICE">📜 Issue Official Show-Cause Notice</option>
-                      <option value="DEDUCT_BONUS">💰 Apply -10% Salary Bonus Penalty Deduction</option>
-                      <option value="INITIATE_INQUIRY">⚖️ Initiate Formal Vigilance Inquiry</option>
-                      <option value="RESOLVE">✅ Mark Grievance as Amicably Resolved</option>
+                      <option value="ISSUE_NOTICE">Request a written response</option>
+                      <option value="DEDUCT_BONUS">Apply a 10% bonus adjustment</option>
+                      <option value="INITIATE_INQUIRY">Start formal review</option>
+                      <option value="RESOLVE">Mark as resolved</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="text-slate-400 font-bold block mb-1">Official Ombudsman Ruling Notes</label>
+                    <label className="text-slate-400 font-bold block mb-1">Resolution notes</label>
                     <textarea
                       value={actionNotes}
                       onChange={(e) => setActionNotes(e.target.value)}
@@ -265,7 +265,7 @@ export const Grievances: React.FC = () => {
                     className="w-full py-3 bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-700 hover:to-amber-700 text-white font-extrabold rounded-xl shadow-lg transition text-xs flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <Send className="w-3.5 h-3.5" />
-                    <span>{submitting ? 'Executing Ruling...' : 'Record & Execute Statutory Ruling'}</span>
+                    <span>{submitting ? 'Saving…' : 'Save resolution'}</span>
                   </button>
                 </form>
               </div>

@@ -85,7 +85,7 @@ export const Sidebar: React.FC = () => {
         <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs space-y-2">
           <div className="flex items-center gap-1.5 font-bold text-amber-400 text-[11px]">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>National Oversight Console</span>
+            <span>Operations overview</span>
           </div>
           <p className="text-[10px] text-slate-300 leading-tight">
             Counter Desk, 108 Fleet, Analytics, Heatmap & Bonus Engine shifted to Port 5175.

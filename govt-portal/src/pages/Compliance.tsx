@@ -68,7 +68,7 @@ export const Compliance: React.FC = () => {
             Apex Hospital Quality & Queue Compliance Leaderboard
           </h2>
           <p className="text-xs text-slate-400 max-w-2xl">
-            Realtime compliance ratings evaluating average OPD queue wait times, emergency triage efficiency, citizen behavioral reviews, and staff bonus pool qualification.
+            Compare hospital wait times, emergency response, patient feedback, and staff performance.
           </p>
         </div>
 

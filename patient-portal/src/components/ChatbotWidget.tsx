@@ -32,7 +32,7 @@ export const ChatbotWidget: React.FC = () => {
     {
       id: 'welcome-1',
       sender: 'bot',
-      text: "Namaste! I am your SmartCare AI Hospital Assistant powered by Gemini. How can I assist you with your OPD token, QR pass, or department guidance today?",
+      text: "Namaste! How can I help with your appointment, hospital pass, or department today?",
       servedBy: "SmartCare AI Gateway",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
@@ -125,7 +125,7 @@ export const ChatbotWidget: React.FC = () => {
             <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-slate-900 animate-pulse" />
           </div>
           <span className="text-xs font-bold tracking-wide pr-1 hidden sm:inline">
-            SmartCare AI Chat
+            Help chat
           </span>
         </button>
       )}
@@ -141,7 +141,7 @@ export const ChatbotWidget: React.FC = () => {
                 <Sparkles className="w-5 h-5 text-yellow-300" />
               </div>
               <div>
-                <h3 className="text-sm font-black tracking-tight leading-none">SmartCare AI Assistant</h3>
+                <h3 className="text-sm font-semibold tracking-tight leading-none">Hospital help</h3>
                 <span className="text-[10px] text-blue-200 font-medium flex items-center gap-1 mt-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                   Gemini Multi-Key Router (Active)
@@ -224,7 +224,7 @@ export const ChatbotWidget: React.FC = () => {
                   <span className="w-2 h-2 rounded-full bg-blue-600 animate-bounce"></span>
                   <span className="w-2 h-2 rounded-full bg-indigo-600 animate-bounce [animation-delay:0.2s]"></span>
                   <span className="w-2 h-2 rounded-full bg-slate-600 animate-bounce [animation-delay:0.4s]"></span>
-                  <span className="text-[11px] text-slate-500 font-medium ml-1">Gemini AI is thinking...</span>
+                  <span className="text-[11px] text-slate-500 font-medium ml-1">Preparing a reply...</span>
                 </div>
               </div>
             )}

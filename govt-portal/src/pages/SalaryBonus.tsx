@@ -98,7 +98,7 @@ export const SalaryBonus: React.FC = () => {
             Doctor Recognition Index (DRI) & Quality Audit Framework
           </h2>
           <p className="text-xs text-slate-400 max-w-2xl">
-            National Clinical Performance & Public Service Evaluation. Evaluates practitioner empathy, patient satisfaction, and queue management efficiency to advise national awards, research grants, and MoHFW honorary citations.
+            Review patient feedback and service outcomes for each clinician.
           </p>
         </div>
 
@@ -139,7 +139,7 @@ export const SalaryBonus: React.FC = () => {
           <p className="text-2xl sm:text-3xl font-black text-emerald-400">
             {gradeADoctors} Nominated
           </p>
-          <p className="text-[11px] text-slate-500">Eligible for National Healthcare Honors</p>
+          <p className="text-[11px] text-slate-500">High service rating</p>
         </div>
 
         <div className="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-1">
@@ -159,7 +159,7 @@ export const SalaryBonus: React.FC = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-amber-400">
             <Sparkles className="w-4 h-4" />
-            <h3 className="font-extrabold text-sm text-white">Interactive Live Survey & DRI Index Simulator</h3>
+            <h3 className="font-extrabold text-sm text-white">Add patient feedback</h3>
           </div>
           <span className="text-[10px] font-mono bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-full border border-amber-500/30">
             SIMULATION SANDBOX
@@ -225,7 +225,7 @@ export const SalaryBonus: React.FC = () => {
               disabled={simulating}
               className="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs transition shadow-md whitespace-nowrap cursor-pointer"
             >
-              {simulating ? 'Processing...' : 'Apply Live Review'}
+              {simulating ? 'Saving…' : 'Add review'}
             </button>
           </div>
         </form>
@@ -247,7 +247,7 @@ export const SalaryBonus: React.FC = () => {
                 <th className="p-4">Performance Grade</th>
                 <th className="p-4">DRI Recognition Tier</th>
                 <th className="p-4">Citizen Survey Count</th>
-                <th className="p-4">Government Audit Status</th>
+                <th className="p-4">Review status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">

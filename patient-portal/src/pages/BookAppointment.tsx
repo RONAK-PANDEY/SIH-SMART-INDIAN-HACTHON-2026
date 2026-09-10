@@ -242,10 +242,10 @@ export const BookAppointment: React.FC = () => {
             <span className="font-bold text-xs uppercase tracking-wider">{t('book_token')}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-            Real OPD Queue Token Booking
+            Book an OPD appointment
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            Generate real scannable QR tokens registered directly in hospital Supabase database.
+            Choose a department, hospital, date and time that work for you.
           </p>
         </div>
 
@@ -259,7 +259,7 @@ export const BookAppointment: React.FC = () => {
           </div>
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              ✓ Real DB Token Issued
+              Appointment confirmed
             </span>
             <h2 className="text-4xl font-black text-slate-900 mt-2">{generatedToken.tokenNumber}</h2>
             <p className="text-xs text-slate-500">{generatedToken.department} • {generatedToken.doctor}</p>
@@ -290,7 +290,7 @@ export const BookAppointment: React.FC = () => {
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-2xl text-xs flex items-center gap-2 shadow-md transition cursor-pointer"
             >
               <QrCode className="w-4 h-4" />
-              <span>View Scannable QR Pass & Live Status</span>
+              <span>View pass and queue status</span>
             </a>
           </div>
         </div>
@@ -398,9 +398,9 @@ export const BookAppointment: React.FC = () => {
             disabled={loading}
             className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-black py-4 rounded-3xl shadow-xl transition text-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
-            {loading ? 'Issuing Real Token in Supabase DB...' : (
+            {loading ? 'Confirming appointment…' : (
               <>
-                <span>Generate OPD Token & Scannable QR Pass</span>
+                <span>Confirm appointment</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

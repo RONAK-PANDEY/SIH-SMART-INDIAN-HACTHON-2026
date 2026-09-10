@@ -43,14 +43,14 @@ export const Dashboard: React.FC = () => {
             </span>
           </div>
           <h1 className="text-2xl font-black text-slate-900">Hospital OPD Command Center</h1>
-          <p className="text-xs text-slate-500">Live operational overview, automated AI triage, and inter-hospital load balancing</p>
+          <p className="text-xs text-slate-500">Today’s queues, patient flow, and hospital capacity</p>
         </div>
         <div className="flex items-center gap-2">
           <span className="flex h-3 w-3 relative">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
           </span>
-          <span className="text-xs font-semibold text-slate-600">WebSocket Live Sync Active</span>
+          <span className="text-xs font-semibold text-slate-600">Live updates on</span>
         </div>
       </div>
 
@@ -101,7 +101,7 @@ export const Dashboard: React.FC = () => {
       <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div>
-            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block">AI Load Balancing Cluster</span>
+            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block">Hospital network</span>
             <h3 className="text-base font-bold text-slate-900">City Hospital Queue Load & Inter-Hospital Referral Status</h3>
           </div>
           <span className="text-xs bg-slate-100 text-slate-700 font-semibold px-3 py-1 rounded-full">
@@ -159,7 +159,7 @@ export const Dashboard: React.FC = () => {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-          <h3 className="font-bold text-slate-800 text-sm mb-4">OPD Inflow vs Wait Time Prediction (AI Forecast)</h3>
+          <h3 className="font-bold text-slate-800 text-sm mb-4">Patient arrivals and expected wait</h3>
           <WaitTimeChart />
         </div>
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">

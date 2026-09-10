@@ -165,23 +165,23 @@ export const LiveScanFeed: React.FC = () => {
           <div className="flex items-center gap-2 mb-1.5">
             <span className="text-xs bg-amber-500/20 text-amber-400 font-bold px-2.5 py-0.5 rounded-full border border-amber-500/30 flex items-center gap-1.5">
               <Radio className="w-3.5 h-3.5 animate-pulse text-amber-400" />
-              MoHFW Real-Time Vigilance
+              Arrival monitoring
             </span>
             <span className="text-slate-600">•</span>
             <span className="text-xs text-slate-400 font-mono">Global Observer Channel</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-3">
-            National Turnstile QR Scan Feed
+            Patient arrival scans
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Real-time multi-hospital observation of patient arrivals, turnstile validations, and chamber entries
+            Confirmed arrivals across hospital entrances and departments.
           </p>
 
           {/* WHY THIS MATTERS: ANTI-GHOST TOKEN DETECTION */}
           <div className="mt-3 p-3 bg-amber-950/40 border border-amber-500/30 rounded-2xl flex items-center gap-2.5 text-xs text-amber-200">
             <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
             <span>
-              <strong>Why this matters:</strong> Turnstile QR verification acts as an automated anti-ghost-token sentinel. Unregistered tickets or queue-jumpers without verified physical arrival are blocked from entering the active doctor consultation queue.
+              Arrival scans confirm that a patient is present before they enter the active consultation queue.
             </span>
           </div>
         </div>
@@ -206,7 +206,7 @@ export const LiveScanFeed: React.FC = () => {
           <div>
             <span className="text-[11px] text-slate-400 font-semibold block uppercase">Total Scans Streamed</span>
             <div className="text-2xl font-black text-white font-mono">{totalScansReceived}</div>
-            <span className="text-[10px] text-emerald-400 font-medium">Live Gateway Sync</span>
+            <span className="text-[10px] text-emerald-400 font-medium">Updates connected</span>
           </div>
         </div>
 
@@ -217,7 +217,7 @@ export const LiveScanFeed: React.FC = () => {
           <div>
             <span className="text-[11px] text-slate-400 font-semibold block uppercase">Observed Hospitals</span>
             <div className="text-2xl font-black text-emerald-300 font-mono">4 Apex Nodes</div>
-            <span className="text-[10px] text-slate-400 font-medium">All Turnstiles Active</span>
+            <span className="text-[10px] text-slate-400 font-medium">All entrances online</span>
           </div>
         </div>
 
@@ -286,7 +286,7 @@ export const LiveScanFeed: React.FC = () => {
               <span>Real-Time Ingestion Log ({filteredEvents.length} Events)</span>
             </h3>
             <p className="text-[11px] text-slate-400 mt-0.5">
-              Live broadcasted from FastAPI <code className="font-mono text-slate-300">AppointmentService.scan_token</code> to <code className="font-mono text-slate-300">/global</code>
+              New verified arrivals appear here automatically.
             </p>
           </div>
           <span className="text-xs text-slate-400 font-mono">Newest First</span>

@@ -100,7 +100,7 @@ export const GovtAdminLanding: React.FC = () => {
                 Government of India • Ministry of Health & Family Welfare
               </p>
               <h1 className="text-base sm:text-lg font-black text-white tracking-tight">
-                National Hospital Administration & Clinical Staff Gateway
+                Hospital staff portal
               </h1>
             </div>
           </div>

@@ -62,7 +62,7 @@ export const Ambulance: React.FC = () => {
           <Flame className="w-4 h-4 animate-pulse" />
           <span className="font-bold text-xs uppercase tracking-wider">24x7 Emergency Trauma Dispatch</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">National Emergency Ambulance (108)</h1>
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Call an ambulance</h1>
         <p className="text-xs text-slate-500 mt-1">
           GPS-tracked emergency ambulance with live paramedic monitoring and hospital trauma bed pre-alert.
         </p>
@@ -71,7 +71,7 @@ export const Ambulance: React.FC = () => {
       {/* Emergency Hotline Bar */}
       <div className="bg-gradient-to-r from-rose-700 via-red-700 to-rose-900 text-white rounded-3xl p-5 shadow-xl mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <span className="text-xs uppercase tracking-wider font-bold text-rose-200 block">Instant Emergency Call</span>
+          <span className="text-xs uppercase tracking-wider font-bold text-rose-200 block">Emergency 108</span>
           <strong className="text-2xl font-black">Call 108 (Toll-Free)</strong>
         </div>
         <a
@@ -211,7 +211,7 @@ export const Ambulance: React.FC = () => {
             ) : (
               <>
                 <Flame className="w-5 h-5 fill-current" />
-                <span>Confirm Instant 108 Ambulance Dispatch</span>
+                <span>Request ambulance</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

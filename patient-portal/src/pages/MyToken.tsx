@@ -251,7 +251,7 @@ export const MyToken: React.FC = () => {
               className="w-full btn-tactile-green font-semibold text-base py-4 px-6 rounded-2xl flex items-center justify-center gap-3 min-h-[64px] cursor-pointer shadow-sm"
             >
               <QrCode className="w-6 h-6" />
-              <span>Tap Here To Scan Turnstile Gate B</span>
+              <span>Test arrival scan</span>
             </button>
           </div>
 

@@ -16,7 +16,7 @@ export const LiveQueue: React.FC = () => {
       <header className="mb-6 flex justify-between items-center">
         <div>
           <span className="text-xs font-bold text-blue-600 uppercase tracking-wider flex items-center gap-1.5">
-            <Activity className="w-4 h-4 animate-pulse" /> Live Realtime WebSocket Feed
+            <Activity className="w-4 h-4 animate-pulse" /> Queue updates
           </span>
           <h1 className="text-2xl font-bold text-slate-800">Cardiology OPD Queue</h1>
         </div>

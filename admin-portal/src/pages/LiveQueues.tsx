@@ -218,15 +218,15 @@ export const LiveQueues: React.FC = () => {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="text-xs bg-blue-900/60 text-blue-300 font-bold px-2.5 py-0.5 rounded-full border border-blue-700/50">
-                MoHFW Sentinel Live Matrix
+                Department queues
               </span>
-              <span className="text-xs text-slate-400 font-mono">OPD Chamber Vigilance</span>
+              <span className="text-xs text-slate-400">Current shift</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              Live OPD Doctor Consoles & Queue Matrix
+              Live department queues
             </h1>
             <p className="text-xs text-slate-400 mt-0.5">
-              Real-time synchronization across all consultation chambers, queue pacing, and token turnovers
+              See who is consulting, who is waiting and where support is needed.
             </p>
           </div>
         </div>

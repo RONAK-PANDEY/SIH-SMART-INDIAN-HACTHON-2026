@@ -75,7 +75,7 @@ export const Dashboard: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className="text-xs bg-teal-50 text-teal-800 font-semibold px-2.5 py-0.5 rounded-md border border-teal-200/60">
-              Verified Citizen Account
+              Account verified
             </span>
             <span className="text-xs text-slate-500 flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5 text-teal-700" />
@@ -127,7 +127,7 @@ export const Dashboard: React.FC = () => {
         </div>
 
         <div className="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-subtle space-y-1">
-          <span className="text-[11px] text-slate-500 uppercase tracking-wider block">Active Turnstiles</span>
+          <span className="text-[11px] text-slate-500 uppercase tracking-wider block">Entry gates</span>
           <p className="text-base sm:text-lg font-semibold text-slate-900">Gate A & Gate B</p>
           <p className="text-xs text-slate-500">QR reader online</p>
         </div>
@@ -199,7 +199,7 @@ export const Dashboard: React.FC = () => {
                     <span>Next step when you reach the hospital:</span>
                   </p>
                   <p className="text-slate-600 leading-relaxed">
-                    Open your digital pass, hold the QR code 10cm in front of the scanner at Turnstile Gate B. Your doctor will immediately see your status as "AT DOOR".
+                    Open your pass and hold its QR code in front of the scanner at Gate B. Staff will see that you have arrived.
                   </p>
                 </div>
 
@@ -357,7 +357,7 @@ export const Dashboard: React.FC = () => {
               <span>Need Assistance at the Hospital?</span>
             </p>
             <p className="text-slate-600 leading-relaxed font-normal">
-              May I Help You desks are positioned near Turnstile Gate A and Gate B. Staff can assist senior citizens and verify paper slips.
+              Help desks are available near Gates A and B. Staff can assist senior citizens and patients using paper slips.
             </p>
           </div>
 
