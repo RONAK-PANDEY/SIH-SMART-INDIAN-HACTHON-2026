@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { API_V1_URL } from '../lib/api';
 import { 
   MessageSquare, 
   X, 
@@ -71,10 +72,8 @@ export const ChatbotWidget: React.FC = () => {
     setInputMessage('');
     setLoading(true);
 
-    const apiHost = window.location.hostname || 'localhost';
-
     try {
-      const resp = await fetch(`http://${apiHost}:8000/api/v1/chatbot/message`, {
+      const resp = await fetch(`${API_V1_URL}/chatbot/message`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -20,6 +20,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { useTranslation, LanguageSwitcherPill } from '../i18n';
+import { API_V1_URL } from '../lib/api';
 
 export const BookAppointment: React.FC = () => {
   const { t } = useTranslation();
@@ -117,11 +118,9 @@ export const BookAppointment: React.FC = () => {
     const hospObj = hospitals.find(h => h.id === selectedHospital) || hospitals[0];
     const patientId = user?.id || user?.phone || 'usr-pat-001';
     const patientName = user?.full_name || 'Aarav Sharma';
-    const apiHost = window.location.hostname || 'localhost';
-
     try {
       // Call real backend token generation endpoint
-      const resp = await fetch(`http://${apiHost}:8000/api/v1/tokens/create`, {
+      const resp = await fetch(`${API_V1_URL}/tokens/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

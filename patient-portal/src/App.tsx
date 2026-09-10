@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { GovtLanding } from './pages/GovtLanding';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
@@ -17,6 +17,12 @@ import { Profile } from './pages/Profile';
 import { Navbar } from './components/Navbar';
 import { ChatbotWidget } from './components/ChatbotWidget';
 import { I18nProvider } from './i18n';
+
+const AppNavigation: React.FC = () => {
+  const { pathname } = useLocation();
+  const hiddenRoutes = new Set(['/', '/home', '/login', '/register']);
+  return hiddenRoutes.has(pathname) ? null : <Navbar />;
+};
 
 export const App: React.FC = () => {
   return (
@@ -39,7 +45,7 @@ export const App: React.FC = () => {
             <Route path="/referral" element={<Referral />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
-          <Navbar />
+          <AppNavigation />
           <ChatbotWidget />
         </div>
       </Router>

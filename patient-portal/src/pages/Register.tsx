@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { User, Phone, Shield, ArrowRight, Sparkles, CheckCircle2, Lock, AlertCircle } from 'lucide-react';
+import { API_V1_URL } from '../lib/api';
 
 export const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -37,10 +38,8 @@ export const Register: React.FC = () => {
     setLoading(true);
     setError('');
 
-    const apiHost = window.location.hostname || 'localhost';
-
     try {
-      const resp = await fetch(`http://${apiHost}:8000/api/v1/auth/register`, {
+      const resp = await fetch(`${API_V1_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -74,22 +73,8 @@ export const Register: React.FC = () => {
         setError(data.detail || 'Registration failed. Please check your inputs.');
       }
     } catch (err) {
-      console.warn('Backend registration offline, continuing with local session:', err);
-      const userObj = {
-        id: `usr_${formData.phone.slice(-6)}`,
-        phone: formData.phone,
-        full_name: formData.fullName,
-        abha_id: formData.abhaId,
-        age: parseInt(formData.age) || 30,
-        gender: formData.gender,
-        address: formData.address,
-        is_senior: formData.isSenior || parseInt(formData.age) >= 60,
-        is_pregnant: formData.isPregnant,
-        is_pwd: formData.isPwd
-      };
-      localStorage.setItem('smartcare_token', 'mock_jwt_token_offline');
-      localStorage.setItem('smartcare_user', JSON.stringify(userObj));
-      window.location.href = '/dashboard';
+      console.error('Registration request failed:', err);
+      setError('We could not reach the registration service. Check your connection and try again.');
     } finally {
       setLoading(false);
     }

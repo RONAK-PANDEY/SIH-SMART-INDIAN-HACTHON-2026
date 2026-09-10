@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_V1_URL, websocketUrl } from '../lib/api';
 import { 
   User,
   Users,
@@ -225,8 +226,7 @@ export const DoctorPanel: React.FC = () => {
     let reconnectTimer: any = null;
 
     const connectWS = () => {
-      const apiHost = window.location.hostname || 'localhost';
-      const wsUrl = `ws://${apiHost}:8000/ws/queue/${staffInfo.hospital_id || 'hosp-001'}/${staffInfo.department_id || 'dept-cardio'}`;
+      const wsUrl = websocketUrl(`/api/v1/ws/queue/${staffInfo.hospital_id || 'hosp-001'}/${staffInfo.department_id || 'dept-cardio'}`);
       
       try {
         ws = new WebSocket(wsUrl);
@@ -300,10 +300,8 @@ export const DoctorPanel: React.FC = () => {
   const handleComplete = async () => {
     if (!currentPatient) return;
     const tokenToComplete = currentPatient.token;
-    const apiHost = window.location.hostname || 'localhost';
-
     try {
-      await fetch(`http://${apiHost}:8000/api/v1/tokens/${encodeURIComponent(tokenToComplete)}/complete`, {
+      await fetch(`${API_V1_URL}/tokens/${encodeURIComponent(tokenToComplete)}/complete`, {
         method: 'POST'
       });
     } catch (err) {

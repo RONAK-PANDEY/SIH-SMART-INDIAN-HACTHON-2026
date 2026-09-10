@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Shield, Lock, Phone, ArrowRight, UserCheck, CheckCircle2, Sparkles, AlertCircle } from 'lucide-react';
+import { API_V1_URL } from '../lib/api';
 
 export const Login: React.FC = () => {
   const [authMode, setAuthMode] = useState<'aadhaar' | 'abha' | 'phone'>('phone');
@@ -57,10 +58,8 @@ export const Login: React.FC = () => {
     setLoading(true);
 
     const targetPhone = customPhone || phone;
-    const apiHost = window.location.hostname || 'localhost';
-
     try {
-      const resp = await fetch(`http://${apiHost}:8000/api/v1/auth/login`, {
+      const resp = await fetch(`${API_V1_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -102,21 +101,8 @@ export const Login: React.FC = () => {
         setError(data.detail || 'Login failed. Please verify credentials.');
       }
     } catch (err) {
-      console.warn('Backend offline, using fallback credentials:', err);
-      // Fallback for resilient offline execution
-      const citizenObj = customCitizen || demoCitizens.find(d => d.phone === targetPhone) || demoCitizens[0];
-      localStorage.setItem('smartcare_token', 'mock_jwt_token_offline');
-      localStorage.setItem('smartcare_user', JSON.stringify({
-        id: `usr_${targetPhone.slice(-6)}`,
-        phone: targetPhone,
-        full_name: citizenObj.name,
-        abha_id: citizenObj.abha,
-        age: citizenObj.phone === '9821443211' ? 68 : 30,
-        is_senior: !!citizenObj.is_senior,
-        is_pregnant: !!citizenObj.is_pregnant,
-        is_pwd: !!citizenObj.is_pwd
-      }));
-      window.location.href = '/dashboard';
+      console.error('Login request failed:', err);
+      setError('We could not reach the hospital service. Check your connection and try again.');
     } finally {
       setLoading(false);
     }

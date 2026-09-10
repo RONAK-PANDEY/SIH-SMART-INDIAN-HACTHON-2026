@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_V1_URL } from '../lib/api';
 import { 
   Scale, 
   ShieldAlert, 
@@ -25,7 +26,7 @@ export const Grievances: React.FC = () => {
   const fetchGrievances = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8000/api/v1/observer/grievances');
+      const res = await fetch(`${API_V1_URL}/observer/grievances`);
       const data = await res.json();
       setGrievances(data.grievances || []);
       if (data.grievances?.length > 0 && !selectedGrievance) {
@@ -48,7 +49,7 @@ export const Grievances: React.FC = () => {
     setSubmitting(true);
 
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/observer/grievances/${selectedGrievance.id}/action`, {
+      const res = await fetch(`${API_V1_URL}/observer/grievances/${selectedGrievance.id}/action`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

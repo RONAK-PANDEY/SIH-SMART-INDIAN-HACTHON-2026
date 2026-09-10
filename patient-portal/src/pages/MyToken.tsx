@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { API_V1_URL, websocketUrl } from '../lib/api';
 import { QRCodeSVG } from 'qrcode.react';
 import { 
   QrCode, 
@@ -76,7 +77,7 @@ export const MyToken: React.FC = () => {
     if (!activeToken) return;
 
     const tokenNum = activeToken.tokenNumber || activeToken.token_number;
-    const wsUrl = `ws://localhost:8000/ws/queue/${activeToken.hospitalId || 'hosp-001'}/${activeToken.deptId || 'dept-cardio'}`;
+    const wsUrl = websocketUrl(`/api/v1/ws/queue/${activeToken.hospitalId || 'hosp-001'}/${activeToken.deptId || 'dept-cardio'}`);
 
     try {
       const ws = new WebSocket(wsUrl);
@@ -118,17 +119,26 @@ export const MyToken: React.FC = () => {
     const tokenNum = activeToken.tokenNumber || activeToken.token_number || 'CARD-204';
     
     try {
-      await fetch('http://localhost:8000/api/v1/turnstiles/scan', {
+      const response = await fetch(`${API_V1_URL}/tokens/scan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          qr_data: activeToken.qr_hash || activeToken.hash || tokenNum,
-          turnstile_id: 'gate-b-north',
-          hospital_id: activeToken.hospitalId || 'hosp-001'
+          token_id: activeToken.tokenId || activeToken.token_id,
+          token_number: tokenNum,
+          qr_hash: activeToken.qr_hash || activeToken.hash,
+          scanner_id: 'patient-demo-gate-b',
+          scanned_by: 'patient-demo-gate-b',
+          hospital_id: activeToken.hospitalId || 'hosp-001',
+          department_id: activeToken.deptId || activeToken.department_id
         })
       });
+      if (!response.ok) {
+        const error = await response.json().catch(() => null);
+        throw new Error(error?.detail || 'The gate could not verify this pass.');
+      }
     } catch (err) {
-      console.warn('Scan simulated locally:', err);
+      setScanMessage(err instanceof Error ? err.message : 'The gate could not verify this pass.');
+      return;
     }
     setLiveStatus('scanned_by_staff');
     setScanMessage('Turnstile Gate B Unlocked: Walk to Chamber 204!');

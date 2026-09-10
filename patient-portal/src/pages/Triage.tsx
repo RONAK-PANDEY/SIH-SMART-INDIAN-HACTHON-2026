@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_V1_URL } from '../lib/api';
 import { 
   Activity, 
   AlertTriangle, 
@@ -89,7 +90,7 @@ export const Triage: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/v1/triage/evaluate', {
+      const response = await fetch(`${API_V1_URL}/triage/evaluate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

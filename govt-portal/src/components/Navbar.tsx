@@ -29,11 +29,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onRefresh, loading }) => {
                 Ministry of Health & Family Welfare (MoHFW)
               </span>
               <span className="bg-rose-500/20 text-rose-400 text-[10px] font-bold px-2 py-0.2 rounded-full border border-rose-500/30">
-                Vigilance Ombudsman
+                Operations
               </span>
             </div>
             <h1 className="text-base font-extrabold text-white tracking-tight">
-              National Healthcare Vigilance & Doctor Recognition Oversight Console
+              Hospital network operations
             </h1>
           </div>
         </div>
@@ -59,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRefresh, loading }) => {
           {/* Direct Link to Patient and Admin Portals */}
           <div className="hidden lg:flex items-center gap-2 pl-3 border-l border-slate-800">
             <a
-              href="http://localhost:5173"
+              href={`${window.location.protocol}//${window.location.hostname}:5173`}
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-1 text-slate-400 hover:text-blue-400 transition text-[11px]"
@@ -69,7 +69,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRefresh, loading }) => {
             </a>
             <span className="text-slate-700">|</span>
             <a
-              href="http://localhost:5174"
+              href={`${window.location.protocol}//${window.location.hostname}:5174`}
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-1 text-slate-400 hover:text-emerald-400 transition text-[11px]"
@@ -81,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRefresh, loading }) => {
 
           <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 text-amber-300 px-3 py-1.5 rounded-xl font-bold">
             <ShieldCheck className="w-4 h-4 text-amber-400" />
-            <span className="text-[11px]">Ombudsman Officer</span>
+            <span className="text-[11px]">Operations officer</span>
           </div>
         </div>
 

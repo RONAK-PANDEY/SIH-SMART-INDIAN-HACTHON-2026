@@ -52,7 +52,7 @@ export const GovtAdminLanding: React.FC = () => {
         role: 'counter',
         designation: 'OPD Registration & Token Operator',
         hospital: 'Safdarjung Hospital',
-        redirect: '/doctor-panel'
+        redirect: '/counter-desk'
       };
     } else if (selectedRole === 'admin') {
       empData = {
@@ -60,7 +60,7 @@ export const GovtAdminLanding: React.FC = () => {
         role: 'admin',
         designation: 'Medical Superintendent & Administrator',
         hospital: 'National Hospital Network',
-        redirect: '/doctor-panel'
+        redirect: `${window.location.protocol}//${window.location.hostname}:5175`
       };
     } else if (selectedRole === 'ambulance') {
       empData = {
@@ -68,14 +68,14 @@ export const GovtAdminLanding: React.FC = () => {
         role: 'ambulance',
         designation: '108 Central Dispatch Controller',
         hospital: 'Delhi Emergency EMS Command',
-        redirect: '/doctor-panel'
+        redirect: '/ambulance-fleet'
       };
     }
 
     localStorage.setItem('smartcare_admin_employee', JSON.stringify(empData));
     localStorage.setItem('smartcare_staff', JSON.stringify(empData));
     localStorage.setItem('smartcare_auth', 'true');
-    window.location.href = '/doctor-panel';
+    window.location.href = empData.redirect;
   };
 
   return (
@@ -123,15 +123,15 @@ export const GovtAdminLanding: React.FC = () => {
           <div className="lg:col-span-6 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold border border-blue-400/30">
               <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-              <span>Restricted Authorization Portal • MoHFW Empanelled Staff Only</span>
+              <span>Hospital staff sign-in</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
-              Select Your Designated Clinical or Administrative Role
+              Choose your workspace
             </h2>
 
             <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-              Every staff login is monitored under the National Health Vigilance Framework. Duty tokens, prescription issuances, and consultation pacing are logged for patient queue efficiency.
+              Sign in to the tools you use during your shift. Activity is recorded in the hospital audit log.
             </p>
 
             {/* Role Cards Grid */}
@@ -244,7 +244,7 @@ export const GovtAdminLanding: React.FC = () => {
                   </p>
                 </div>
                 <span className="text-[10px] font-mono bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">
-                  TLS 1.3 256-BIT
+                  Secure session
                 </span>
               </div>
 
@@ -288,7 +288,7 @@ export const GovtAdminLanding: React.FC = () => {
                     <span>Duty Protocol Adherence Notice</span>
                   </div>
                   <p>
-                    All consultation notes, queue calls, and referral tokens issued in this session are audited in real time by the <strong>Government Observer Portal</strong>.
+                    Queue calls and clinical actions in this session are included in the hospital audit log.
                   </p>
                 </div>
 
@@ -297,7 +297,7 @@ export const GovtAdminLanding: React.FC = () => {
                   className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-extrabold rounded-xl shadow-lg transition text-xs flex items-center justify-center gap-2 cursor-pointer mt-2"
                 >
                   <LogIn className="w-4 h-4" />
-                  <span>Authenticate & Enter Designated Workspace</span>
+                  <span>Continue to workspace</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </form>

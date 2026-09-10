@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_V1_URL } from '../lib/api';
 import { 
   Award, 
   TrendingUp, 
@@ -27,7 +28,7 @@ export const SalaryBonus: React.FC = () => {
   const fetchPayroll = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8000/api/v1/observer/doctors/performance');
+      const res = await fetch(`${API_V1_URL}/observer/doctors/performance`);
       const data = await res.json();
       setDoctors(data.doctors || []);
     } catch (e) {
@@ -63,7 +64,7 @@ export const SalaryBonus: React.FC = () => {
     };
 
     try {
-      const res = await fetch('http://localhost:8000/api/v1/observer/surveys', {
+      const res = await fetch(`${API_V1_URL}/observer/surveys`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

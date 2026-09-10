@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { API_V1_URL } from '../lib/api';
 import { 
   ShieldAlert, 
   Activity, 
@@ -37,9 +38,9 @@ export const Dashboard: React.FC = () => {
     setLoading(true);
     try {
       const [resAudits, resDocs, resGrv] = await Promise.all([
-        fetch('http://localhost:8000/api/v1/observer/audits').then((r) => r.json()),
-        fetch('http://localhost:8000/api/v1/observer/doctors/performance').then((r) => r.json()),
-        fetch('http://localhost:8000/api/v1/observer/grievances').then((r) => r.json())
+        fetch(`${API_V1_URL}/observer/audits`).then((r) => r.json()),
+        fetch(`${API_V1_URL}/observer/doctors/performance`).then((r) => r.json()),
+        fetch(`${API_V1_URL}/observer/grievances`).then((r) => r.json())
       ]);
       setAudits(resAudits);
       setDoctors(resDocs.doctors || []);
@@ -89,7 +90,7 @@ export const Dashboard: React.FC = () => {
   const handleDispatchInspection = async (anom: any) => {
     setDispatchingId(anom.id);
     try {
-      await fetch('http://localhost:8000/api/v1/observer/dispatch-inspection', {
+      await fetch(`${API_V1_URL}/observer/dispatch-inspection`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

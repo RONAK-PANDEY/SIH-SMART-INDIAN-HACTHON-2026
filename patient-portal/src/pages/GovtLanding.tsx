@@ -106,15 +106,15 @@ export const GovtLanding: React.FC = () => {
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-xs font-semibold">
               <ShieldCheck className="w-3.5 h-3.5 text-teal-700" />
-              <span>National OPD Token & Digital Turnstile System</span>
+              <span>Appointments and live queue updates</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-slate-900 tracking-tight leading-[1.15]">
-              No more standing in hospital queues. Walk in on time.
+              Spend less time waiting at the hospital.
             </h1>
 
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal">
-              Generate a digital OPD pass from home, verify your arrival at the hospital turnstile via QR scan, and track live queue movements in real time directly on your mobile device.
+              Describe what you need, choose a suitable department and receive a digital pass. We’ll keep your place in the queue and show you when to arrive.
             </p>
 
             {/* Strict 48px touch target action buttons */}
@@ -123,7 +123,7 @@ export const GovtLanding: React.FC = () => {
                 href="/triage"
                 className="bg-teal-700 hover:bg-teal-800 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-colors inline-flex items-center gap-2 shadow-subtle min-h-[48px]"
               >
-                <span>Book OPD Consultation</span>
+                <span>Book an appointment</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
 
@@ -132,7 +132,7 @@ export const GovtLanding: React.FC = () => {
                 className="bg-white hover:bg-slate-50 text-slate-900 border border-slate-300 font-semibold text-sm px-5 py-3.5 rounded-xl transition-colors inline-flex items-center gap-2 shadow-subtle min-h-[48px]"
               >
                 <QrCode className="w-4 h-4 text-teal-700" />
-                <span>View My Digital Pass</span>
+                <span>View my pass</span>
               </a>
 
               <button
@@ -149,15 +149,15 @@ export const GovtLanding: React.FC = () => {
             <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center gap-6 text-xs text-slate-500">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-teal-700" />
-                <span>Zero registration fees</span>
+                <span>Simple registration</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-teal-700" />
-                <span>ABHA linked records</span>
+                <span>Health records in one place</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-teal-700" />
-                <span>SMS queue reminders</span>
+                <span>Queue reminders</span>
               </div>
             </div>
           </div>
@@ -202,7 +202,7 @@ export const GovtLanding: React.FC = () => {
               <div className="bg-teal-50/60 rounded-lg p-4 border border-teal-100/80 space-y-2">
                 <p className="text-xs font-semibold text-teal-900 flex items-center gap-1.5">
                   <QrCode className="w-4 h-4 text-teal-700" />
-                  <span>How turnstile scanning works at the hospital:</span>
+                  <span>When you reach the hospital</span>
                 </p>
                 <ol className="text-xs text-slate-600 space-y-1 pl-4 list-decimal">
                   <li>Show the QR pass on your phone to the scanner at Gate B.</li>
@@ -216,7 +216,7 @@ export const GovtLanding: React.FC = () => {
                   href="/live-queue"
                   className="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs py-3 rounded-lg transition-colors flex items-center justify-center gap-1.5 min-h-[44px]"
                 >
-                  <span>Check Live Counter Congestion</span>
+                  <span>View the live queue</span>
                   <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
                 </a>
               </div>
@@ -232,10 +232,10 @@ export const GovtLanding: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="max-w-2xl mb-8">
             <h2 className="text-2xl font-semibold text-slate-900 tracking-tight">
-              Designed for patients, doctors, and hospital administrators.
+              One clear journey from booking to consultation.
             </h2>
             <p className="text-sm text-slate-600 mt-2 font-normal">
-              Every step is engineered to reduce physical queue crowding and guarantee prioritized medical attention for those in urgent need.
+              Urgent cases are prioritised while every patient gets a clear place in the queue.
             </p>
           </div>
 
@@ -287,8 +287,8 @@ export const GovtLanding: React.FC = () => {
             <span>National Health Authority (NHA) & MoHFW</span>
           </div>
           <div className="flex items-center gap-6">
-            <a href="/login" className="hover:text-slate-900 transition-colors">Doctor Portal</a>
-            <a href="/login" className="hover:text-slate-900 transition-colors">Admin Console</a>
+            <a href={`${window.location.protocol}//${window.location.hostname}:5174/login`} className="hover:text-slate-900 transition-colors">Staff portal</a>
+            <a href={`${window.location.protocol}//${window.location.hostname}:5175`} className="hover:text-slate-900 transition-colors">Operations console</a>
             <button onClick={() => setIsFeedbackOpen(true)} className="hover:text-slate-900 transition-colors">
               Submit Grievance
             </button>

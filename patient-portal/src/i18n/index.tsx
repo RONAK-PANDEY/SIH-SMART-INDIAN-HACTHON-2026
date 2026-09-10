@@ -259,6 +259,9 @@ export const LanguageSwitcherPill: React.FC = () => {
       <button
         type="button"
         onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        aria-label={`Choose language. Current language: ${current.name}`}
         className="flex items-center gap-1.5 bg-white/90 hover:bg-white text-slate-800 border border-slate-200 px-3 py-1.5 rounded-full text-xs font-bold shadow-xs transition"
       >
         <span>🌐</span>
@@ -272,6 +275,8 @@ export const LanguageSwitcherPill: React.FC = () => {
           className="fixed inset-0 z-40 bg-transparent"
         >
           <div 
+            role="listbox"
+            aria-label="Available languages"
             onClick={(e) => e.stopPropagation()}
             className="absolute right-4 top-14 w-60 bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 z-50 max-h-80 overflow-y-auto"
           >
@@ -287,6 +292,8 @@ export const LanguageSwitcherPill: React.FC = () => {
                     setLang(l.code);
                     setOpen(false);
                   }}
+                  role="option"
+                  aria-selected={lang === l.code}
                   className={`w-full px-3 py-2 rounded-xl text-left text-xs transition flex items-center justify-between ${
                     lang === l.code
                       ? 'bg-blue-600 text-white font-bold'

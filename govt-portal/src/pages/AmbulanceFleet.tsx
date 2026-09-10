@@ -143,6 +143,8 @@ export const AmbulanceFleet: React.FC = () => {
               </a>
               <button
                 type="button"
+                onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(amb.location.split('->')[0].trim())}`, '_blank', 'noopener,noreferrer')}
+                aria-label={`Open live map for ${amb.id}`}
                 className="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition cursor-pointer"
               >
                 <Navigation className="w-3.5 h-3.5" />

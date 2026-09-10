@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_V1_URL } from '../lib/api';
 import { 
   Stethoscope, 
   Star, 
@@ -24,7 +25,7 @@ export const DoctorPerformance: React.FC = () => {
   const fetchDoctors = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8000/api/v1/observer/doctors/performance');
+      const res = await fetch(`${API_V1_URL}/observer/doctors/performance`);
       const data = await res.json();
       setDoctors(data.doctors || []);
       if (data.doctors?.length > 0 && !selectedDoctor) {
@@ -40,7 +41,7 @@ export const DoctorPerformance: React.FC = () => {
 
   const fetchDoctorSurveys = async (docId: string) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/observer/surveys/doctor/${docId}`);
+      const res = await fetch(`${API_V1_URL}/observer/surveys/doctor/${docId}`);
       const data = await res.json();
       setDoctorSurveys(data.surveys || []);
     } catch (e) {

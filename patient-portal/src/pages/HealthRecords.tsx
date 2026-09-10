@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { downloadTextFile } from '../lib/download';
 import { 
   FileText, 
   Receipt, 
@@ -278,7 +279,7 @@ export const HealthRecords: React.FC = () => {
               <div className="pt-2 flex justify-end gap-2">
                 <button
                   type="button"
-                  onClick={() => alert(`Downloading Lab Report: ${lab.id}`)}
+                  onClick={() => downloadTextFile(`${lab.id}-lab-report.txt`, `SmartCare lab report\nReport: ${lab.id}\nTest: ${lab.testName}\nResult: ${lab.resultSummary}\nDate: ${lab.date}`)}
                   className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer shadow-xs"
                 >
                   <Download className="w-3.5 h-3.5" />
@@ -327,7 +328,7 @@ export const HealthRecords: React.FC = () => {
                     </div>
                     <button
                       type="button"
-                      onClick={() => alert(`Downloading Invoice: ${rec.invoiceNo}`)}
+                      onClick={() => downloadTextFile(`${rec.invoiceNo}-invoice.txt`, `SmartCare invoice\nInvoice: ${rec.invoiceNo}\nDate: ${rec.date}\nService: ${rec.service}\nAmount: ${rec.amount}`)}
                       className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-1 rounded-lg transition text-[11px] flex items-center gap-1 cursor-pointer"
                     >
                       <Download className="w-3.5 h-3.5" />

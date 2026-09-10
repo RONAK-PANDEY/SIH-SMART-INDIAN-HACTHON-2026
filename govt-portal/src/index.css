@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,7 +6,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }
 
 body {
@@ -20,9 +18,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Enforce strict 2 font weights */
-b, strong, .font-bold, .font-semibold, .font-extrabold, .font-black, .font-medium {
-  font-weight: 600 !important;
+:focus-visible { outline: 3px solid #f59e0b; outline-offset: 3px; }
+button:disabled { cursor: not-allowed; opacity: .55; }
+.rounded-3xl { border-radius: 1rem !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition-duration: 0.01ms !important; }
 }
 
 /* 2.5D Tactile Buttons */

@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { GovtAdminLanding } from './pages/GovtAdminLanding';
 import { DoctorPanel } from './pages/DoctorPanel';
 import { LiveQueues } from './pages/LiveQueues';
+import { CounterDesk } from './pages/CounterDesk';
+import { AmbulanceFleet } from './pages/AmbulanceFleet';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 
@@ -39,6 +41,8 @@ export const App: React.FC = () => {
                       <Route path="/" element={<DoctorPanel />} />
                       <Route path="/doctor-panel" element={<DoctorPanel />} />
                       <Route path="/live-queues" element={<LiveQueues />} />
+                      <Route path="/counter-desk" element={<CounterDesk />} />
+                      <Route path="/ambulance-fleet" element={<AmbulanceFleet />} />
                       <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
                   </main>

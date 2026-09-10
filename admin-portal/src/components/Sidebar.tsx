@@ -10,15 +10,28 @@ import {
   Clock,
   Sparkles
 } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Sidebar: React.FC = () => {
   const location = useLocation();
 
+  const savedEmployee = localStorage.getItem('smartcare_admin_employee');
+  let role = 'doctor';
+  if (savedEmployee) {
+    try {
+      role = JSON.parse(savedEmployee).role || role;
+    } catch {
+      localStorage.removeItem('smartcare_admin_employee');
+    }
+  }
+  const roleItem = role === 'counter'
+    ? { label: 'Reception Desk', icon: UserCheck, path: '/counter-desk' }
+    : role === 'ambulance'
+      ? { label: '108 Fleet Control', icon: Activity, path: '/ambulance-fleet' }
+      : { label: 'Doctor Consultation', icon: Stethoscope, path: '/doctor-panel' };
   const menuItems = [
-    { label: 'Doctor Consultation Panel', icon: Stethoscope, path: '/doctor-panel' },
+    roleItem,
     { label: 'Live Turn Calling', icon: Layers, path: '/live-queues' },
-    { label: 'Staff Duty Login', icon: LogIn, path: '/login' },
   ];
 
   return (
@@ -50,9 +63,9 @@ export const Sidebar: React.FC = () => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path || (item.path === '/doctor-panel' && location.pathname === '/');
           return (
-            <a
+            <Link
               key={item.label}
-              href={item.path}
+              to={item.path}
               className={`flex items-center gap-3 px-3.5 py-3 rounded-xl font-medium transition ${
                 isActive
                   ? 'bg-blue-600 text-white font-bold shadow-md shadow-blue-600/30'
@@ -61,7 +74,7 @@ export const Sidebar: React.FC = () => {
             >
               <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
               <span>{item.label}</span>
-            </a>
+            </Link>
           );
         })}
       </nav>
@@ -77,7 +90,7 @@ export const Sidebar: React.FC = () => {
             Counter Desk, 108 Fleet, Analytics, Heatmap & Bonus Engine shifted to Port 5175.
           </p>
           <a
-            href="http://localhost:5175"
+            href={`${window.location.protocol}//${window.location.hostname}:5175`}
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-between px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg font-bold text-[11px] transition shadow-xs"

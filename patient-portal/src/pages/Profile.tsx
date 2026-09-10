@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { downloadTextFile } from '../lib/download';
 import { 
   User, 
   Shield, 
@@ -706,7 +707,7 @@ export const Profile: React.FC = () => {
                     </div>
                     <button
                       type="button"
-                      onClick={() => alert(`Downloading Invoice: ${rec.invoiceNo}`)}
+                      onClick={() => downloadTextFile(`${rec.invoiceNo}-invoice.txt`, `SmartCare invoice\nInvoice: ${rec.invoiceNo}\nDate: ${rec.date}\nService: ${rec.service}\nAmount: ${rec.amount}`)}
                       className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-1 rounded-lg transition text-[11px] flex items-center gap-1 cursor-pointer"
                     >
                       <Download className="w-3.5 h-3.5" />

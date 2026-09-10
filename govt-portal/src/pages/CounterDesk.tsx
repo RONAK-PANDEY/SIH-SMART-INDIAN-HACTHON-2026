@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_V1_URL } from '../lib/api';
 import { 
   Building2, 
   UserPlus, 
@@ -34,6 +35,7 @@ export const CounterDesk: React.FC = () => {
   const [selectedDept, setSelectedDept] = useState('dept-cardio');
   const [issuedToken, setIssuedToken] = useState<any>(null);
   const [evaluating, setEvaluating] = useState(false);
+  const [smsSent, setSmsSent] = useState(false);
 
   const departments = [
     { id: 'dept-emergency', name: 'Emergency & Trauma (P1)', floor: 'Ground Floor Red Zone' },
@@ -49,7 +51,7 @@ export const CounterDesk: React.FC = () => {
 
   const handleQuickAadhaarLookup = async () => {
     try {
-      const resp = await fetch('http://localhost:8000/api/v1/triage/auth/aadhaar/verify-otp', {
+      const resp = await fetch(`${API_V1_URL}/triage/auth/aadhaar/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ aadhaar_or_phone: patientSearch || '982144321109', otp: '123456' })
@@ -66,7 +68,7 @@ export const CounterDesk: React.FC = () => {
   const handleAIAnalyze = async () => {
     setEvaluating(true);
     try {
-      const resp = await fetch('http://localhost:8000/api/v1/triage/evaluate', {
+      const resp = await fetch(`${API_V1_URL}/triage/evaluate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -96,6 +98,7 @@ export const CounterDesk: React.FC = () => {
     const isP1 = selectedDept === 'dept-emergency';
     const isP2 = patientData.is_senior || patientData.is_pregnant || patientData.is_pwd;
 
+    setSmsSent(false);
     setIssuedToken({
       token_number: `${selectedDept.replace('dept-', '').toUpperCase().slice(0, 4)}-${Math.floor(100 + Math.random() * 900)}`,
       patient_name: patientData.full_name,
@@ -305,10 +308,12 @@ export const CounterDesk: React.FC = () => {
                   </button>
                   <button 
                     type="button" 
+                    onClick={() => setSmsSent(true)}
+                    disabled={smsSent}
                     className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-1 cursor-pointer"
                   >
                     <Send className="w-3 h-3" />
-                    <span>SMS Sent</span>
+                    <span>{smsSent ? 'SMS sent' : 'Send by SMS'}</span>
                   </button>
                 </div>
               </div>

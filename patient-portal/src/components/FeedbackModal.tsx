@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Star, ShieldAlert, CheckCircle2, MessageSquare, Award, AlertTriangle, X, ThumbsUp } from 'lucide-react';
 import { useTranslation } from '../i18n';
+import { API_V1_URL } from '../lib/api';
 
 interface FeedbackModalProps {
   isOpen: boolean;
@@ -25,6 +26,16 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
   patientName = 'Citizen Patient',
   onSuccess
 }) => {
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    closeButtonRef.current?.focus();
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
   const { t } = useTranslation();
   const [politeness, setPoliteness] = useState<number>(5);
   const [communication, setCommunication] = useState<number>(5);
@@ -59,7 +70,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
     };
 
     try {
-      const response = await fetch('http://localhost:8000/api/v1/observer/surveys', {
+      const response = await fetch(`${API_V1_URL}/observer/surveys`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -98,6 +109,8 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
             key={star}
             type="button"
             onClick={() => setRating(star)}
+            aria-label={`Rate ${star} out of 5`}
+            aria-pressed={star === rating}
             className="p-1 focus:outline-none transition-transform hover:scale-110"
           >
             <Star
@@ -113,13 +126,16 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-y-auto" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
+      <div role="dialog" aria-modal="true" aria-labelledby="feedback-title" className="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200">
         
         {/* National Vigilance Ombudsman Header */}
         <div className="bg-gradient-to-r from-emerald-700 via-teal-800 to-slate-900 text-white p-5 relative">
           <button
+            ref={closeButtonRef}
+            type="button"
             onClick={onClose}
+            aria-label="Close feedback form"
             className="absolute top-4 right-4 text-emerald-200 hover:text-white p-1 rounded-full hover:bg-white/10"
           >
             <X className="w-5 h-5" />
@@ -129,9 +145,9 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
             <Award className="w-4 h-4" />
             <span>Govt of India • National Healthcare Oversight</span>
           </div>
-          <h3 className="text-lg font-bold">Citizen Consultation & Doctor Feedback</h3>
+          <h3 id="feedback-title" className="text-lg font-bold">Consultation feedback</h3>
           <p className="text-xs text-emerald-100 mt-0.5">
-            Your honest rating directly shapes doctor salary incentives and government hospital quality audits.
+            Tell the hospital what went well and where the service can improve.
           </p>
         </div>
 

@@ -12,7 +12,7 @@ import {
   BarChart3, 
   QrCode 
 } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Sidebar: React.FC = () => {
   const location = useLocation();
@@ -37,10 +37,10 @@ export const Sidebar: React.FC = () => {
       <div className="p-3 mb-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-855 border border-slate-800 text-xs">
         <div className="flex items-center gap-2 text-amber-400 font-bold mb-1">
           <Radio className="w-3.5 h-3.5 animate-pulse" />
-          <span>GOVERNMENT OBSERVER CONSOLE</span>
+          <span>NETWORK OPERATIONS</span>
         </div>
         <p className="text-[11px] text-slate-400 leading-tight">
-          Central statutory vigilance overseeing patient queue flow, token turnstiles, and doctor recognition metrics.
+          Queue flow, arrival scans and service quality across participating hospitals.
         </p>
       </div>
 
@@ -53,9 +53,9 @@ export const Sidebar: React.FC = () => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
           return (
-            <a
+            <Link
               key={item.label}
-              href={item.path}
+              to={item.path}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition cursor-pointer ${
                 isActive
                   ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'
@@ -64,7 +64,7 @@ export const Sidebar: React.FC = () => {
             >
               <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-slate-950' : 'text-slate-400'}`} />
               <span>{item.label}</span>
-            </a>
+            </Link>
           );
         })}
       </div>
@@ -78,9 +78,9 @@ export const Sidebar: React.FC = () => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
           return (
-            <a
+            <Link
               key={item.label}
-              href={item.path}
+              to={item.path}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition cursor-pointer ${
                 isActive
                   ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'
@@ -89,7 +89,7 @@ export const Sidebar: React.FC = () => {
             >
               <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-slate-950' : 'text-slate-400'}`} />
               <span>{item.label}</span>
-            </a>
+            </Link>
           );
         })}
       </div>

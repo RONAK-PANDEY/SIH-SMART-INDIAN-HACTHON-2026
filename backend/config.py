@@ -1,5 +1,4 @@
 import os
-from typing import List, Dict
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -10,6 +9,11 @@ class Settings(BaseSettings):
     JWT_SECRET: str = os.getenv("JWT_SECRET", "super-secret-sih2026-key-replace-in-prod")
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 1 day
+    CORS_ORIGINS: str = os.getenv(
+        "CORS_ORIGINS",
+        "http://localhost:5173,http://localhost:5174,http://localhost:5175,"
+        "http://127.0.0.1:5173,http://127.0.0.1:5174,http://127.0.0.1:5175",
+    )
 
     # Supabase Multi-Key Configuration
     SUPABASE_URL: str = os.getenv("SUPABASE_URL", "https://smartcare-sih2026.supabase.co")

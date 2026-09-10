@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_V1_URL } from '../lib/api';
 import { 
   Users, 
   Clock, 
@@ -20,7 +21,7 @@ export const Dashboard: React.FC = () => {
   const [hospitals, setHospitals] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/v1/triage/hospitals-network')
+    fetch(`${API_V1_URL}/triage/hospitals-network`)
       .then(res => res.json())
       .then(data => {
         if (data.hospitals) setHospitals(data.hospitals);
