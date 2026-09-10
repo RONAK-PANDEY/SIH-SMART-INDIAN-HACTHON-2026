@@ -51,7 +51,7 @@ async def test_patient_service():
     assert vitals is not None
     print(f"[PASS] Retrieved vitals: HR {vitals.heart_rate} bpm, BP {vitals.blood_pressure_systolic}/{vitals.blood_pressure_diastolic}")
 
-def test_appointment_service():
+async def test_appointment_service():
     print("\n--- Testing Appointment Service ---")
     from services.appointment_service import (
         AppointmentService,
@@ -99,7 +99,7 @@ def test_appointment_service():
         triage_score=2,
         is_senior=True
     )
-    appointment = AppointmentService.book_appointment(book_req)
+    appointment = await AppointmentService.book_appointment(book_req)
     assert appointment.appointment_id.startswith("apt_")
     assert appointment.token_number.startswith("GENM-") or appointment.token_number.startswith("GEN-")
     print(f"[PASS] Booked Appointment: {appointment.appointment_id} with token {appointment.token_number}")
@@ -181,7 +181,7 @@ def test_triage_and_aadhaar_services():
 
 async def main():
     await test_patient_service()
-    test_appointment_service()
+    await test_appointment_service()
     test_fastapi_app_routes()
     test_triage_and_aadhaar_services()
     print("\n==========================================")

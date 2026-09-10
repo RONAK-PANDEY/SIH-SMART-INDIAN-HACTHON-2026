@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from main import app
 from services.appointment_service.service import AppointmentService
 
+@pytest.mark.asyncio
 async def test_end_to_end_loop():
     print("\n=======================================================")
     print("STARTING SMARTCARE E2E QR TURNSTILE & WS INTEGRATION TEST")
