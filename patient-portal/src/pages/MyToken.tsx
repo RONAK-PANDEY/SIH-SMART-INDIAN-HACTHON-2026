@@ -6,23 +6,19 @@ import {
   CheckCircle2, 
   Printer, 
   ShieldCheck, 
-  Activity, 
   Building2, 
   Stethoscope, 
-  Radio, 
-  UserCheck,
-  ChevronRight,
-  ArrowRight
+  User,
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 import { useTranslation } from '../i18n';
-import { FeedbackModal } from '../components/FeedbackModal';
 
 export const MyToken: React.FC = () => {
   const { t } = useTranslation();
-  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [allTokens, setAllTokens] = useState<any[]>([]);
   const [activeToken, setActiveToken] = useState<any>(null);
-  const [liveStatus, setLiveStatus] = useState<string>('waiting'); // waiting, scanned_by_staff, in_consultation, completed
+  const [liveStatus, setLiveStatus] = useState<string>('waiting');
   const [wsConnected, setWsConnected] = useState<boolean>(false);
   const [scanMessage, setScanMessage] = useState<string | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
@@ -52,11 +48,11 @@ export const MyToken: React.FC = () => {
           patientName: 'Aarav Sharma',
           age: 68,
           gender: 'Male',
-          department: 'Cardiology & Heart Care',
+          department: 'Cardiology',
           deptId: 'dept-cardio',
           department_id: 'dept-cardio',
-          doctor: 'Dr. Rajesh Sharma (MD)',
-          chamber: 'Room 204, Block B',
+          doctor: 'Dr. Rajesh Sharma',
+          chamber: 'Chamber 204, Gate B',
           hospital: 'AIIMS New Delhi',
           hospitalId: 'hosp-001',
           hospital_id: 'hosp-001',
@@ -64,7 +60,7 @@ export const MyToken: React.FC = () => {
           time: '10:30 AM',
           queuePosition: 1,
           estimatedWaitMins: 7,
-          priorityTag: 'Priority 2 - Senior Citizen Accelerated Pass',
+          priorityTag: 'Priority 2 • Senior Citizen',
           fee: 'Free (PM-JAY Cashless)'
         }
       ];
@@ -75,7 +71,7 @@ export const MyToken: React.FC = () => {
     setActiveToken(tokensList[0]);
   }, []);
 
-  // WebSocket live sync with backend
+  // WebSocket live sync
   useEffect(() => {
     if (!activeToken) return;
 
@@ -94,13 +90,13 @@ export const MyToken: React.FC = () => {
           if (data.token === tokenNum || data.token_id === tokenNum) {
             if (data.status === 'at_door' || data.event === 'scanned_turnstile') {
               setLiveStatus('scanned_by_staff');
-              setScanMessage('Turnstile Gate B scan verified. Doctor notified.');
+              setScanMessage('Turnstile Gate B Verified: Walk inside to Chamber 204!');
             } else if (data.status === 'in_consultation') {
               setLiveStatus('in_consultation');
-              setScanMessage('Consultation in progress in Room 204.');
+              setScanMessage('Consultation with doctor in progress.');
             } else if (data.status === 'completed') {
               setLiveStatus('completed');
-              setScanMessage('Consultation completed. Prescription saved.');
+              setScanMessage('Consultation finished. Medicine pass saved.');
             }
           }
         } catch (err) {
@@ -108,7 +104,7 @@ export const MyToken: React.FC = () => {
         }
       };
     } catch (e) {
-      console.warn('WS connection failed, running in local mode');
+      console.warn('WS offline fallback');
     }
 
     return () => {
@@ -122,7 +118,7 @@ export const MyToken: React.FC = () => {
     const tokenNum = activeToken.tokenNumber || activeToken.token_number || 'CARD-204';
     
     try {
-      const res = await fetch('http://localhost:8000/api/v1/turnstiles/scan', {
+      await fetch('http://localhost:8000/api/v1/turnstiles/scan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -131,213 +127,126 @@ export const MyToken: React.FC = () => {
           hospital_id: activeToken.hospitalId || 'hosp-001'
         })
       });
-
-      if (res.ok) {
-        setLiveStatus('scanned_by_staff');
-        setScanMessage('Turnstile Gate B Verified: Gate unlocked. Your status is now AT DOOR.');
-      } else {
-        setLiveStatus('scanned_by_staff');
-        setScanMessage('Gate B Verified: Status updated to AT DOOR.');
-      }
     } catch (err) {
-      setLiveStatus('scanned_by_staff');
-      setScanMessage('Gate B Verified: Status updated to AT DOOR.');
+      console.warn('Scan simulated locally:', err);
     }
-  };
-
-  const handlePrint = () => {
-    window.print();
+    setLiveStatus('scanned_by_staff');
+    setScanMessage('Turnstile Gate B Unlocked: Walk to Chamber 204!');
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-[#0F172A] p-4 sm:p-6 max-w-4xl mx-auto pb-32 font-sans">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] p-4 sm:p-6 pb-28 font-sans max-w-2xl mx-auto flex flex-col justify-center">
       
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pt-2 pb-6 border-b border-slate-200">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-xs bg-teal-50 text-teal-800 font-semibold px-2.5 py-0.5 rounded-md border border-teal-200/60">
-              National Health Authority • Digital Pass
-            </span>
-            <span className="text-xs text-slate-500 flex items-center gap-1.5 font-mono">
-              <span className={`w-2 h-2 rounded-full ${wsConnected ? 'bg-emerald-500' : 'bg-slate-400'}`}></span>
-              {wsConnected ? 'Live Gateway Connected' : 'Local Verification'}
-            </span>
+      {/* 1. Header with Hospital Identity & Print Button */}
+      <div className="flex items-center justify-between pb-4 border-b-2 border-slate-200 mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-xl font-bold border-2 border-blue-300">
+            🏥
           </div>
-          <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">
-            Outpatient Attendance Pass
-          </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Present this QR code at the turnstile reader when you enter the hospital.
-          </p>
+          <div>
+            <h1 className="text-xl font-semibold text-slate-900">
+              {activeToken?.hospital || 'AIIMS New Delhi'}
+            </h1>
+            <p className="text-xs text-slate-500 font-medium">
+              Cardiology Outpatient Clinic
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={handlePrint}
-            className="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold text-xs px-4 py-3 rounded-xl transition-colors shadow-subtle inline-flex items-center gap-2 min-h-[44px]"
-          >
-            <Printer className="w-4 h-4 text-slate-500" />
-            <span>Print Pass</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className="btn-tactile-slate px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center gap-1.5 min-h-[44px]"
+        >
+          <Printer className="w-4 h-4 text-slate-500" />
+          <span>Print</span>
+        </button>
       </div>
 
-      {/* Main Boarding Pass Card - Clean, Asymmetrical, 8pt Grid */}
+      {/* 2. Flat, Single-Screen Giant Boarding Pass */}
       {activeToken && (
-        <div className="bg-white rounded-xl border border-slate-200 shadow-card overflow-hidden mb-8">
+        <div className="bg-white rounded-3xl border-3 border-slate-300 shadow-sm p-6 sm:p-8 space-y-6 text-center">
           
-          {/* Top Pass Banner */}
-          <div className="bg-slate-900 text-white px-6 py-4 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-teal-700 text-white flex items-center justify-center font-semibold text-sm">
-                OPD
-              </div>
-              <div>
-                <p className="text-sm font-semibold tracking-tight">{activeToken.hospital || 'AIIMS New Delhi'}</p>
-                <p className="text-[11px] text-slate-400 font-normal">Department of Cardiology & Heart Care</p>
-              </div>
+          {/* Gigantic Token Badge */}
+          <div className="inline-block bg-blue-50 border-2 border-blue-600 px-6 py-2 rounded-2xl">
+            <span className="text-xs text-blue-700 uppercase font-semibold block tracking-wider">Your Token Number</span>
+            <span className="text-4xl sm:text-5xl font-semibold font-mono tracking-wider text-blue-700 block mt-0.5">
+              {activeToken.tokenNumber || 'CARD-204'}
+            </span>
+          </div>
+
+          {/* Gigantic Unmissable High-Contrast QR Code */}
+          <div className="flex justify-center my-2">
+            <div className="p-5 bg-white border-4 border-slate-900 rounded-3xl shadow-sm inline-block">
+              <QRCodeSVG
+                value={activeToken.qr_hash || activeToken.hash || activeToken.tokenNumber || 'CARD-204'}
+                size={220}
+                level="H"
+                includeMargin={false}
+              />
+            </div>
+          </div>
+
+          {/* Simple Visual 3-Stage Progress Lights (Universal Accessibility) */}
+          <div className="grid grid-cols-3 gap-3 text-center pt-2">
+            <div className="bg-emerald-50 border-2 border-emerald-500 rounded-2xl p-3 space-y-1">
+              <span className="text-xl block">🎫</span>
+              <span className="text-xs font-semibold text-emerald-800 block">Pass Ready</span>
             </div>
 
+            <div className={`rounded-2xl p-3 border-2 space-y-1 ${
+              liveStatus !== 'waiting'
+                ? 'bg-emerald-50 border-emerald-500 text-emerald-800'
+                : 'bg-blue-50 border-blue-500 text-blue-800'
+            }`}>
+              <span className="text-xl block">🚪</span>
+              <span className="text-xs font-semibold block">Gate B Turnstile</span>
+            </div>
+
+            <div className={`rounded-2xl p-3 border-2 space-y-1 ${
+              liveStatus === 'completed'
+                ? 'bg-emerald-50 border-emerald-500 text-emerald-800'
+                : 'bg-slate-50 border-slate-200 text-slate-500'
+            }`}>
+              <span className="text-xl block">🩺</span>
+              <span className="text-xs font-semibold block">Doctor Room</span>
+            </div>
+          </div>
+
+          {/* Scan Notification Message */}
+          {scanMessage && (
+            <div className="p-4 rounded-2xl bg-emerald-100 border-2 border-emerald-400 text-emerald-900 font-semibold text-sm flex items-center justify-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0" />
+              <span>{scanMessage}</span>
+            </div>
+          )}
+
+          {/* Doctor & Room Information */}
+          <div className="p-4 bg-slate-50 rounded-2xl border-2 border-slate-200 flex items-center justify-between text-left text-xs sm:text-sm">
+            <div>
+              <span className="text-slate-500 block font-medium">Assigned Specialist</span>
+              <span className="font-semibold text-slate-900 text-sm sm:text-base">{activeToken.doctor || 'Dr. Rajesh Sharma'}</span>
+            </div>
             <div className="text-right">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Token Number</span>
-              <span className="text-xl font-semibold font-mono tracking-wide text-teal-400">
-                {activeToken.tokenNumber || activeToken.token_number || 'CARD-204'}
-              </span>
+              <span className="text-slate-500 block font-medium">Location</span>
+              <span className="font-semibold text-blue-700 text-sm sm:text-base">{activeToken.chamber || 'Chamber 204'}</span>
             </div>
           </div>
 
-          <div className="p-6 sm:p-8 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Column: QR Code & Verification Info */}
-            <div className="md:col-span-5 flex flex-col items-center text-center space-y-4 border-b md:border-b-0 md:border-r border-slate-200 pb-6 md:pb-0 md:pr-8">
-              <div className="p-4 bg-white border border-slate-200 rounded-xl shadow-subtle">
-                <QRCodeSVG
-                  value={activeToken.qr_hash || activeToken.hash || activeToken.tokenNumber || 'CARD-204'}
-                  size={192}
-                  level="H"
-                  includeMargin={false}
-                />
-              </div>
-
-              <div>
-                <span className="text-xs font-semibold text-slate-900 block font-mono">
-                  {activeToken.tokenNumber || 'CARD-204'}
-                </span>
-                <span className="text-[11px] text-slate-500 font-mono block mt-0.5">
-                  Gate B Turnstile Reader Compatible
-                </span>
-              </div>
-
-              {/* Turnstile scan simulate button - 48px touch target */}
-              <button
-                type="button"
-                onClick={handleSimulateScan}
-                className="w-full bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs py-3 px-4 rounded-xl transition-colors shadow-subtle inline-flex items-center justify-center gap-2 min-h-[48px]"
-              >
-                <QrCode className="w-4 h-4" />
-                <span>Simulate Turnstile Gate B Scan</span>
-              </button>
-            </div>
-
-            {/* Right Column: Pass Details & Status Timeline */}
-            <div className="md:col-span-7 space-y-6">
-              
-              {/* Scan Notification Banner */}
-              {scanMessage && (
-                <div className="p-3.5 rounded-lg bg-teal-50 border border-teal-200 text-xs text-teal-900 font-semibold flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-teal-700 shrink-0" />
-                  <span>{scanMessage}</span>
-                </div>
-              )}
-
-              {/* 4-Step Patient Journey Timeline */}
-              <div className="space-y-2">
-                <span className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider block">
-                  Turnstile & Consultation Journey
-                </span>
-
-                <div className="grid grid-cols-4 gap-2 text-center text-xs">
-                  <div className="p-2.5 rounded-lg bg-teal-50 border border-teal-200 text-teal-900 font-semibold">
-                    <span className="block text-[10px] text-teal-700 uppercase">Step 1</span>
-                    Pass Issued
-                  </div>
-
-                  <div className={`p-2.5 rounded-lg border text-xs ${
-                    liveStatus !== 'waiting'
-                      ? 'bg-teal-50 border-teal-200 text-teal-900 font-semibold'
-                      : 'bg-slate-50 border-slate-200 text-slate-500'
-                  }`}>
-                    <span className="block text-[10px] uppercase text-slate-400">Step 2</span>
-                    At Turnstile
-                  </div>
-
-                  <div className={`p-2.5 rounded-lg border text-xs ${
-                    liveStatus === 'in_consultation' || liveStatus === 'completed'
-                      ? 'bg-teal-50 border-teal-200 text-teal-900 font-semibold'
-                      : 'bg-slate-50 border-slate-200 text-slate-500'
-                  }`}>
-                    <span className="block text-[10px] uppercase text-slate-400">Step 3</span>
-                    Doctor Intake
-                  </div>
-
-                  <div className={`p-2.5 rounded-lg border text-xs ${
-                    liveStatus === 'completed'
-                      ? 'bg-teal-50 border-teal-200 text-teal-900 font-semibold'
-                      : 'bg-slate-50 border-slate-200 text-slate-500'
-                  }`}>
-                    <span className="block text-[10px] uppercase text-slate-400">Step 4</span>
-                    Complete
-                  </div>
-                </div>
-              </div>
-
-              {/* Patient and Doctor metadata */}
-              <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-100 text-xs">
-                <div>
-                  <span className="text-slate-500 block">Patient Name</span>
-                  <p className="font-semibold text-slate-900 mt-0.5">{activeToken.patientName || 'Aarav Sharma'}</p>
-                  <p className="text-slate-500 text-[11px]">{activeToken.age || 68} Y / {activeToken.gender || 'Male'}</p>
-                </div>
-
-                <div>
-                  <span className="text-slate-500 block">Attending Doctor</span>
-                  <p className="font-semibold text-slate-900 mt-0.5">{activeToken.doctor || 'Dr. Rajesh Sharma'}</p>
-                  <p className="text-slate-500 text-[11px]">{activeToken.chamber || 'Room 204, Block B'}</p>
-                </div>
-
-                <div className="pt-2 border-t border-slate-100">
-                  <span className="text-slate-500 block">Queue Status</span>
-                  <p className="font-semibold text-teal-800 mt-0.5">
-                    {liveStatus === 'scanned_by_staff' ? 'AT DOOR (Verified)' : '1 Patient Ahead'}
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-slate-100">
-                  <span className="text-slate-500 block">Est. Consultation</span>
-                  <p className="font-semibold text-slate-900 mt-0.5">
-                    {activeToken.time || '10:30 AM'} (~7 mins)
-                  </p>
-                </div>
-              </div>
-
-            </div>
-
+          {/* Gigantic 64px Tactile 2.5D Action Button: Simulate Gate Scan */}
+          <div>
+            <button
+              type="button"
+              onClick={handleSimulateScan}
+              className="w-full btn-tactile-green font-semibold text-base py-4 px-6 rounded-2xl flex items-center justify-center gap-3 min-h-[64px] cursor-pointer shadow-sm"
+            >
+              <QrCode className="w-6 h-6" />
+              <span>Tap Here To Scan Turnstile Gate B</span>
+            </button>
           </div>
+
         </div>
       )}
-
-      {/* Helpful Guidance */}
-      <div className="bg-slate-100 rounded-xl p-5 border border-slate-200 text-xs text-slate-600 space-y-1.5">
-        <p className="font-semibold text-slate-900 flex items-center gap-1.5">
-          <ShieldCheck className="w-4 h-4 text-teal-700" />
-          <span>Physical Turnstile Guidelines</span>
-        </p>
-        <p className="leading-relaxed font-normal">
-          If you encounter any difficulty scanning the QR screen, present your Token ID <strong>{activeToken?.tokenNumber || 'CARD-204'}</strong> to the attendant at the Counter Helpdesk.
-        </p>
-      </div>
 
     </div>
   );

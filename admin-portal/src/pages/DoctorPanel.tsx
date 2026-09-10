@@ -5,30 +5,20 @@ import {
   CheckCircle2, 
   Play, 
   SkipForward, 
-  Share2, 
   Stethoscope, 
-  AlertTriangle, 
-  ShieldCheck, 
-  FileText, 
   Clock, 
   Building2, 
   ArrowRight,
   Send,
-  Printer,
-  FlaskConical,
-  Heart,
-  Activity,
-  Plus,
-  Search,
   Timer,
-  History,
-  ChevronRight,
-  CheckCircle,
+  Heart,
   Thermometer,
+  Activity,
   Wind,
-  QrCode,
-  Radio,
-  X
+  Search,
+  CheckCircle,
+  X,
+  History
 } from 'lucide-react';
 import { BackButton } from '../components/BackButton';
 
@@ -81,7 +71,7 @@ interface PatientInQueue {
 export const DoctorPanel: React.FC = () => {
   const [staffInfo, setStaffInfo] = useState<any>({
     name: 'Dr. Rajesh Sharma',
-    roleTitle: 'Senior Cardiologist & HOD',
+    roleTitle: 'Senior Cardiologist',
     dept: 'Cardiology (Chamber 204)',
     hospital_id: 'hosp-001',
     department_id: 'dept-cardio'
@@ -89,16 +79,10 @@ export const DoctorPanel: React.FC = () => {
 
   const [selectedTokenId, setSelectedTokenId] = useState<string | null>(null);
   const [doctorNotes, setDoctorNotes] = useState('');
-  const [referralSent, setReferralSent] = useState(false);
-  const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const [showLabModal, setShowLabModal] = useState(false);
   const [selectedLabs, setSelectedLabs] = useState<string[]>(['12-Lead Rest ECG']);
-  const [consultCompleted, setConsultCompleted] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [consultTimerSeconds, setConsultTimerSeconds] = useState(245);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
-  const [viewTreatedPatient, setViewTreatedPatient] = useState<TreatedPatient | null>(null);
-  const [latestScanNotification, setLatestScanNotification] = useState<any>(null);
   const [wsConnected, setWsConnected] = useState(false);
 
   const [recentHistory, setRecentHistory] = useState<TreatedPatient[]>([
@@ -110,8 +94,8 @@ export const DoctorPanel: React.FC = () => {
       gender: 'Male',
       department: 'Cardiology',
       time: '10:14 AM',
-      diagnosis: 'Stable Angina Pectoris (CCS Class II)',
-      rxSummary: 'Tab Sorbitrate 5mg SL SOS, Tab Atorvastatin 40mg HS'
+      diagnosis: 'Stable Angina Pectoris',
+      rxSummary: 'Tab Sorbitrate 5mg'
     },
     {
       id: 'TP-2',
@@ -121,19 +105,8 @@ export const DoctorPanel: React.FC = () => {
       gender: 'Female',
       department: 'Cardiology',
       time: '10:31 AM',
-      diagnosis: 'Essential Hypertension Stage 2 with Sinus Tachycardia',
-      rxSummary: 'Tab Telmisartan 40mg + Amlodipine 5mg, Tab Metoprolol 25mg OD'
-    },
-    {
-      id: 'TP-3',
-      token: 'CARD-203',
-      name: 'Harish Chandra',
-      age: 71,
-      gender: 'Male',
-      department: 'Cardiology',
-      time: '10:52 AM',
-      diagnosis: 'Mild Sinus Bradycardia (Asymptomatic), Post-Pacemaker Review',
-      rxSummary: 'Routine surveillance, Repeat 12-lead ECG in 6 months'
+      diagnosis: 'Hypertension Stage 2',
+      rxSummary: 'Tab Telmisartan 40mg'
     }
   ]);
 
@@ -143,9 +116,7 @@ export const DoctorPanel: React.FC = () => {
     'Comprehensive Lipid Profile',
     'Complete Blood Count (CBC)',
     '2D Echocardiography',
-    'Chest X-Ray (PA View)',
-    'Serum Creatinine & Electrolytes',
-    'HbA1c Glycated Hemoglobin'
+    'Chest X-Ray (PA View)'
   ];
 
   const initialPatientsQueue: PatientInQueue[] = [
@@ -157,29 +128,29 @@ export const DoctorPanel: React.FC = () => {
       aadhaar_verified: true,
       phone: '+91 98765 43210',
       triage_level: 2,
-      priority_tag: 'Priority 2 - Senior Citizen Accelerated',
-      chief_complaint: 'Crushing chest tightness radiating to left shoulder on fast walking, exertional fatigue since 3 days',
-      observed_symptoms: ['Mild Chest Tightness on Exertion', 'Breathlessness on Incline', 'Profuse Sweating during Episodes'],
+      priority_tag: 'Priority 2 • Senior Citizen',
+      chief_complaint: 'Crushing chest tightness radiating to left shoulder on fast walking',
+      observed_symptoms: ['Chest Tightness', 'Breathlessness on stairs', 'Sweating episodes'],
       vitals: {
-        bp: '148/92 mmHg',
+        bp: '148/92',
         bpStatus: 'Elevated Stage 1',
         hr: '88 bpm',
-        hrStatus: 'Normal Regular',
+        hrStatus: 'Regular',
         spo2: '97%',
-        spo2Status: 'Adequate',
+        spo2Status: 'Normal',
         temp: '98.4 °F',
         tempStatus: 'Normal'
       },
-      ai_assessment: 'Exertional angina symptom constellation in senior patient with hypertension history. Immediate 12-lead ECG and Troponin screen advised before treadmill testing.',
+      ai_assessment: 'Exertional angina in senior patient. 12-lead ECG and Troponin advised.',
       medical_history: {
-        surgeries: 'Appendectomy (1998), Left Knee Arthroscopy (2018)',
-        chronic: 'Hypertension (12 yrs on Telmisartan 40mg), Mild Dyslipidemia',
-        social: 'Non-smoker, Non-alcoholic, Retired Civil Engineer',
-        family: 'Father: Acute Myocardial Infarction at 64 yrs'
+        surgeries: 'Appendectomy (1998)',
+        chronic: 'Hypertension (12 yrs on Telmisartan)',
+        social: 'Non-smoker',
+        family: 'Father: MI at 64 yrs'
       },
       scanned: true,
       scanned_at: '10:48 AM',
-      scanned_by: 'Turnstile Gate B (North Wing)',
+      scanned_by: 'Turnstile Gate B',
       status: 'at_door'
     },
     {
@@ -190,25 +161,25 @@ export const DoctorPanel: React.FC = () => {
       aadhaar_verified: true,
       phone: '+91 98112 33445',
       triage_level: 3,
-      priority_tag: 'Priority 3 - Routine Outpatient Follow-up',
-      chief_complaint: 'Routine follow-up for mitral valve prolapse murmur, occasional palpitations during evening stress',
-      observed_symptoms: ['Palpitations / Fluttering', 'Mild Lightheadedness when standing up abruptly'],
+      priority_tag: 'Priority 3 • Routine Follow-up',
+      chief_complaint: 'Routine review for murmur and evening palpitations',
+      observed_symptoms: ['Palpitations', 'Mild lightheadedness'],
       vitals: {
-        bp: '122/78 mmHg',
-        bpStatus: 'Normal Optimal',
+        bp: '122/78',
+        bpStatus: 'Normal',
         hr: '76 bpm',
-        hrStatus: 'Regular Rhythm',
+        hrStatus: 'Optimal',
         spo2: '99%',
         spo2Status: 'Optimal',
         temp: '98.6 °F',
         tempStatus: 'Normal'
       },
-      ai_assessment: 'Hemodynamically stable follow-up patient. Previous echocardiography showed mild MVP with trace regurgitation.',
+      ai_assessment: 'Stable MVP follow-up.',
       medical_history: {
         surgeries: 'None',
-        chronic: 'Mild MVP diagnosed 2022, General anxiety disorder',
-        social: 'Occasional tea/coffee consumer, Desk professional',
-        family: 'Mother: Osteoarthritis, No premature CAD'
+        chronic: 'Mild MVP (2022)',
+        social: 'Coffee drinker',
+        family: 'None'
       },
       scanned: false,
       status: 'waiting'
@@ -221,25 +192,25 @@ export const DoctorPanel: React.FC = () => {
       aadhaar_verified: true,
       phone: '+91 98450 11223',
       triage_level: 2,
-      priority_tag: 'Priority 2 - Post-Stent Follow-up',
-      chief_complaint: 'Follow-up 6 months post LAD Stenting. Reports good exercise tolerance without angina.',
-      observed_symptoms: ['Mild exertional fatigue', 'Occasional calf stiffness'],
+      priority_tag: 'Priority 2 • Post-Stent',
+      chief_complaint: 'Routine follow-up 6 months post LAD stenting. Asymptomatic.',
+      observed_symptoms: ['Mild fatigue'],
       vitals: {
-        bp: '130/82 mmHg',
-        bpStatus: 'Pre-hypertensive',
+        bp: '130/82',
+        bpStatus: 'Controlled',
         hr: '68 bpm',
-        hrStatus: 'Controlled',
+        hrStatus: 'Normal',
         spo2: '98%',
         spo2Status: 'Normal',
         temp: '98.2 °F',
         tempStatus: 'Normal'
       },
-      ai_assessment: 'Post-PCI stable patient on dual antiplatelet therapy. Review lipid profile and renal panel.',
+      ai_assessment: 'Post-PCI stable patient on DAPT.',
       medical_history: {
-        surgeries: 'PCI with DES to LAD (Nov 2025)',
-        chronic: 'Type 2 Diabetes (HbA1c 6.9%), CAD',
-        social: 'Ex-smoker (quit 2024)',
-        family: 'Brother: CABG at age 58'
+        surgeries: 'PCI to LAD (Nov 2025)',
+        chronic: 'Diabetes Type 2',
+        social: 'Ex-smoker',
+        family: 'Brother: CAD'
       },
       scanned: false,
       status: 'waiting'
@@ -248,7 +219,7 @@ export const DoctorPanel: React.FC = () => {
 
   const [patientsQueue, setPatientsQueue] = useState<PatientInQueue[]>(initialPatientsQueue);
 
-  // WebSocket Live Connection to Turnstile Gateway
+  // WebSocket Live Connection
   useEffect(() => {
     let ws: WebSocket | null = null;
     let reconnectTimer: any = null;
@@ -281,10 +252,6 @@ export const DoctorPanel: React.FC = () => {
                 }
                 return p;
               }));
-              setLatestScanNotification({
-                token: scannedToken,
-                time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
-              });
             }
           } catch (err) {
             console.error('WS parse error:', err);
@@ -327,8 +294,6 @@ export const DoctorPanel: React.FC = () => {
     const nextIndex = (currentIndex + 1) % patientsQueue.length;
     setSelectedTokenId(patientsQueue[nextIndex]?.token || null);
     setDoctorNotes('');
-    setReferralSent(false);
-    setConsultCompleted(false);
     setConsultTimerSeconds(0);
   };
 
@@ -354,14 +319,13 @@ export const DoctorPanel: React.FC = () => {
       gender: currentPatient.gender,
       department: 'Cardiology',
       time: nowTime,
-      diagnosis: doctorNotes.trim() ? doctorNotes.split('\n')[0].substring(0, 70) : 'Clinical Consultation Completed - Stable',
-      rxSummary: selectedLabs.length > 0 ? `Labs: ${selectedLabs.join(', ')}` : 'Standard Cardiac Rx Issued'
+      diagnosis: doctorNotes.trim() ? doctorNotes.split('\n')[0].substring(0, 70) : 'Clinical Consultation Completed',
+      rxSummary: selectedLabs.length > 0 ? `Labs: ${selectedLabs.join(', ')}` : 'Standard Rx'
     };
 
     setRecentHistory(prev => [newTreated, ...prev.slice(0, 5)]);
     setPatientsQueue(prev => prev.filter(p => p.token !== currentPatient.token));
     setSelectedTokenId(null);
-    setConsultCompleted(true);
     setDoctorNotes('');
     setConsultTimerSeconds(0);
   };
@@ -376,134 +340,99 @@ export const DoctorPanel: React.FC = () => {
     const q = searchQuery.toLowerCase();
     return (
       p.name.toLowerCase().includes(q) ||
-      p.token.toLowerCase().includes(q) ||
-      p.priority_tag.toLowerCase().includes(q)
+      p.token.toLowerCase().includes(q)
     );
   });
 
   return (
-    <div className="p-4 sm:p-6 space-y-6 bg-[#0F172A] text-[#F8FAFC] min-h-screen pb-32 font-sans selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] p-4 sm:p-6 pb-24 font-sans max-w-7xl mx-auto">
       
-      {/* 1. Header Bar - 8pt Grid */}
-      <header className="bg-[#1E293B] p-5 sm:p-6 rounded-xl border border-[#334155] shadow-subtle flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div className="flex items-start sm:items-center gap-4">
+      {/* 1. Header Bar with Massive Action Buttons */}
+      <header className="bg-white p-5 sm:p-6 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-4">
           <BackButton />
+          <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border-2 border-blue-200 shrink-0">
+            <Stethoscope className="w-6 h-6" />
+          </div>
           <div>
-            <div className="flex flex-wrap items-center gap-2 mb-1.5">
-              <span className="text-xs bg-blue-900/60 text-blue-300 font-semibold px-2.5 py-0.5 rounded-md border border-blue-700/50 flex items-center gap-1.5">
-                <Stethoscope className="w-3.5 h-3.5 text-blue-400" />
-                {staffInfo.roleTitle}
-              </span>
-              <span className="text-xs text-slate-400 font-normal flex items-center gap-1">
-                <Building2 className="w-3 h-3 text-slate-500" />
-                {staffInfo.dept}
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight">
+                {staffInfo.name}
+              </h1>
+              <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                wsConnected ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'
+              }`}>
+                <span className={`w-2 h-2 rounded-full ${wsConnected ? 'bg-emerald-500' : 'bg-slate-400'}`}></span>
+                {wsConnected ? 'Gate Live' : 'Offline'}
               </span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-semibold text-white tracking-tight flex items-center gap-3">
-              {staffInfo.name}
-              <span className="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md border border-slate-700 font-normal">
-                AIIMS New Delhi
-              </span>
-              <span className={`text-[11px] px-2 py-0.5 rounded-md border flex items-center gap-1.5 ${
-                wsConnected 
-                  ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/60' 
-                  : 'bg-slate-800 text-slate-400 border-slate-700'
-              }`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${wsConnected ? 'bg-emerald-400' : 'bg-slate-500'}`}></span>
-                <span>{wsConnected ? 'Live Turnstile Feed' : 'Local Verification'}</span>
-              </span>
-            </h1>
+            <p className="text-xs text-slate-500 font-medium mt-0.5">
+              AIIMS New Delhi • Cardiology Chamber 204
+            </p>
           </div>
         </div>
 
-        {/* Timer and Call Next actions */}
-        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto justify-between md:justify-end">
-          <div className="flex items-center gap-2 px-3.5 py-2 bg-[#0F172A] border border-[#334155] rounded-lg text-xs">
-            <Timer className="w-4 h-4 text-blue-400" />
-            <div>
-              <span className="text-[10px] text-slate-400 block uppercase">Consultation Timer</span>
-              <span className="text-sm font-semibold text-blue-300">{formatTimer(consultTimerSeconds)}</span>
-            </div>
+        {/* Timer & Gigantic Action Buttons */}
+        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          <div className="flex items-center gap-2 px-4 py-3 bg-slate-100 border-2 border-slate-200 rounded-xl">
+            <Timer className="w-5 h-5 text-blue-600" />
+            <span className="text-lg font-semibold font-mono text-slate-900">{formatTimer(consultTimerSeconds)}</span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleNext}
-              disabled={patientsQueue.length === 0}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 text-white font-semibold px-4 py-3 rounded-xl text-xs transition-colors cursor-pointer min-h-[44px]"
-            >
-              <Play className="w-4 h-4 fill-current" />
-              <span>Call Next Patient</span>
-            </button>
-            <button
-              type="button"
-              onClick={handleNext}
-              disabled={patientsQueue.length === 0}
-              className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-3.5 py-3 rounded-xl text-xs transition-colors border border-slate-700 min-h-[44px]"
-            >
-              <SkipForward className="w-4 h-4 text-slate-400" />
-              <span>Skip</span>
-            </button>
-          </div>
+          {/* Massive 60px tactile green button: CALL NEXT PATIENT */}
+          <button
+            type="button"
+            onClick={handleNext}
+            disabled={patientsQueue.length === 0}
+            className="flex-1 sm:flex-none btn-tactile-green font-semibold text-sm px-6 py-3.5 rounded-xl flex items-center justify-center gap-2 min-h-[56px] cursor-pointer"
+          >
+            <Play className="w-5 h-5 fill-current" />
+            <span>Call Next Patient</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleNext}
+            disabled={patientsQueue.length === 0}
+            className="btn-tactile-slate font-semibold text-sm px-4 py-3.5 rounded-xl flex items-center justify-center gap-1.5 min-h-[56px] cursor-pointer"
+            title="Skip to next patient"
+          >
+            <SkipForward className="w-5 h-5 text-slate-500" />
+            <span>Skip</span>
+          </button>
         </div>
       </header>
 
-      {/* 2. Restrained KPI Row (8pt Grid) */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-4 shadow-subtle space-y-1">
-          <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Waiting In Queue</span>
-          <p className="text-2xl font-semibold text-white">{patientsQueue.length}</p>
-          <p className="text-xs text-blue-400">Triaged for Room 204</p>
-        </div>
-
-        <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-4 shadow-subtle space-y-1">
-          <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Average Consult Duration</span>
-          <p className="text-2xl font-semibold text-white">6.2 mins</p>
-          <p className="text-xs text-slate-400">Target &lt; 8.0 mins</p>
-        </div>
-
-        <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-4 shadow-subtle space-y-1">
-          <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Treated Today</span>
-          <p className="text-2xl font-semibold text-emerald-400">{recentHistory.length + 18}</p>
-          <p className="text-xs text-slate-400">Completed consultations</p>
-        </div>
-
-        <div className="bg-[#1E293B] border border-[#334155] rounded-xl p-4 shadow-subtle space-y-1">
-          <span className="text-[11px] text-slate-400 uppercase tracking-wider block">DPI Performance Bonus</span>
-          <p className="text-2xl font-semibold text-blue-400">Tier 1</p>
-          <p className="text-xs text-emerald-400">Turnstile verified</p>
-        </div>
-      </div>
-
-      {/* 3. Main Workstation Layout - Asymmetrical (4 Cols Queue : 8 Cols Consultation) */}
+      {/* 2. Single-Screen Flat Layout (Queue Left : Consultation Right) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* Left 4 Cols: Queue Rail */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="bg-[#1E293B] rounded-xl border border-[#334155] p-4 shadow-subtle space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-white flex items-center gap-2">
-                <Users className="w-4 h-4 text-blue-400" />
-                <span>Patient Queue ({patientsQueue.length})</span>
-              </h2>
-              <span className="text-xs text-slate-400">Room 204</span>
+          <div className="bg-white rounded-2xl border-2 border-slate-200 p-5 shadow-sm space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2 text-slate-900 font-semibold text-sm">
+                <Users className="w-5 h-5 text-blue-600" />
+                <span>Patient Queue</span>
+              </div>
+              <span className="text-xs bg-blue-50 text-blue-700 font-semibold px-2.5 py-1 rounded-full border border-blue-200">
+                {patientsQueue.length} Waiting
+              </span>
             </div>
 
-            {/* Search Input */}
+            {/* Quick Search */}
             <div className="relative">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Filter by token or patient name..."
-                className="w-full pl-9 pr-3 py-2 rounded-lg bg-[#0F172A] border border-[#334155] text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-blue-500 min-h-[38px]"
+                placeholder="Search patient or token..."
+                className="w-full pl-9 pr-3 py-2.5 rounded-xl border-2 border-slate-200 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 min-h-[44px]"
               />
             </div>
 
-            {/* Patient Cards in Queue */}
-            <div className="space-y-2 pt-1 max-h-[600px] overflow-y-auto">
+            {/* Queue Cards with Gigantic Visual Status Lights */}
+            <div className="space-y-3 pt-1">
               {filteredQueue.map((patient) => {
                 const isSelected = currentPatient?.token === patient.token;
                 const isAtDoor = patient.status === 'at_door' || patient.scanned;
@@ -513,33 +442,34 @@ export const DoctorPanel: React.FC = () => {
                     key={patient.token}
                     type="button"
                     onClick={() => setSelectedTokenId(patient.token)}
-                    className={`w-full p-3.5 rounded-lg border text-left transition-colors flex flex-col gap-2 min-h-[48px] ${
+                    className={`w-full p-4 rounded-xl border-2 text-left transition-all flex flex-col gap-2 min-h-[64px] ${
                       isSelected
-                        ? 'bg-slate-800 border-blue-500 ring-1 ring-blue-500/40 text-white'
-                        : 'bg-[#0F172A] hover:bg-slate-800/80 border-[#334155] text-slate-300'
+                        ? 'bg-blue-50/70 border-blue-600 ring-2 ring-blue-600/20 shadow-sm'
+                        : 'bg-white hover:bg-slate-50 border-slate-200'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold font-mono text-blue-400">
+                      <span className="text-sm font-semibold font-mono text-blue-700">
                         {patient.token}
                       </span>
 
-                      {/* Clean flat status pill - NO pulsing strobe */}
+                      {/* Gigantic visual status light */}
                       {isAtDoor ? (
-                        <span className="inline-flex items-center gap-1 bg-amber-500 text-slate-950 font-semibold px-2 py-0.5 rounded text-[10px]">
-                          AT DOOR (Gate B)
+                        <span className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 border-2 border-emerald-300 font-semibold px-2.5 py-1 rounded-lg text-xs">
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+                          AT DOOR
                         </span>
                       ) : (
-                        <span className="bg-slate-700 text-slate-300 font-semibold px-2 py-0.5 rounded text-[10px]">
+                        <span className="bg-slate-100 text-slate-600 font-medium px-2.5 py-1 rounded-lg text-xs border border-slate-200">
                           WAITING
                         </span>
                       )}
                     </div>
 
                     <div>
-                      <p className="text-sm font-semibold text-white">{patient.name}</p>
-                      <p className="text-xs text-slate-400 mt-0.5">
-                        {patient.age}Y • {patient.gender} • {patient.priority_tag}
+                      <p className="text-base font-semibold text-slate-900">{patient.name}</p>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        {patient.age} Y • {patient.gender} • {patient.priority_tag}
                       </p>
                     </div>
                   </button>
@@ -552,112 +482,102 @@ export const DoctorPanel: React.FC = () => {
         {/* Right 8 Cols: Active Patient Consultation Workspace */}
         <div className="lg:col-span-8 space-y-6">
           {currentPatient ? (
-            <div className="bg-[#1E293B] rounded-xl border border-[#334155] shadow-card p-6 space-y-6">
+            <div className="bg-white rounded-2xl border-2 border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
               
-              {/* Patient Identity & Verification */}
-              <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#334155]">
+              {/* Patient Identity & Arrival Status */}
+              <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b-2 border-slate-100">
                 <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-sm font-semibold font-mono text-blue-400">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="text-sm font-semibold font-mono text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">
                       Token {currentPatient.token}
                     </span>
-                    <span className="text-xs bg-emerald-950/60 text-emerald-300 font-semibold px-2 py-0.5 rounded border border-emerald-700/50">
-                      Aadhaar Verified
-                    </span>
                     {currentPatient.status === 'at_door' && (
-                      <span className="text-xs bg-amber-500 text-slate-950 font-semibold px-2 py-0.5 rounded">
-                        AT DOOR • Turnstile Gate B
+                      <span className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-0.5 rounded-md text-xs font-semibold">
+                        <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+                        Turnstile Gate B Verified
                       </span>
                     )}
                   </div>
-                  <h2 className="text-2xl font-semibold text-white tracking-tight">
+                  <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">
                     {currentPatient.name}
                   </h2>
-                  <p className="text-xs text-slate-400 mt-0.5">
+                  <p className="text-xs text-slate-500 font-medium mt-1">
                     {currentPatient.age} Years • {currentPatient.gender} • Phone: {currentPatient.phone}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowHistoryModal(true)}
-                    className="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold text-xs px-3.5 py-2.5 rounded-lg transition-colors flex items-center gap-1.5 min-h-[40px]"
-                  >
-                    <History className="w-4 h-4 text-slate-400" />
-                    <span>View Medical History</span>
-                  </button>
+                  <span className="bg-slate-100 text-slate-700 font-semibold text-xs px-3 py-2 rounded-lg border border-slate-200">
+                    Aadhaar Linked
+                  </span>
                 </div>
               </div>
 
-              {/* Vitals Grid - Clean Data Tiles */}
+              {/* 4 Massive Visual Vitals Badges */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="bg-[#0F172A] rounded-lg p-3 border border-[#334155] space-y-1">
-                  <span className="text-[10px] text-slate-400 uppercase block">Blood Pressure</span>
-                  <p className="text-base font-semibold text-white font-mono">{currentPatient.vitals.bp}</p>
-                  <span className="text-[11px] text-amber-400 block">{currentPatient.vitals.bpStatus}</span>
+                <div className="bg-slate-50 rounded-xl p-4 border-2 border-slate-200 space-y-1">
+                  <span className="text-[11px] text-slate-500 uppercase block font-semibold">Blood Pressure</span>
+                  <p className="text-xl font-semibold text-slate-900 font-mono">{currentPatient.vitals.bp}</p>
+                  <span className="text-xs text-amber-700 font-medium block">{currentPatient.vitals.bpStatus}</span>
                 </div>
 
-                <div className="bg-[#0F172A] rounded-lg p-3 border border-[#334155] space-y-1">
-                  <span className="text-[10px] text-slate-400 uppercase block">Heart Rate</span>
-                  <p className="text-base font-semibold text-white font-mono">{currentPatient.vitals.hr}</p>
-                  <span className="text-[11px] text-slate-400 block">{currentPatient.vitals.hrStatus}</span>
+                <div className="bg-slate-50 rounded-xl p-4 border-2 border-slate-200 space-y-1">
+                  <span className="text-[11px] text-slate-500 uppercase block font-semibold">Heart Rate</span>
+                  <p className="text-xl font-semibold text-slate-900 font-mono">{currentPatient.vitals.hr}</p>
+                  <span className="text-xs text-slate-500 font-medium block">{currentPatient.vitals.hrStatus}</span>
                 </div>
 
-                <div className="bg-[#0F172A] rounded-lg p-3 border border-[#334155] space-y-1">
-                  <span className="text-[10px] text-slate-400 uppercase block">Oxygen SpO2</span>
-                  <p className="text-base font-semibold text-white font-mono">{currentPatient.vitals.spo2}</p>
-                  <span className="text-[11px] text-emerald-400 block">{currentPatient.vitals.spo2Status}</span>
+                <div className="bg-slate-50 rounded-xl p-4 border-2 border-slate-200 space-y-1">
+                  <span className="text-[11px] text-slate-500 uppercase block font-semibold">Oxygen SpO2</span>
+                  <p className="text-xl font-semibold text-emerald-700 font-mono">{currentPatient.vitals.spo2}</p>
+                  <span className="text-xs text-emerald-700 font-medium block">{currentPatient.vitals.spo2Status}</span>
                 </div>
 
-                <div className="bg-[#0F172A] rounded-lg p-3 border border-[#334155] space-y-1">
-                  <span className="text-[10px] text-slate-400 uppercase block">Temperature</span>
-                  <p className="text-base font-semibold text-white font-mono">{currentPatient.vitals.temp}</p>
-                  <span className="text-[11px] text-slate-400 block">{currentPatient.vitals.tempStatus}</span>
+                <div className="bg-slate-50 rounded-xl p-4 border-2 border-slate-200 space-y-1">
+                  <span className="text-[11px] text-slate-500 uppercase block font-semibold">Temperature</span>
+                  <p className="text-xl font-semibold text-slate-900 font-mono">{currentPatient.vitals.temp}</p>
+                  <span className="text-xs text-slate-500 font-medium block">{currentPatient.vitals.tempStatus}</span>
                 </div>
               </div>
 
               {/* Chief Complaint */}
-              <div className="bg-[#0F172A] rounded-lg p-4 border border-[#334155] space-y-1.5">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">
-                  Reported Symptoms & Chief Complaint
+              <div className="bg-blue-50/50 rounded-xl p-4 border-2 border-blue-100 space-y-2">
+                <span className="text-xs font-semibold text-blue-900 uppercase tracking-wide block">
+                  Reported Symptoms
                 </span>
-                <p className="text-sm text-slate-200 font-normal leading-relaxed">
+                <p className="text-sm text-slate-800 leading-relaxed font-medium">
                   {currentPatient.chief_complaint}
                 </p>
-                <div className="flex flex-wrap gap-1.5 pt-2">
+                <div className="flex flex-wrap gap-2 pt-1">
                   {currentPatient.observed_symptoms.map((sym, idx) => (
-                    <span key={idx} className="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">
+                    <span key={idx} className="text-xs bg-white text-slate-800 px-3 py-1 rounded-lg border border-slate-200 font-medium shadow-xs">
                       {sym}
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Doctor Clinical Notes / Diagnosis Input */}
+              {/* Doctor Clinical Notes */}
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider block">
-                  Clinical Diagnosis & Examination Notes
+                <label className="text-xs font-semibold text-slate-900 uppercase tracking-wide block">
+                  Doctor Diagnosis & Prescription Notes
                 </label>
                 <textarea
-                  rows={4}
+                  rows={3}
                   value={doctorNotes}
                   onChange={(e) => setDoctorNotes(e.target.value)}
-                  placeholder="Record clinical impressions, heart sounds S1/S2, murmurs, and management plan..."
-                  className="w-full p-3.5 rounded-lg bg-[#0F172A] border border-[#334155] text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
+                  placeholder="Type clinical diagnosis, medications prescribed, or dietary advice..."
+                  className="w-full p-4 rounded-xl border-2 border-slate-200 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 transition-colors"
                 />
               </div>
 
-              {/* Lab Investigations Pad */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
-                    Order Lab Investigations
-                  </label>
-                  <span className="text-xs text-slate-400">Selected: {selectedLabs.length}</span>
-                </div>
+              {/* Lab Investigations Pad - 48px Touch Targets */}
+              <div className="space-y-2">
+                <label className="text-xs font-semibold text-slate-900 uppercase tracking-wide block">
+                  Order Diagnostic Lab Tests
+                </label>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                   {labOptions.map((lab) => {
                     const isChecked = selectedLabs.includes(lab);
                     return (
@@ -665,69 +585,56 @@ export const DoctorPanel: React.FC = () => {
                         key={lab}
                         type="button"
                         onClick={() => toggleLab(lab)}
-                        className={`p-2.5 rounded-lg border text-left text-xs transition-colors min-h-[44px] flex items-center justify-between ${
+                        className={`p-3 rounded-xl border-2 text-left text-xs font-semibold transition-all min-h-[48px] flex items-center justify-between ${
                           isChecked
-                            ? 'bg-blue-950/60 border-blue-500 text-blue-200'
-                            : 'bg-[#0F172A] border-[#334155] text-slate-400 hover:text-slate-200'
+                            ? 'bg-blue-50 border-blue-600 text-blue-900'
+                            : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700'
                         }`}
                       >
                         <span className="truncate">{lab}</span>
-                        {isChecked && <CheckCircle className="w-3.5 h-3.5 text-blue-400 shrink-0 ml-1" />}
+                        {isChecked && <CheckCircle className="w-4 h-4 text-blue-600 shrink-0 ml-1" />}
                       </button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Action Bar - Standard 48px touch targets */}
-              <div className="pt-4 border-t border-[#334155] flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setReferralSent(true)}
-                    className="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs px-4 py-3 rounded-xl border border-slate-700 transition-colors flex items-center gap-1.5 min-h-[48px]"
-                  >
-                    <Send className="w-4 h-4 text-slate-400" />
-                    <span>{referralSent ? 'Referral Sent' : 'Refer to Specialist'}</span>
-                  </button>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={handleComplete}
-                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs px-6 py-3 rounded-xl shadow-subtle transition-colors flex items-center gap-2 min-h-[48px] cursor-pointer"
-                  >
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>Complete Consultation & Release Token</span>
-                  </button>
-                </div>
+              {/* Giant 64px Tactile Action Button: Complete & Release */}
+              <div className="pt-4 border-t-2 border-slate-100 flex flex-wrap items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={handleComplete}
+                  className="w-full sm:w-auto btn-tactile-green font-semibold text-base px-8 py-4 rounded-xl flex items-center justify-center gap-2 min-h-[64px] cursor-pointer shadow-sm"
+                >
+                  <CheckCircle2 className="w-6 h-6" />
+                  <span>Complete Consultation & Release Token</span>
+                </button>
               </div>
 
             </div>
           ) : (
-            <div className="bg-[#1E293B] rounded-xl border border-[#334155] p-12 text-center space-y-3">
-              <Users className="w-8 h-8 text-slate-500 mx-auto" />
-              <p className="text-base font-semibold text-white">All patients in Room 204 queue have been seen</p>
-              <p className="text-xs text-slate-400">New arrivals will appear automatically as they scan at Turnstile Gate B.</p>
+            <div className="bg-white rounded-2xl border-2 border-slate-200 p-12 text-center space-y-3">
+              <Users className="w-12 h-12 text-slate-400 mx-auto" />
+              <p className="text-lg font-semibold text-slate-900">All patients in queue have been treated</p>
+              <p className="text-xs text-slate-500">New arrivals will appear here when they scan at Turnstile Gate B.</p>
             </div>
           )}
 
-          {/* Recent History Table */}
-          <div className="bg-[#1E293B] rounded-xl border border-[#334155] p-6 shadow-subtle space-y-4">
-            <h3 className="text-sm font-semibold text-white">Consultations Completed Today</h3>
+          {/* Recent Completed History */}
+          <div className="bg-white rounded-2xl border-2 border-slate-200 p-6 shadow-sm space-y-3">
+            <h3 className="text-sm font-semibold text-slate-900">Consultations Completed Today</h3>
             <div className="space-y-2">
               {recentHistory.map((rec) => (
-                <div key={rec.id} className="p-3 bg-[#0F172A] rounded-lg border border-[#334155] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                <div key={rec.id} className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
                   <div>
-                    <span className="font-mono font-semibold text-blue-400 mr-2">{rec.token}</span>
-                    <strong className="text-white">{rec.name}</strong>
-                    <span className="text-slate-400 ml-2">({rec.age}Y • {rec.gender})</span>
-                    <p className="text-slate-400 text-[11px] mt-0.5">{rec.diagnosis}</p>
+                    <span className="font-mono font-semibold text-blue-700 mr-2">{rec.token}</span>
+                    <strong className="text-slate-900">{rec.name}</strong>
+                    <span className="text-slate-500 ml-2">({rec.age}Y • {rec.gender})</span>
+                    <p className="text-slate-600 text-[11px] mt-0.5">{rec.diagnosis}</p>
                   </div>
                   <div className="text-right">
-                    <span className="text-slate-400">{rec.time}</span>
-                    <p className="text-emerald-400 text-[11px]">{rec.rxSummary}</p>
+                    <span className="text-slate-500">{rec.time}</span>
+                    <p className="text-emerald-700 font-semibold text-[11px]">{rec.rxSummary}</p>
                   </div>
                 </div>
               ))}
@@ -737,45 +644,6 @@ export const DoctorPanel: React.FC = () => {
         </div>
 
       </div>
-
-      {/* History Modal */}
-      {showHistoryModal && currentPatient && (
-        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
-          <div className="bg-[#1E293B] border border-[#334155] rounded-xl max-w-lg w-full p-6 space-y-4 shadow-card">
-            <div className="flex items-center justify-between pb-3 border-b border-[#334155]">
-              <h3 className="text-base font-semibold text-white">Medical History • {currentPatient.name}</h3>
-              <button onClick={() => setShowHistoryModal(false)} className="text-slate-400 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-3 text-xs">
-              <div>
-                <span className="text-slate-400 block font-semibold">Chronic Conditions:</span>
-                <p className="text-slate-200 mt-0.5">{currentPatient.medical_history.chronic}</p>
-              </div>
-              <div className="pt-2 border-t border-[#334155]">
-                <span className="text-slate-400 block font-semibold">Prior Surgeries:</span>
-                <p className="text-slate-200 mt-0.5">{currentPatient.medical_history.surgeries}</p>
-              </div>
-              <div className="pt-2 border-t border-[#334155]">
-                <span className="text-slate-400 block font-semibold">Family History:</span>
-                <p className="text-slate-200 mt-0.5">{currentPatient.medical_history.family}</p>
-              </div>
-            </div>
-
-            <div className="pt-3 border-t border-[#334155] flex justify-end">
-              <button
-                type="button"
-                onClick={() => setShowHistoryModal(false)}
-                className="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg text-xs font-semibold min-h-[36px]"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
     </div>
   );

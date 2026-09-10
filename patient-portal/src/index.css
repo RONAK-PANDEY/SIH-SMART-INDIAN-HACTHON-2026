@@ -8,30 +8,59 @@
 }
 
 body {
-  background-color: #F8F9FA;
+  background-color: #F8FAFC;
   color: #0F172A;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Enforce strict 2 font weights: 400 Regular and 600 Semi-bold */
+/* Strict 2 font weights */
 b, strong, .font-bold, .font-semibold, .font-extrabold, .font-black, .font-medium {
   font-weight: 600 !important;
 }
 
-/* Subtle, realistic elevation shadows */
-.shadow-subtle {
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+/* Tactile 2.5D Pressable Buttons */
+.btn-tactile-green {
+  background-color: #059669;
+  color: #ffffff;
+  border-bottom: 4px solid #047857;
+  transition: all 0.1s ease;
+}
+.btn-tactile-green:hover {
+  background-color: #10B981;
+}
+.btn-tactile-green:active {
+  transform: translateY(2px);
+  border-bottom: 2px solid #047857;
 }
 
-.shadow-card {
-  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+.btn-tactile-blue {
+  background-color: #2563EB;
+  color: #ffffff;
+  border-bottom: 4px solid #1D4ED8;
+  transition: all 0.1s ease;
+}
+.btn-tactile-blue:hover {
+  background-color: #3B82F6;
+}
+.btn-tactile-blue:active {
+  transform: translateY(2px);
+  border-bottom: 2px solid #1D4ED8;
 }
 
-/* Standard human touch targets (min 44x48px) */
-.min-touch-target {
-  min-height: 48px;
-  min-width: 48px;
+.btn-tactile-slate {
+  background-color: #FFFFFF;
+  color: #0F172A;
+  border: 2px solid #CBD5E1;
+  border-bottom: 4px solid #94A3B8;
+  transition: all 0.1s ease;
+}
+.btn-tactile-slate:hover {
+  background-color: #F1F5F9;
+}
+.btn-tactile-slate:active {
+  transform: translateY(2px);
+  border-bottom: 2px solid #94A3B8;
 }
