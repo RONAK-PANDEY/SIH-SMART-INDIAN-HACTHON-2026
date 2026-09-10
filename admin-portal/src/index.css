@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +8,7 @@
 }
 
 body {
-  background-color: #0B0F19;
+  background-color: #0F172A;
   color: #F8FAFC;
   font-size: 14px;
   line-height: 1.5;
@@ -20,16 +16,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Enforce strict 2 font weights: 400 Regular and 600 Semi-bold */
+/* Strict 2 weights: 400 Regular and 600 Semi-bold */
 b, strong, .font-bold, .font-semibold, .font-extrabold, .font-black, .font-medium {
   font-weight: 600 !important;
 }
 
 /* Subtle elevation */
 .shadow-subtle {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
 }
 
 .shadow-card {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.35), 0 2px 4px -2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
 }
