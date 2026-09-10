@@ -469,3 +469,17 @@ SmartCare is open source software developed for the **Smart India Hackathon (SIH
 <p align="center">
   <sub>Ministry of Health & Family Welfare, Government of India</sub>
 </p>
+
+
+---
+
+## 📽️ Official Presentation & Pitch Deck
+
+The final presentation slides for **SmartCare (Team Quantum Coders)** for the **Smart India Hackathon 2026 (Problem Statement: SIH26133)** are available to view and download directly:
+
+| Resource | Link | Format |
+|---|---|---|
+| **Direct Download (.pptx)** | [📥 **Download Presentation Deck (PPTX)**](https://github.com/RONAK-PANDEY/SIH-SMART-INDIAN-HACTHON-2026/raw/main/SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx) | Microsoft PowerPoint (.pptx, 292 KB) |
+| **Repository File** | [📄 `SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx`](./SIH_2026_SmartCare_Quantum_Coders_FINAL.pptx) | GitHub PPTX Viewer |
+
+> **Note:** Click the direct download link above to download the slide deck directly to your system. The presentation covers problem statement analysis, technical architecture, multi-portal workflows, AI queue & triage engines, live Android scan verification loop, and national government vigilance metrics.
