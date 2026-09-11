@@ -1,0 +1,6 @@
+{
+  "name": "SmartCare Scanner",
+  "description": "Hospital front-desk QR token scanner for patient intake and verification.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

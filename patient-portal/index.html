@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartCare Patient OPD Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Enable class-based dark mode so ThemeContext can toggle via document.documentElement.classList
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'slate-850': 'rgb(18, 26, 38)'
+            },
+            animation: {
+              'in': 'fadeIn 0.15s ease-out'
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'scale(0.97)' },
+                '100%': { opacity: '1', transform: 'scale(1)' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 transition-colors duration-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
