@@ -1,38 +1,84 @@
-# SmartCare Architecture
+# SmartCare System Architecture
+> **Primary Maintainer**: Arpan  
+> **Status**: Approved for Development (SIH 2026)
 
-SmartCare consists of a FastAPI backend, three React frontends, and an Android turnstile scanner. The backend provides REST endpoints and WebSocket updates for the OPD queue.
+---
 
-## High-level flow
+## 1. Executive Summary
+SmartCare is built on a high-concurrency modular backend with WebSocket pub/sub for real-time queue synchronization, integrated with machine learning models for predictive waiting time estimation and automated multi-lingual triage scoring.
 
-```text
-Patient Portal (:5173)      Doctor Console (:5174)      Govt Dashboard (:5175)
-        |                            ^                              ^
-        | REST                       | WebSocket                    |
-        v                            |                              |
-Android Turnstile Scanner ---> FastAPI Backend (:8000) -------------
-                                 |
-                                 v
-                          Supabase/Postgres + Redis
+---
+
+## 2. High-Level Architecture Diagram
+
+```
+                 +-------------------------------------------------------+
+                 |                     Clients Layer                     |
+                 |  +------------------------+  +---------------------+  |
+                 |  | Patient Web/PWA App    |  | Admin/Doctor Portal |  |
+                 |  | (React + Vite + i18n)  |  | (React + Recharts)  |  |
+                 |  +-----------+------------+  +----------+----------+  |
+                 +--------------|--------------------------|-------------+
+                                | REST / JSON              | WebSocket (WSS)
+                                v                          v
+                 +-------------------------------------------------------+
+                 |                    API Gateway Layer                  |
+                 |              (FastAPI ASGI Router & Auth)             |
+                 +--------------------------+----------------------------+
+                                            |
+                 +--------------------------v----------------------------+
+                 |                     Core Services                     |
+                 |  +--------------------+  +-------------------------+  |
+                 |  | Auth & RBAC        |  | Dynamic Queue Engine    |  |
+                 |  +--------------------+  +-------------------------+  |
+                 |  | Triage Evaluator   |  | Referral Engine         |  |
+                 |  +--------------------+  +-------------------------+  |
+                 |  | Appointment Mgr    |  | Notification Engine     |  |
+                 |  +--------------------+  +-------------------------+  |
+                 +--------------------------+----------------------------+
+                                            |
+                 +--------------------------v----------------------------+
+                 |                  AI / ML Inference                    |
+                 |  +--------------------+  +-------------------------+  |
+                 |  | Wait-Time Regressor|  | Congestion Forecaster   |  |
+                 |  +--------------------+  +-------------------------+  |
+                 |  | NLP Triage Assessor|  | Synthetic Gen           |  |
+                 |  +--------------------+  +-------------------------+  |
+                 +--------------------------+----------------------------+
+                                            |
+                 +--------------------------v----------------------------+
+                 |                 Data Persistence Layer                |
+                 |  +--------------------+  +-------------------------+  |
+                 |  | PostgreSQL 16      |  | Redis 7 (Queue Cache &  |  |
+                 |  | (Relational State) |  | Pub/Sub Broker)         |  |
+                 |  +--------------------+  +-------------------------+  |
+                 +-------------------------------------------------------+
 ```
 
-## Components
+---
 
-### Web applications
+## 3. Component Breakdown
 
-- **Patient portal:** appointment booking, triage input, and QR pass display.
-- **Admin portal:** consultation workflow and live queue operations.
-- **Government portal:** aggregate queue monitoring and doctor-performance reporting.
+### 3.1 Frontend Web Applications
+* **Patient Portal (PWA)**:
+  * Built using React 18, TypeScript, Tailwind CSS, Lucide Icons.
+  * Local caching & service workers for poor connectivity in rural areas.
+  * Multi-language support (English, Hindi, Punjabi) for diverse accessibility.
+* **Admin & Doctor Console**:
+  * Realtime consultation workflow, one-click patient call/skip/transfer.
+  * Live hospital capacity analytics with Recharts and geospatial heatmap.
 
-### Backend
+### 3.2 Backend Service Layers
+* **Queue Engine**:
+  * Calculates dynamic composite priority score $P(t) = w_t \cdot \Delta t + w_s \cdot S_{triage} + w_a \cdot A_{vulnerability}$.
+  * Handles queue re-ordering upon emergency walk-in arrivals.
+* **WebSocket Gateway**:
+  * Realtime channel multiplexing per hospital/department/doctor room.
+* **Triage Service**:
+  * Accepts structured symptoms + free-text complaints, maps to 5-tier Emergency Severity Index (ESI).
 
-- **Module layout:** domain code lives in `core/` (appointments, patients, queue, triage, referrals, and observer), access control in `auth/`, and external services in `integrations/`.
-- **Authentication and RBAC:** JWT sessions and role checks.
-- **Appointment and token services:** booking, QR hash generation, scan verification, and queue status.
-- **Triage service:** structured symptoms and free-text complaints are mapped to a severity level and department.
-- **Queue engine:** orders waiting patients using wait time, triage severity, and vulnerability factors.
-- **WebSocket gateway:** broadcasts relevant queue changes to connected clients.
-- **Integrations:** chatbot and notification support.
+---
 
-### Data layer
-
-The prototype can use Supabase/Postgres and Redis configuration supplied by the environment. Its tests use local or mocked data paths; infrastructure hardening and a production data deployment remain out of scope.
+## 4. Security & Compliance
+* **ABHA & Data Privacy**: Pseudonymized health records adhering to ABDM (Ayushman Bharat Digital Mission) standards.
+* **Authentication**: JWT-based session management with role-based access control (RBAC).

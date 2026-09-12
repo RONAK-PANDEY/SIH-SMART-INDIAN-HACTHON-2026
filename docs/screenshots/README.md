@@ -46,4 +46,4 @@ screenshots/
 2. Save them in the appropriate subdirectory with the exact filename
 3. Recommended dimensions: **1920×1080** (desktop) or **1080×2400** (mobile)
 4. Use **PNG** format for clarity
-5. Screenshots are referenced from the repository [README](../../README.md).
+5. Screenshots are referenced in [DEMO.md](../../DEMO.md) and [README.md](../../README.md)
